@@ -4,7 +4,7 @@ import sun.misc.JarFilter
 
 class StudioConf
 {
-    def static IZPACK_HOME = "C:/Utils/IzPack"
+    def static IZPACK_HOME = "C:/Program Files/IzPack"
 
 
     StudioConf()
