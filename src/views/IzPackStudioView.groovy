@@ -43,7 +43,7 @@ frame(
         ) {
            panel(
                    id: 'panelPreview',
-                   background: Color.BLUE,
+                   background: Color.WHITE,
                    layout: new MigLayout(
                            new LC().fillX().fillY(),
                            new AC().align("center"),
