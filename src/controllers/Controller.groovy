@@ -7,13 +7,13 @@ abstract class Controller
 
     def model
     def view
-    def swing = new SwingBuilder()
 
     Controller(m = null, v = null)
     {
         model = m
-        view = v
-        swing.controller = this
+        if(v != null) view = v
+        else view = new SwingBuilder()
+        view.controller = this
     }
 
     def abstract start() {}

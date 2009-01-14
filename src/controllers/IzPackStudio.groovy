@@ -13,7 +13,7 @@ class IzPackStudio extends Controller
 
     def start()
     {
-        def GUI = swing.build(view)
+        def GUI = view.build(IzPackStudioView)
         GUI.show()
 
         if(!StudioConf.checkIzPackHome())
@@ -25,7 +25,7 @@ class IzPackStudio extends Controller
         {
             def hellopanel = new HelloPanelController(new InstallerData())
             hellopanel.start()
-            swing.panelPreview.add(hellopanel.getPanel())
+            view.panelPreview.add(hellopanel.getPanel())
             GUI.show()
         }
 
@@ -37,8 +37,7 @@ class IzPackStudio extends Controller
     def static main(args)
     {
         def m = new StudioConf()
-        def v = IzPackStudioView
-        def c = new IzPackStudio(m, v)
+        def c = new IzPackStudio(m)
         
         c.start()
     }
