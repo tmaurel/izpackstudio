@@ -5,6 +5,8 @@ import com.izforge.izpack.LocaleDatabase;
 import com.izforge.izpack.gui.IconsDatabase;
 
 
+
+
 public class InstallerFrame
 {
 

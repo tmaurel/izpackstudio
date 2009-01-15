@@ -13,8 +13,8 @@ import java.awt.Dimension
 
 window(
         id: 'splashWindow',
-        size: [600,450],
-        location: Positionning.CenterPosition([600,450])
+        size: [400,300],
+        location: Positionning.CenterPosition([400,300])
 ) {
         panel(
             id: 'splashPanel',
@@ -42,9 +42,9 @@ window(
                     
                         progressBar(
                            id: 'splashProgress',
-                           maximumSize: new Dimension(200, 30),
-                           preferredSize: new Dimension(200, 30),
-                           minimumSize: new Dimension(200,30),
+                           maximumSize: new Dimension(130, 20),
+                           preferredSize: new Dimension(130, 20),
+                           minimumSize: new Dimension(130,20),
                            background: Color.decode("#b3a87f"),
                            foreground: Color.decode("#4c321b"),
                            border: BorderFactory.createMatteBorder(4,4,4,4,Color.decode("#4c321b")),
