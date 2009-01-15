@@ -1,7 +1,6 @@
 package controllers
 
 import com.izforge.izpack.panels.HelloPanel
-import javax.swing.JScrollPane
 import java.awt.Dimension
 import java.awt.Color
 import javax.swing.BorderFactory

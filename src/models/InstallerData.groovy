@@ -36,7 +36,7 @@ class InstallerData {
         installerframe.installdata.xmlData.setAttribute("langpack", "fra")
         installerframe.installdata.localeISO3 = "fra"
 
-        def test = new File(StudioConf.IZPACK_HOME + '/bin/langpacks/installer/fra.xml')
+        def test = new File('../bin/langpacks/installer/fra.xml')
 
         InputStream ine = new FileInputStream(test.getAbsolutePath())
         installerframe.installdata.langpack = new LocaleDatabase(ine)
