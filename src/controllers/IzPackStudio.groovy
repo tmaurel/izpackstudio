@@ -76,7 +76,7 @@ class IzPackStudio extends Controller
 
     def static main(args)
     {
-        def m = new StudioConf()
+        def m = null
         def c = new IzPackStudio(m)
         
         c.start()
