@@ -2,36 +2,57 @@ package helpers
 
 import java.awt.*
 
+/**
+* Helper class for Positionning Containers or Components
+*
+*/
 class Positionning
 {
 
+    /**
+    * Get the size of the screen
+    *
+    */
     def static Dimension FullScreenSize = Toolkit.getDefaultToolkit().getScreenSize()
 
+
+    /**
+    * Give the location to center frames/windows using the size
+    *
+    * @param    dimension   Dimension of the frame/window
+    * @return   top left location used to center the frame/window
+    */
     def static CenterPosition(dimension)
     {
-
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize()
+        // Get component size
         Dimension componentSize = dimension
-        Point position = null
-
-        if (componentSize.height > screenSize.height)
+        // If the component height is bigger than screensize, use the screensize
+        if (componentSize.height > FullScreenSize.height)
         {
-            componentSize.height = screenSize.height
+            componentSize.height = FullScreenSize.height
         }
 
-        componentSize.height = (screenSize.height - componentSize.height) / 2
+        // Vertical position is the screen height minus the component height divided by 2
+        componentSize.height = (FullScreenSize.height - componentSize.height) / 2
 
-
-        if (componentSize.width > screenSize.width)
+        // If the component width is bigger than screensize, use the screensize
+        if (componentSize.width > FullScreenSize.width)
         {
-            componentSize.width = screenSize.width
+            componentSize.width = FullScreenSize.width
         }
 
-        componentSize.width = (screenSize.width - componentSize.width) / 2
+        // Horizontal position is the screen width minus the component width divided by 2
+        componentSize.width = (FullScreenSize.width - componentSize.width) / 2
 
+        // Return the position as [int, int]
         return [(int) componentSize.width, (int) componentSize.height]
     }
 
+    /**
+    * Getter for the screen size
+    *
+    * @return   Screen size
+    */
     def static getFullScreenSize()
     {
         return FullScreenSize

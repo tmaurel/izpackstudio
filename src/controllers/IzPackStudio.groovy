@@ -3,14 +3,30 @@ package controllers
 import models.*
 import views.*
 
+
+/**
+ * IzPackStudio main class
+ *
+ */
 class IzPackStudio extends Controller
 {
 
-    IzPackStudio(m = null, v = null)
+   /**
+    * IzPackStudio Constructor
+    *
+    * @param    m   The model used by the constructor
+    * @param    v   The view used by the constructor
+    * @param    p   Parent controller
+    */
+    IzPackStudio(m = null, v = null, p = null)
     {
-        super(m, v)
+        super(m, v, p)
     }
 
+    /**
+    * Start IzPack Studio
+    *
+    */
     def start()
     {
 
@@ -45,13 +61,26 @@ class IzPackStudio extends Controller
 
     }
 
-
+    /**
+    * Start Splash Screen
+    *
+    */
     def displaySplash()
     {
+        // Build SplashView
         def splash = view.build(SplashView)
+
+        // Display SplashView
         splash.show()
     }
 
+
+    /**
+    * Changed ProgressBar value
+    *
+    * @param    num     Value of the ProgressBar
+    * @param    text    Text associated with the ProgressBar value
+    */
     def setProgressBar(num, text = null) throws Exception
     {
         view.splashProgress.setValue(num)
@@ -74,6 +103,11 @@ class IzPackStudio extends Controller
 
     }
 
+
+    /**
+    * Main method called when launching app
+    *
+    */
     def static main(args)
     {
         def m = null
@@ -82,6 +116,10 @@ class IzPackStudio extends Controller
         c.start()
     }
 
+    /**
+    * Exit method to close the app
+    *
+    */
     def static exit()
     {
         System.exit(0)

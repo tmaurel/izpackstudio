@@ -1,34 +1,27 @@
 package controllers
 
+/**
+* Controller for Projects
+*
+*/
+class ProjectController extends Controller {
 
-class ProjectController {
+   /**
+    * ProjectController Constructor
+    *
+    * @param    m   The model used by the constructor
+    * @param    v   The view used by the constructor
+    * @param    p   Parent controller
+    */
+    ProjectController(m = null, v = null, p = null)
+    {
+        super(m, v, p)
+    }
 
-    def appname
-
-    def appversion
-
-    def appsubpath
-
-    def url
-
-    def authors
-
-    def uninstaller
-
-    def javaversion
-
-    def requiresjdk
-
-    def webdir
-
-    def summarylogfilepath
-
-    def writeinstallationinformation
-
-    def pack200
-
-    def packager
-
-    def unpacker
+    /**
+    * Start method of the Controller
+    *
+    */
+    def start() {}
 
 }
