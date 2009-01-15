@@ -2,6 +2,7 @@ package controllers
 
 import models.*
 import views.*
+import javax.swing.DefaultListModel
 
 
 /**
@@ -31,33 +32,32 @@ class IzPackStudio extends Controller
     {
 
         displaySplash()
-        sleep(400)
         setProgressBar(1, "Loading GUI...")
         def GUI = view.build(IzPackStudioView)
-        sleep(400)
-        setProgressBar(2)
-        sleep(400)
-        setProgressBar(3)
-        sleep(400)
-        setProgressBar(4)
-        sleep(400)
-        setProgressBar(5, "Loading Panels...")
+
+
+
+
+        //setProgressBar(5, "Loading Panels...")
         def hellopanel = new HelloPanelController(new InstallerData())
         hellopanel.start()
+
         view.panelPreview.add(hellopanel.getPanel())
-        sleep(200)
-        setProgressBar(5)
-        sleep(200)
-        setProgressBar(6)
-        sleep(200)
-        setProgressBar(7)
-        sleep(200)
-        setProgressBar(8)
-        sleep(200)
-        setProgressBar(9)
-        sleep(200)
+
         setProgressBar(10, "Loaded !")
-        GUI.show()       
+        GUI.show()
+
+
+        def listModel = new DefaultListModel()
+        listModel.addElement(hellopanel.getThumb())
+        listModel.addElement(hellopanel.getThumb())
+        listModel.addElement(hellopanel.getThumb())
+        listModel.addElement(hellopanel.getThumb())
+        listModel.addElement(hellopanel.getThumb())
+        listModel.addElement(hellopanel.getThumb())
+        view.thumbList.setModel(listModel)
+
+
 
     }
 

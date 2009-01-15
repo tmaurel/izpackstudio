@@ -42,6 +42,7 @@ public class InstallerFrame
     */
     public Info info;
 
+    
     /**
     * Constructor
     *

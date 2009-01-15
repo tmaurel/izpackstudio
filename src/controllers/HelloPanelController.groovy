@@ -5,17 +5,14 @@ import java.awt.Dimension
 import java.awt.Color
 import javax.swing.BorderFactory
 
+
 /**
 * Controller for IzPack HelloPanels
 *
 */
-class HelloPanelController extends Controller {
+class HelloPanelController extends PanelController {
 
-    /**
-    * Contains the IzPack Panel object
-    *
-    */
-    def panel
+
 
     /**
     * HelloPanel Constructor
@@ -44,20 +41,6 @@ class HelloPanelController extends Controller {
 
         // Define Black Borders for the IzPack HelloPanel
         panel.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK))
-    }
-
-    /**
-    * Getter for the IzPack Panel Object
-    * @return IzPack HelloPanel
-    * 
-    */
-    def getPanel()
-    {
-        // Set the panel as visible
-        panel.setVisible(true)
-
-        // return IzPack HelloPanel Object
-        return panel
     }
 
 }

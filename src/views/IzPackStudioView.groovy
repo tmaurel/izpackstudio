@@ -9,6 +9,7 @@ import net.miginfocom.layout.AC
 import net.miginfocom.layout.LC
 
 
+
 frame(
         id: 'mainFrame',
         title: 'IzPack Studio',
@@ -16,7 +17,7 @@ frame(
         size: Positionning.getFullScreenSize(),
         defaultCloseOperation: EXIT_ON_CLOSE,
         background: Color.WHITE,
-        layout: new MigLayout()
+        layout: new MigLayout('fill')
 ) {
      panel(
         id: 'topPanel',
@@ -27,12 +28,15 @@ frame(
      panel(
         border: BorderFactory.createMatteBorder(1,1,1,1,Color.RED),
         id: 'leftPanel',
-        constraints: 'w 20%, h 70%'
-     ) {}
+        layout: new MigLayout('fill'),
+        constraints: 'w 180px, h 70%'
+     ) {
+        build(ThumbListView)
+     }
 
      panel(
         id: 'centerPanel',
-        constraints: 'w 60%, h 70%',
+        constraints: 'grow, w 60%, h 70%',
         background: Color.WHITE,
         layout: new MigLayout()
      ) {
