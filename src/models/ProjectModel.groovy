@@ -1,37 +1,126 @@
 package models
 
+import com.izforge.izpack.installer.InstallerFrame
+import com.izforge.izpack.Info.Author
+import com.izforge.izpack.LocaleDatabase
+import com.izforge.izpack.GUIPrefs
+import com.izforge.izpack.installer.ResourceManager
+import java.io.File
+import com.izforge.izpack.gui.IconsDatabase
+import net.n3.nanoxml.*
+import javax.swing.ImageIcon
+import java.awt.Dimension
+
 /**
  * Project Model containing all global vars needed for a project
  *
  */
 class ProjectModel {
 
-    def appname
+    def installerframe
 
-    def appversion
+    def width
 
-    def appsubpath
+    def height
 
-    def url
+    ProjectModel()
+    {
+        installerframe = new InstallerFrame()
+        load()
+        width = 800
+        height = 600
+    }
 
-    def authors
+    def getSize()
+    {
+        return new Dimension(width, height)
+    }
 
-    def uninstaller
 
-    def javaversion
+    def getInstallerframe()
+    {
+        return installerframe
+    }    
 
-    def requiresjdk
 
-    def webdir
+    def addInfos()
+    {
+        installerframe.info.setAppName("Test")
+        installerframe.info.setAppVersion("1.0")
+        installerframe.info.addAuthor(new Author("Alexis Plantin", "alexis@roux.com"))
+        installerframe.info.addAuthor(new Author("Thomas Maurel", "thomas@roux.com"))
+        installerframe.info.setAppURL("http://www.roux.com")
+        installerframe.installdata.info = installerframe.info
+    }
 
-    def summarylogfilepath
+    def addLangPack()
+    {
+        installerframe.installdata.xmlData.setAttribute("langpack", "fra")
+        installerframe.installdata.localeISO3 = "fra"
 
-    def writeinstallationinformation
+        def test = new File('../bin/langpacks/installer/fra.xml')
 
-    def pack200
+        InputStream ine = new FileInputStream(test.getAbsolutePath())
+        installerframe.installdata.langpack = new LocaleDatabase(ine)
+        installerframe.langpack = installerframe.installdata.langpack
+    }
 
-    def packager
+    def addGUIPrefs()
+    {
+        def prefs = new GUIPrefs()
+        prefs.width = 800;
+        prefs.height = 600;
+        prefs.resizable = false;
+        installerframe.installdata.guiPrefs = prefs
+    }
 
-    def unpacker    
+    def addResourceManager()
+    {
+        ResourceManager.create(installerframe.installdata)
+    }
+
+    private void addIcons() throws Exception
+    {
+        // Initialisations
+        installerframe.icons = new IconsDatabase()
+        URL url
+        ImageIcon img
+        XMLElement icon
+
+        InputStream inXML = InstallerFrame.class
+                .getResourceAsStream("/com/izforge/izpack/installer/icons.xml")
+
+        // Initialises the parser
+        StdXMLParser parser = new StdXMLParser()
+        parser.setBuilder(XMLBuilderFactory.createXMLBuilder())
+        parser.setReader(new StdXMLReader(inXML))
+        parser.setValidator(new NonValidator())
+
+        // We get the data
+        XMLElement data = (XMLElement) parser.parse()
+
+        // We load the icons
+        Vector<XMLElement> children = data.getChildrenNamed("icon")
+        int size = children.size()
+        for (int i = 0; i < size; i++)
+        {
+            icon = children.get(i)
+            url = InstallerFrame.class.getResource(icon.getAttribute("res"))
+            img = new ImageIcon(url)
+            installerframe.icons.put(icon.getAttribute("id"), img)
+        }
+
+
+    }
+
+
+    def load()
+    {
+        addInfos()
+        addLangPack()
+        addGUIPrefs()
+        addIcons()
+        addResourceManager()
+    }
 
 }

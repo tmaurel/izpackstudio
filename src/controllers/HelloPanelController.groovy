@@ -1,10 +1,5 @@
 package controllers
 
-import com.izforge.izpack.panels.HelloPanel
-import java.awt.Dimension
-import java.awt.Color
-import javax.swing.BorderFactory
-
 
 /**
 * Controller for IzPack HelloPanels
@@ -13,6 +8,7 @@ import javax.swing.BorderFactory
 class HelloPanelController extends PanelController {
 
 
+    
 
     /**
     * HelloPanel Constructor
@@ -24,7 +20,7 @@ class HelloPanelController extends PanelController {
     HelloPanelController(m = null, v = null, p = null)
     {
         super(m, v, p)
-        model.load()
+        name = "com.izforge.izpack.panels.HelloPanel"
     }
 
     /**
@@ -33,14 +29,9 @@ class HelloPanelController extends PanelController {
     */
     def start()
     {
-        // Instantiate a new IzPack HelloPanel using InstallFrame and InstallData
-        panel = new HelloPanel(model.installerframe, model.installerframe.installdata)
-
-        // Define PreferredSize for the IzPack HelloPanel
-        panel.setPreferredSize(new Dimension(800,600))
-
-        // Define Black Borders for the IzPack HelloPanel
-        panel.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK))
+        // Build Panel
+        buildPanel()
+        
     }
 
 }

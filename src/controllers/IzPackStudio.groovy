@@ -37,9 +37,9 @@ class IzPackStudio extends Controller
 
 
 
-
+        def project = new ProjectController(new ProjectModel(), view)
         //setProgressBar(5, "Loading Panels...")
-        def hellopanel = new HelloPanelController(new InstallerData())
+        def hellopanel = new HelloPanelController(null, view, project)
         hellopanel.start()
 
         view.panelPreview.add(hellopanel.getPanel())
