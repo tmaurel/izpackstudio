@@ -10,6 +10,8 @@ import com.izforge.izpack.gui.IconsDatabase
 import net.n3.nanoxml.*
 import javax.swing.ImageIcon
 import java.awt.Dimension
+import com.izforge.izpack.gui.ButtonFactory
+import com.izforge.izpack.gui.LabelFactory
 
 /**
  * Project Model containing all global vars needed for a project
@@ -17,11 +19,17 @@ import java.awt.Dimension
  */
 class ProjectModel {
 
-    def installerframe
+    /**
+    * Container for the panel controllers
+    *
+    */
+    private panels = []
 
-    def width
+    private installerframe
 
-    def height
+    private width
+
+    private height
 
     ProjectModel()
     {
@@ -31,19 +39,19 @@ class ProjectModel {
         height = 600
     }
 
-    def getSize()
+    public getSize()
     {
         return new Dimension(width, height)
     }
 
 
-    def getInstallerframe()
+    public getInstallerFrame()
     {
         return installerframe
     }    
 
 
-    def addInfos()
+    private addInfos()
     {
         installerframe.info.setAppName("Test")
         installerframe.info.setAppVersion("1.0")
@@ -53,7 +61,7 @@ class ProjectModel {
         installerframe.installdata.info = installerframe.info
     }
 
-    def addLangPack()
+    private addLangPack()
     {
         installerframe.installdata.xmlData.setAttribute("langpack", "fra")
         installerframe.installdata.localeISO3 = "fra"
@@ -65,21 +73,43 @@ class ProjectModel {
         installerframe.langpack = installerframe.installdata.langpack
     }
 
-    def addGUIPrefs()
+    private addGUIPrefs()
     {
         def prefs = new GUIPrefs()
         prefs.width = 800;
         prefs.height = 600;
         prefs.resizable = false;
+        prefs.modifier.put("useButtonIcons", "yes")
+        prefs.modifier.put("useLabelIcons", "yes")
         installerframe.installdata.guiPrefs = prefs
+
+        boolean useButtonIcons = true;
+        if (installerframe.installdata.guiPrefs.modifier.containsKey("useButtonIcons")
+                && "no".equalsIgnoreCase(installerframe.installdata.guiPrefs.modifier
+                .get("useButtonIcons")))
+        {
+            useButtonIcons = false;
+        }
+        ButtonFactory.useButtonIcons(useButtonIcons)
+
+        boolean useLabelIcons = true;
+        if (installerframe.installdata.guiPrefs.modifier.containsKey("useLabelIcons")
+                && "no".equalsIgnoreCase(installerframe.installdata.guiPrefs.modifier
+                .get("useLabelIcons")))
+        {
+            useLabelIcons = false;
+        }
+        LabelFactory.setUseLabelIcons(useLabelIcons);
+
+
     }
 
-    def addResourceManager()
+    private addResourceManager()
     {
         ResourceManager.create(installerframe.installdata)
     }
 
-    private void addIcons() throws Exception
+    private addIcons() throws Exception
     {
         // Initialisations
         installerframe.icons = new IconsDatabase()
@@ -114,13 +144,15 @@ class ProjectModel {
     }
 
 
-    def load()
+    private load()
     {
         addInfos()
         addLangPack()
         addGUIPrefs()
         addIcons()
         addResourceManager()
+        installerframe.createNavPanel()
+        installerframe.installdata.installSuccess = true
     }
 
 }

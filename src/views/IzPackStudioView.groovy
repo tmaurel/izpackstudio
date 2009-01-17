@@ -45,14 +45,15 @@ frame(
                 constraints: 'w 100%, h 100%',
                 border: BorderFactory.createEmptyBorder(),
         ) {
+
            panel(
                    id: 'panelPreview',
                    background: Color.WHITE,
                    layout: new MigLayout(
-                           new LC().fillX().fillY(),
-                           new AC().align("center"),
+                           new LC().fillY(),
+                           new AC().gap("0"),
                            new AC().align("center"))
-           ) {}
+           ) { }
         }
 
      }

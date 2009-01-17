@@ -5,10 +5,8 @@ package controllers
 * Controller for IzPack HelloPanels
 *
 */
-class HelloPanelController extends PanelController {
-
-
-    
+class HelloPanelController extends PanelController
+{    
 
     /**
     * HelloPanel Constructor
@@ -20,18 +18,17 @@ class HelloPanelController extends PanelController {
     HelloPanelController(m = null, v = null, p = null)
     {
         super(m, v, p)
-        name = "com.izforge.izpack.panels.HelloPanel"
+        model.setName("com.izforge.izpack.panels.HelloPanel")
     }
 
     /**
     * Start method of the Controller
     *
     */
-    def start()
+    public start()
     {
         // Build Panel
-        buildPanel()
-        
+        buildPanel()        
     }
 
 }

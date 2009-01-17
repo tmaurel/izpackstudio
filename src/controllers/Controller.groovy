@@ -13,20 +13,20 @@ abstract class Controller
     * Model used by the controller
     *
     */
-    def model
+    protected model
 
 
     /**
     * View (SwingBuilder, ...) used by the controller
     *
     */
-    def view
+    protected view
 
     /**
     * Parent controller
     *
     */
-    def parent
+    protected parent
 
 
     /**
@@ -57,6 +57,6 @@ abstract class Controller
     * Define the controller start method
     *
     */
-    def abstract start() {}
+    def abstract public start() {}
 
 }

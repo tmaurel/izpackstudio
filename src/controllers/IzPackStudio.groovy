@@ -3,6 +3,10 @@ package controllers
 import models.*
 import views.*
 import javax.swing.DefaultListModel
+import groovy.swing.SwingBuilder
+import java.awt.Point
+import javax.swing.Box
+import helpers.Positionning
 
 
 /**
@@ -11,6 +15,26 @@ import javax.swing.DefaultListModel
  */
 class IzPackStudio extends Controller
 {
+
+   /**
+    * The current project controller
+    *
+    */
+    private project
+
+   /**
+    * The JFrame containing whole GUI
+    *
+    */
+    private GUI
+
+   /**
+    * Thumbs list
+    *
+    */
+    private listModel = new DefaultListModel()
+
+
 
    /**
     * IzPackStudio Constructor
@@ -28,36 +52,39 @@ class IzPackStudio extends Controller
     * Start IzPack Studio
     *
     */
-    def start()
+    public start()
     {
 
+        // Display the Splash Screen
         displaySplash()
+
+
         setProgressBar(1, "Loading GUI...")
-        def GUI = view.build(IzPackStudioView)
 
 
+        // Build the main View
+        GUI = view.build(IzPackStudioView)
 
-        def project = new ProjectController(new ProjectModel(), view)
-        //setProgressBar(5, "Loading Panels...")
-        def hellopanel = new HelloPanelController(null, view, project)
-        hellopanel.start()
-
-        view.panelPreview.add(hellopanel.getPanel())
 
         setProgressBar(10, "Loaded !")
-        GUI.show()
 
-
-        def listModel = new DefaultListModel()
-        listModel.addElement(hellopanel.getThumb())
-        listModel.addElement(hellopanel.getThumb())
-        listModel.addElement(hellopanel.getThumb())
-        listModel.addElement(hellopanel.getThumb())
-        listModel.addElement(hellopanel.getThumb())
-        listModel.addElement(hellopanel.getThumb())
+        // Assign the our own List Model to the ThumbList
         view.thumbList.setModel(listModel)
 
+        // Display the GUI
+        GUI.show()
 
+        // Create the new empty project
+        // TO-DO : Args to load projects (no empty project)
+        project = new ProjectController(new ProjectModel(), view, this)
+        project.start()
+
+
+        view.build
+        {
+            view.panelScrollPane.getViewport().setViewPosition(
+                        new Point(Positionning.initialPosition(project, view.panelScrollPane.getViewport()),0))
+        }
 
     }
 
@@ -65,7 +92,7 @@ class IzPackStudio extends Controller
     * Start Splash Screen
     *
     */
-    def displaySplash()
+    private displaySplash()
     {
         // Build SplashView
         def splash = view.build(SplashView)
@@ -81,26 +108,99 @@ class IzPackStudio extends Controller
     * @param    num     Value of the ProgressBar
     * @param    text    Text associated with the ProgressBar value
     */
-    def setProgressBar(num, text = null) throws Exception
+    private setProgressBar(num, text = null) throws Exception
     {
-        view.splashProgress.setValue(num)
 
-        if(text != null)
+        SwingBuilder.build
         {
-            view.loadingText.setText(text)
+            // Set the value of the progress bar
+            view.splashProgress.setValue(num)
+
+            // If the text isnt null, set it
+            if(text != null)
+            {
+                view.loadingText.setText(text)
+            }
+
+            // If the current value is the maximum value, then close the splash
+            if(num == view.splashProgress.getMaximum())
+            {
+                
+                view.splashWindow.with
+                {
+                    setVisible(false)
+                    dispose()
+                }
+
+            }
+
         }
 
-        if(num == view.splashProgress.getMaximum())
+    }
+
+
+    /**
+    * Display Panel preview and thumb
+    *
+    * @param controller Controller of the panel u want to print
+    */
+    def printPanel(controller)
+    {
+        // Make sur u print the Panel before printing the Thumb
+        SwingBuilder.build
         {
-            javax.swing.SwingUtilities.invokeAndWait(
-               Thread.start {
-                   sleep(1000)
-                   view.splashWindow.setVisible(false)
-                   view.splashWindow.dispose()                       
-               }
-            )
+            // Print the Panel
+            printPreview(controller)
+
+            doLater
+            {
+                // Print the Thumb
+                printThumb(controller)
+            }
+
+            GUI.validate()
+        }
+    }
+
+
+    /**
+    * Display Panel preview
+    *
+    * @param controller Controller of the panel u want to print
+    */
+    def printPreview(controller)
+    {
+        
+        SwingBuilder.build
+        {
+            view.panelPreview.with
+            {
+                add(Box.createHorizontalGlue())
+                // Add the Panel to the preview section of the GUI
+                add(controller.getPanel(), "gapleft "
+                        + Positionning.getGap(view.panelScrollPane.getViewport()) +
+                        ", gapright "
+                        + Positionning.getGap(view.panelScrollPane.getViewport()))
+
+                // Make sure it is visible
+                controller.showPanel()
+
+                validate()
+            }
         }
 
+    }
+
+
+    /**
+    * Display Panel thumb
+    *
+    * @param controller Controller of the panel u want to print 
+    */
+    def printThumb(controller)
+    {           
+        // Add the Thumb to the Thumbs List
+        listModel.addElement(controller.getThumb())
     }
 
 
@@ -108,7 +208,7 @@ class IzPackStudio extends Controller
     * Main method called when launching app
     *
     */
-    def static main(args)
+    def static public main(args)
     {
         def m = null
         def c = new IzPackStudio(m)
@@ -116,11 +216,12 @@ class IzPackStudio extends Controller
         c.start()
     }
 
+    
     /**
     * Exit method to close the app
     *
     */
-    def static exit()
+    def static public exit()
     {
         System.exit(0)
     }

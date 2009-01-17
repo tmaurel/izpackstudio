@@ -7,6 +7,9 @@ import models.ThumbEntry
 import javax.swing.ImageIcon
 import javax.swing.BorderFactory
 import java.awt.Color
+import groovy.swing.SwingBuilder
+import java.awt.GridLayout
+import java.awt.BorderLayout
 
 /**
 * Controller for IzPack Panels
@@ -14,21 +17,7 @@ import java.awt.Color
 */
 abstract class PanelController extends Controller {
 
-
-    /**
-    * Contains the IzPack Panel name
-    *
-    */
-    def name
-
-
-    /**
-    * Contains the IzPack Panel object
-    *
-    */
-    def panel
-
-    
+   
     /**
     * Constructor
     *
@@ -46,18 +35,83 @@ abstract class PanelController extends Controller {
     *
     * @return    The IzPanel Object
     */
-    def buildPanel()
+    protected buildPanel()
     {
-        // Instantiate a new IzPack HelloPanel using the parent model
-        panel = Class.forName(name).newInstance(parent.model.getInstallerframe(), parent.model.getInstallerframe().installdata)
+        def container
+        view.build {
 
-        // Define PreferredSize for the IzPanel
-        panel.setPreferredSize(parent.model.getSize())
+            container = panel(
+                layout: new BorderLayout()
+            )
 
-        // Define Black Borders for the IzPack HelloPanel
-        panel.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK))
+            panelsContainer = panel(
+                border: BorderFactory.createEmptyBorder(10, 10, 0, 10),
+                layout: new GridLayout(1, 1)
+            )
+
+            container.add(panelsContainer, BorderLayout.CENTER);
+
+            // Instantiate a new IzPack HelloPanel using the parent model
+            def panel = Class.forName(model.getName()).newInstance(parent.getInstallerFrame(), parent.getInstallerFrame().installdata)
+            panel.panelActivate()
+
+            this.removeAL(panel)
+
+
+            panelsContainer.add(panel)
+            container.add(parent.getInstallerFrame().createNavPanel(), BorderLayout.SOUTH)
+
+
+            // Define PreferredSize for the Container
+            container.setPreferredSize(parent.getSize())
+
+            // Define Black Borders for the IzPack HelloPanel
+            container.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK))
+
+            container.validate()
+
+            model.setPanel(container)
+            
+        }
+
         
-        return panel
+        return container
+    }
+
+
+    /**
+    * Recursive remover of ActionListeners
+    * @return IzPack HelloPanel
+    *
+    */
+    public removeAL(container)
+    {
+
+        try
+        {
+
+            try
+            {
+                def al = container.getActionListeners()
+                al.each
+                {
+                    container.removeActionListener(it)                  
+                }
+            }
+            catch(MissingMethodException Exception)
+            {
+            }
+            
+            container.getComponents().each
+            {
+                removeAL(it)
+            }
+            
+        }
+        catch(MissingMethodException Exception)
+        {
+        }
+
     }
 
 
@@ -66,13 +120,10 @@ abstract class PanelController extends Controller {
     * @return IzPack HelloPanel
     *
     */
-    def getPanel()
+    public getPanel()
     {
-        // Set the panel as visible
-        panel.setVisible(true)
-
         // return IzPack HelloPanel Object
-        return panel
+        return model.getPanel()
     }
 
     /**
@@ -80,16 +131,18 @@ abstract class PanelController extends Controller {
     * @return IzPack HelloPanel
     *
     */
-    def getThumb()
+    public getThumb()
     {
+
         // Define width ratio
-        def scaleX = 120/parent.model.width
+        def scaleX = 120/parent.getSize().width
 
         // Define height ratio
-        def scaleY = 80/parent.model.height
+        def scaleY = 80/parent.getSize().height
 
         // Create a new BufferedImage
-        def image = new BufferedImage(parent.model.width, parent.model.height, BufferedImage.TYPE_INT_RGB)
+        def image = new BufferedImage((int) parent.getSize().width, (int) parent.getSize().height, BufferedImage.TYPE_INT_RGB)
+
 
         // Create a new Graphic using the buffered image
         def g2 = image.createGraphics()
@@ -97,7 +150,6 @@ abstract class PanelController extends Controller {
         // Create a new AffineTransform
         def tx = new AffineTransform()
 
-        // Get the panel printed view through g2
         panel.paint(g2)
 
         // Dispose of g2
@@ -112,11 +164,37 @@ abstract class PanelController extends Controller {
         // Create a new scaled BufferedImage
         def biNew = new BufferedImage( (int) (image.getWidth() * scaleX), (int) (image.getHeight() * scaleY), image.getType())
 
-        // Get the class name
-        def name = panel.class.name
-
         // Return a new ThumbEntry containing the image and the title of the thumb
-        return new ThumbEntry(new ImageIcon(op.filter(image, biNew)), name.substring(name.lastIndexOf ('.') + 1))
+        return new ThumbEntry(new ImageIcon(op.filter(image, biNew)), model.getName().substring(model.getName().lastIndexOf ('.') + 1))
+ 
+    }
+
+    /**
+     * Show the Panel
+     *
+     */
+    public showPanel()
+    {
+        model.getPanel().setVisible(true)
+        model.getPanel().setOpaque(true)
+    }
+
+    /**
+     * Hide the Panel
+     *
+     */
+    public hidePanel()
+    {
+        model.getPanel().setVisible(false)
+    }
+
+    /**
+     * Start the controller
+     *
+     */
+    public start()
+    {
+        showPanel()
     }
 
 
