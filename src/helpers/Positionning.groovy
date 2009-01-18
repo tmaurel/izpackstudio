@@ -108,7 +108,7 @@ class Positionning
             doLater
             {
                 def i = 0
-                while(i < diff)
+                while(i <= diff)
                 {
                     edt {
 
@@ -141,8 +141,11 @@ class Positionning
                             break
                         }
                     }
-
-                    if(diff > viewportw*2 && i > 50 && i < (diff - 50))
+                    if(diff > viewportw*4 && i > 50 && i < (diff - 50))
+                    {
+                        i = i+10                    
+                    }
+                    else if(diff > viewportw*2 && i > 50 && i < (diff - 50))
                     {
                         i = i+6                    
                     }
