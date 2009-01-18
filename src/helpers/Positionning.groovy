@@ -1,6 +1,7 @@
 package helpers
 
 import java.awt.*
+import groovy.swing.SwingBuilder
 
 /**
 * Helper class for Positionning Containers or Components
@@ -52,25 +53,116 @@ class Positionning
     /**
     * Calc the gap needed for a container to only show one element at once
     *
+    * @param    component   Component
     * @return   gap needed for a container
     */
-    def static getGap(componant)
+    def static getGap(component)
     {
-        return (int) componant.getSize().width / 2
+        return (int) component.getSize().width / 2
     }
 
 
     /**
-    * Calc the gap needed for a container to only show one element at once
+    * Calc the initial poisition of the container considering the component size
+    * and the gap
     *
+    * @param    component   Component included
+    * @param    container   Container where the component is included
     * @return   gap needed for a container
     */
-    def static initialPosition(container, componant)
+    def static initialPosition(component, container)
     {
-        int dec = (int) (componant.getSize().width - container.getSize().width) / 2
-        int pos = (int) Positionning.getGap(componant) - dec + 5
+        int dec = (int) (container.getSize().width - component.getSize().width) / 2
+        int pos = (int) Positionning.getGap(container) - dec
         return (int) pos
     }
+
+
+    /**
+    * Slide the given ScrollPane to the right index
+    *
+    * @param    component   Component included
+    * @param    scrollpane  Scrollpane where the component is included
+    * @param    index       Where you need to slide to 
+    * @return   gap needed for a container
+    */
+    def static slideViewPositionTo(component, scrollpane, index)
+    {
+        SwingBuilder.build
+        {
+
+            int initial = initialPosition(component, scrollpane)
+            int viewportw = scrollpane.getViewport().getSize().width
+            int to = (int) initial + index * (viewportw + component.getSize().width)
+            int current = scrollpane.getViewport().getViewPosition().x
+            int diff = to - current
+            boolean pos = true
+
+            if(diff < 0)
+            {
+                pos = false
+            }
+
+            diff = Math.abs(diff)
+
+            doLater
+            {
+                def i = 0
+                while(i < diff)
+                {
+                    edt {
+
+                        if(pos)
+                        {
+                            scrollpane.getViewport().setViewPosition(new Point(current + i, 0))
+                        }
+                        else
+                        {
+                            scrollpane.getViewport().setViewPosition(new Point(current - i, 0))    
+                        }
+
+                        switch(i)
+                        {
+                            case (diff-10)..diff:
+                                sleep(20)
+                            break
+
+                            case (diff-20)..(diff-11):
+                                sleep(15)
+                            break
+
+                            case (diff-30)..(diff-21):
+                                sleep(10)
+                            break
+
+
+                            case (diff-40)..(diff-31):
+                                sleep(5)
+                            break
+                        }
+                    }
+
+                    if(diff > viewportw*2 && i > 50 && i < (diff - 50))
+                    {
+                        i = i+6                    
+                    }
+                    else if(diff > viewportw && i > 50 && i < (diff - 50))
+                    {
+                        i = i+3
+                    }
+                    else
+                    {
+                        ++i
+                    }
+                }
+            }
+        }
+    }
+
+
+
+
+
 
     /**
     * Getter for the screen size

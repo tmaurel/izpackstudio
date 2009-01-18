@@ -29,7 +29,7 @@ class ProjectController extends Controller {
     */
     public addPanel(controller) {
         model.panels.add(controller)
-        parent.printPanel(controller)       
+        parent.printPanel(controller)
     }
 
     /**
@@ -54,13 +54,7 @@ class ProjectController extends Controller {
     *
     */
     public start() {
-        def hello = new HelloPanelController(new PanelModel(), null, this)
-        hello.start()
-        addPanel(hello)
 
-        def finish = new FinishPanelController(new PanelModel(), null, this)
-        finish.start()
-        addPanel(finish)
     }
 
 

@@ -12,6 +12,7 @@ import javax.swing.BorderFactory
 import javax.swing.SpringLayout
 import java.awt.Dimension
 import javax.swing.SwingConstants
+import javax.swing.event.ListSelectionListener
 
 
 
@@ -31,7 +32,7 @@ class ThumbCellRenderer extends JLabel implements ListCellRenderer {
         def whiteBorder = BorderFactory.createMatteBorder(4,4,4,4,Color.WHITE)
         def redBorder = BorderFactory.createMatteBorder(4,4,4,4,Color.RED)
 
-        setPreferredSize(new Dimension(125,110))
+        setPreferredSize(new Dimension(142,120))
         setAlignmentX(3)
         ThumbEntry entry = (ThumbEntry) value
         setText(entry.getTitle())
@@ -51,23 +52,30 @@ class ThumbCellRenderer extends JLabel implements ListCellRenderer {
 
 
 
-panel(
-    id: 'thumbPanel',
-    layout: new MigLayout('fill'),
-    constraints: 'w 100%, h 100%'
-) {
     scrollPane(
         id: 'thumbScrollPane',
-        constraints: 'w 100%, h 100%'
+        constraints: 'w 100%, h 100%',
+        border: BorderFactory.createEmptyBorder()
     ) {
         list(
             id: 'thumbList',
             selectionMode: ListSelectionModel.SINGLE_SELECTION,
             layoutOrientation: JList.VERTICAL_WRAP,
-            cellRenderer: new ThumbCellRenderer()
-
+            cellRenderer: new ThumbCellRenderer(),
+            selectedIndex: -1
         ) {
-
+            thumbList.addListSelectionListener( {e ->
+                if (!e.getValueIsAdjusting())
+                {
+                    if (thumbList.getSelectedIndex() != -1)
+                    {
+                        edt
+                        {
+                            controller.slideTo(thumbList.getSelectedIndex())
+                        }
+                    }
+                }
+            }  as ListSelectionListener)
         }
     }
-}   
+  

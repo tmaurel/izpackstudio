@@ -135,10 +135,10 @@ abstract class PanelController extends Controller {
     {
 
         // Define width ratio
-        def scaleX = 120/parent.getSize().width
+        def scaleX = 133/parent.getSize().width
 
         // Define height ratio
-        def scaleY = 80/parent.getSize().height
+        def scaleY = 88/parent.getSize().height
 
         // Create a new BufferedImage
         def image = new BufferedImage((int) parent.getSize().width, (int) parent.getSize().height, BufferedImage.TYPE_INT_RGB)

@@ -76,15 +76,8 @@ class IzPackStudio extends Controller
 
         // Create the new empty project
         // TO-DO : Args to load projects (no empty project)
-        project = new ProjectController(new ProjectModel(), view, this)
+        project = new ProjectController(new ProjectModel(), null, this)
         project.start()
-
-
-        view.build
-        {
-            view.panelScrollPane.getViewport().setViewPosition(
-                        new Point(Positionning.initialPosition(project, view.panelScrollPane.getViewport()),0))
-        }
 
     }
 
@@ -139,6 +132,20 @@ class IzPackStudio extends Controller
     }
 
 
+
+    /**
+    * Slide the scroll pane to the right index
+    *
+    * @param index  Index of the panel in the list
+    */
+    def slideTo(index)
+    {
+        Positionning.slideViewPositionTo(project, view.panelScrollPane, index)
+    }
+
+
+
+
     /**
     * Display Panel preview and thumb
     *
@@ -156,9 +163,12 @@ class IzPackStudio extends Controller
             {
                 // Print the Thumb
                 printThumb(controller)
+                view.thumbList.setSelectedIndex(project.model.panels.size() - 1)
             }
 
             GUI.validate()
+
+   
         }
     }
 
