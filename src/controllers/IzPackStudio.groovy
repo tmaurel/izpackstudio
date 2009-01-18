@@ -4,7 +4,6 @@ import models.*
 import views.*
 import javax.swing.DefaultListModel
 import groovy.swing.SwingBuilder
-import java.awt.Point
 import javax.swing.Box
 import helpers.Positionning
 
@@ -104,7 +103,7 @@ class IzPackStudio extends Controller
     private setProgressBar(num, text = null) throws Exception
     {
 
-        SwingBuilder.build
+        view.build
         {
             // Set the value of the progress bar
             view.splashProgress.setValue(num)
@@ -118,7 +117,7 @@ class IzPackStudio extends Controller
             // If the current value is the maximum value, then close the splash
             if(num == view.splashProgress.getMaximum())
             {
-                
+
                 view.splashWindow.with
                 {
                     setVisible(false)
@@ -154,7 +153,7 @@ class IzPackStudio extends Controller
     def printPanel(controller)
     {
         // Make sur u print the Panel before printing the Thumb
-        SwingBuilder.build
+        view.build
         {
             // Print the Panel
             printPreview(controller)
@@ -181,7 +180,7 @@ class IzPackStudio extends Controller
     def printPreview(controller)
     {
         
-        SwingBuilder.build
+        view.build
         {
             view.panelPreview.with
             {

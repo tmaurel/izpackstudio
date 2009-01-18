@@ -7,7 +7,6 @@ import models.ThumbEntry
 import javax.swing.ImageIcon
 import javax.swing.BorderFactory
 import java.awt.Color
-import groovy.swing.SwingBuilder
 import java.awt.GridLayout
 import java.awt.BorderLayout
 

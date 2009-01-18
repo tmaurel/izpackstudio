@@ -108,39 +108,39 @@ class Positionning
             doLater
             {
                 def i = 0
-                while(i < diff)
+                while(i <= diff)
                 {
-                    edt {
+                  
 
-                        if(pos)
-                        {
-                            scrollpane.getViewport().setViewPosition(new Point(current + i, 0))
-                        }
-                        else
-                        {
-                            scrollpane.getViewport().setViewPosition(new Point(current - i, 0))    
-                        }
-
-                        switch(i)
-                        {
-                            case (diff-10)..diff:
-                                sleep(20)
-                            break
-
-                            case (diff-20)..(diff-11):
-                                sleep(15)
-                            break
-
-                            case (diff-30)..(diff-21):
-                                sleep(10)
-                            break
-
-
-                            case (diff-40)..(diff-31):
-                                sleep(5)
-                            break
-                        }
+                    if(pos)
+                    {
+                        scrollpane.getViewport().setViewPosition(new Point(current + i, 0))
                     }
+                    else
+                    {
+                        scrollpane.getViewport().setViewPosition(new Point(current - i, 0))
+                    }
+
+                    switch(i)
+                    {
+                        case (diff-10)..diff:
+                            sleep(20)
+                        break
+
+                        case (diff-20)..(diff-11):
+                            sleep(15)
+                        break
+
+                        case (diff-30)..(diff-21):
+                            sleep(10)
+                        break
+
+
+                        case (diff-40)..(diff-31):
+                            sleep(5)
+                        break
+                    }
+
 
                     if(diff > viewportw*2 && i > 50 && i < (diff - 50))
                     {
