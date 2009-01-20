@@ -1,7 +1,5 @@
 package controllers
 
-import models.PanelModel
-
 
 /**
 * Controller for Projects

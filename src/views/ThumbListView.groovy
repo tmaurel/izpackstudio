@@ -13,6 +13,7 @@ import javax.swing.SpringLayout
 import java.awt.Dimension
 import javax.swing.SwingConstants
 import javax.swing.event.ListSelectionListener
+import javax.swing.JScrollPane
 
 
 
@@ -51,16 +52,16 @@ class ThumbCellRenderer extends JLabel implements ListCellRenderer {
 
 
 
-
     scrollPane(
         id: 'thumbScrollPane',
         constraints: 'w 100%, h 100%',
+        verticalScrollBarPolicy: JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,     
         border: BorderFactory.createEmptyBorder()
     ) {
         list(
             id: 'thumbList',
             selectionMode: ListSelectionModel.SINGLE_SELECTION,
-            layoutOrientation: JList.VERTICAL_WRAP,
+            layoutOrientation: JList.VERTICAL,
             cellRenderer: new ThumbCellRenderer(),
             selectedIndex: -1
         ) {
@@ -69,10 +70,7 @@ class ThumbCellRenderer extends JLabel implements ListCellRenderer {
                 {
                     if (thumbList.getSelectedIndex() != -1)
                     {
-                        edt
-                        {
-                            controller.slideTo(thumbList.getSelectedIndex())
-                        }
+                        controller.slideTo(thumbList.getSelectedIndex())                         
                     }
                 }
             }  as ListSelectionListener)

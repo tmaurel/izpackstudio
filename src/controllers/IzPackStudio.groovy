@@ -3,8 +3,6 @@ package controllers
 import models.*
 import views.*
 import javax.swing.DefaultListModel
-import groovy.swing.SwingBuilder
-import java.awt.Point
 import javax.swing.Box
 import helpers.Positionning
 
@@ -34,7 +32,11 @@ class IzPackStudio extends Controller
     */
     private listModel = new DefaultListModel()
 
-
+   /**
+    * Animation used to slide between panels
+    *
+    */
+    private animation
 
    /**
     * IzPackStudio Constructor
@@ -58,14 +60,14 @@ class IzPackStudio extends Controller
         // Display the Splash Screen
         displaySplash()
 
-
         setProgressBar(1, "Loading GUI...")
-
 
         // Build the main View
         GUI = view.build(IzPackStudioView)
 
-
+        // Create a new Animation Controller to slide between panels
+        animation = new AnimationController()
+        
         setProgressBar(10, "Loaded !")
 
         // Assign the our own List Model to the ThumbList
@@ -104,7 +106,7 @@ class IzPackStudio extends Controller
     private setProgressBar(num, text = null) throws Exception
     {
 
-        SwingBuilder.build
+        view.build
         {
             // Set the value of the progress bar
             view.splashProgress.setValue(num)
@@ -140,7 +142,7 @@ class IzPackStudio extends Controller
     */
     def slideTo(index)
     {
-        Positionning.slideViewPositionTo(project, view.panelScrollPane, index)
+        animation.slideViewPositionTo(project, view.panelScrollPane, index)
     }
 
 
@@ -154,7 +156,7 @@ class IzPackStudio extends Controller
     def printPanel(controller)
     {
         // Make sur u print the Panel before printing the Thumb
-        SwingBuilder.build
+        view.build
         {
             // Print the Panel
             printPreview(controller)
@@ -181,7 +183,7 @@ class IzPackStudio extends Controller
     def printPreview(controller)
     {
         
-        SwingBuilder.build
+        view.build
         {
             view.panelPreview.with
             {

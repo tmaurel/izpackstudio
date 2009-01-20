@@ -7,9 +7,10 @@ import models.ThumbEntry
 import javax.swing.ImageIcon
 import javax.swing.BorderFactory
 import java.awt.Color
-import groovy.swing.SwingBuilder
 import java.awt.GridLayout
 import java.awt.BorderLayout
+import javax.swing.JButton
+import java.awt.Container
 
 /**
 * Controller for IzPack Panels
@@ -87,33 +88,24 @@ abstract class PanelController extends Controller {
     public removeAL(container)
     {
 
-        try
+        if(container instanceof JButton)
         {
+            container.getActionListeners().each
+            {
+                container.removeActionListener(it)
+            }
+        }
 
-            try
-            {
-                def al = container.getActionListeners()
-                al.each
-                {
-                    container.removeActionListener(it)                  
-                }
-            }
-            catch(MissingMethodException Exception)
-            {
-            }
-            
+        if(container instanceof Container)
+        {
             container.getComponents().each
             {
                 removeAL(it)
             }
-            
         }
-        catch(MissingMethodException Exception)
-        {
-        }
-
     }
 
+  
 
     /**
     * Getter for the IzPack Panel Object
