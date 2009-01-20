@@ -1,6 +1,8 @@
 package helpers
 
-import java.awt.*
+import java.awt.Dimension
+import java.awt.Toolkit
+
 
 
 /**
@@ -47,34 +49,6 @@ class Positionning
 
         // Return the position as [int, int]
         return [(int) componentSize.width, (int) componentSize.height]
-    }
-
-
-    /**
-    * Calc the gap needed for a container to only show one element at once
-    *
-    * @param    component   Component
-    * @return   gap needed for a container
-    */
-    def static getGap(component)
-    {
-        return (int) component.getSize().width / 2
-    }
-
-
-    /**
-    * Calc the initial poisition of the container considering the component size
-    * and the gap
-    *
-    * @param    component   Component included
-    * @param    container   Container where the component is included
-    * @return   gap needed for a container
-    */
-    def static initialPosition(component, container)
-    {
-        int dec = (int) (container.getSize().width - component.getSize().width) / 2
-        int pos = (int) Positionning.getGap(container) - dec
-        return (int) pos
     }
 
 

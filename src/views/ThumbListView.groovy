@@ -9,11 +9,12 @@ import java.awt.Component
 import models.ThumbEntry
 import net.miginfocom.swing.MigLayout
 import javax.swing.BorderFactory
-import javax.swing.SpringLayout
 import java.awt.Dimension
 import javax.swing.SwingConstants
 import javax.swing.event.ListSelectionListener
 import javax.swing.JScrollPane
+import java.awt.BorderLayout
+
 
 
 
@@ -50,12 +51,16 @@ class ThumbCellRenderer extends JLabel implements ListCellRenderer {
     }
 }
 
-
+panel(
+    id: 'thumbToolBar',
+    constraints: BorderLayout.WEST,    
+    layout: new MigLayout(),
+) {
 
     scrollPane(
         id: 'thumbScrollPane',
-        constraints: 'w 100%, h 100%',
-        verticalScrollBarPolicy: JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,     
+        constraints: 'width 159px, height 100%',
+        verticalScrollBarPolicy: JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
         border: BorderFactory.createEmptyBorder()
     ) {
         list(
@@ -70,10 +75,10 @@ class ThumbCellRenderer extends JLabel implements ListCellRenderer {
                 {
                     if (thumbList.getSelectedIndex() != -1)
                     {
-                        controller.slideTo(thumbList.getSelectedIndex())                         
+                        controller.slideTo(thumbList.getSelectedIndex())
                     }
                 }
             }  as ListSelectionListener)
         }
     }
-  
+}

@@ -4,7 +4,6 @@ import models.*
 import views.*
 import javax.swing.DefaultListModel
 import javax.swing.Box
-import helpers.Positionning
 
 
 /**
@@ -65,9 +64,6 @@ class IzPackStudio extends Controller
         // Build the main View
         GUI = view.build(IzPackStudioView)
 
-        // Create a new Animation Controller to slide between panels
-        animation = new AnimationController()
-        
         setProgressBar(10, "Loaded !")
 
         // Assign the our own List Model to the ThumbList
@@ -80,6 +76,9 @@ class IzPackStudio extends Controller
         // TO-DO : Args to load projects (no empty project)
         project = new ProjectController(new ProjectModel(), null, this)
         project.start()
+
+        // Create a new Animation Controller to slide between panels
+        animation = new AnimationController(project, view.panelScrollPane)
 
     }
 
@@ -120,7 +119,7 @@ class IzPackStudio extends Controller
             // If the current value is the maximum value, then close the splash
             if(num == view.splashProgress.getMaximum())
             {
-                
+
                 view.splashWindow.with
                 {
                     setVisible(false)
@@ -142,7 +141,7 @@ class IzPackStudio extends Controller
     */
     def slideTo(index)
     {
-        animation.slideViewPositionTo(project, view.panelScrollPane, index)
+        animation.slideViewPositionTo(index)
     }
 
 
@@ -170,7 +169,7 @@ class IzPackStudio extends Controller
 
             GUI.validate()
 
-   
+
         }
     }
 
@@ -182,7 +181,7 @@ class IzPackStudio extends Controller
     */
     def printPreview(controller)
     {
-        
+
         view.build
         {
             view.panelPreview.with
@@ -190,9 +189,9 @@ class IzPackStudio extends Controller
                 add(Box.createHorizontalGlue())
                 // Add the Panel to the preview section of the GUI
                 add(controller.getPanel(), "gapleft "
-                        + Positionning.getGap(view.panelScrollPane.getViewport()) +
+                        + animation.getGap() +
                         ", gapright "
-                        + Positionning.getGap(view.panelScrollPane.getViewport()))
+                        + animation.getGap())
 
                 // Make sure it is visible
                 controller.showPanel()
@@ -207,10 +206,10 @@ class IzPackStudio extends Controller
     /**
     * Display Panel thumb
     *
-    * @param controller Controller of the panel u want to print 
+    * @param controller Controller of the panel u want to print
     */
     def printThumb(controller)
-    {           
+    {
         // Add the Thumb to the Thumbs List
         listModel.addElement(controller.getThumb())
     }
@@ -224,11 +223,11 @@ class IzPackStudio extends Controller
     {
         def m = null
         def c = new IzPackStudio(m)
-        
+
         c.start()
     }
 
-    
+
     /**
     * Exit method to close the app
     *
