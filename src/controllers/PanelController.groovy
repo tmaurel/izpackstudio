@@ -82,7 +82,7 @@ abstract class PanelController extends Controller {
 
     /**
     * Recursive remover of ActionListeners
-    * @return IzPack HelloPanel
+    * @param container Origin container were u want to disable all the action listeners
     *
     */
     public removeAL(container)

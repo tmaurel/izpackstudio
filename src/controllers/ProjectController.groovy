@@ -24,6 +24,7 @@ class ProjectController extends Controller {
     /**
     * Add a controller to panel's list
     *
+    * @param controller The Panel Controller that need to be added
     */
     public addPanel(controller) {
         model.panels.add(controller)
@@ -33,6 +34,7 @@ class ProjectController extends Controller {
     /**
     * Get the model's installerframe
     *
+    * @return Current installer frame
     */
     public getInstallerFrame() {
         return model.getInstallerFrame()
@@ -42,6 +44,7 @@ class ProjectController extends Controller {
     /**
     * Get the model's size
     *
+    * @return Preferred size for the panels 
     */
     public getSize() {
         return model.getSize()

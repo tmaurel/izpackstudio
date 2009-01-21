@@ -56,7 +56,6 @@ class AnimationController {
     /**
     * Calc the gap needed for a container to only show one element at once
     *
-    * @param    component   Component
     * @return   gap needed for a container
     */
     def getGap()
@@ -70,7 +69,6 @@ class AnimationController {
     * Slide the given ScrollPane to the right index
     *
     * @param    index       Where you need to slide to
-    * @return   gap needed for a container
     */
     def slideViewPositionTo(index)
     {
@@ -114,9 +112,7 @@ class AnimationController {
     * Calc the initial poisition of the container considering the component size
     * and the gap
     *
-    * @param    component   Component included
-    * @param    container   Container where the component is included
-    * @return   gap needed for a container
+    * @return   Initial position needed for a container
     */
     def getInitialPosition()
     {
