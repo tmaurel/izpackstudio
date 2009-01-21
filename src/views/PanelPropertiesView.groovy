@@ -1,14 +1,15 @@
 package views
 
-import java.awt.BorderLayout
 import net.miginfocom.swing.MigLayout
 import net.miginfocom.layout.AC
 import net.miginfocom.layout.LC
 import javax.swing.JToolBar
 
 
+
 toolBar(
-    constraints: BorderLayout.EAST,
+    id: 'propertiesPanel',
+    constraints: 'dock east, grow',
     orientation: JToolBar.VERTICAL,
     layout: new MigLayout(
         new LC().fill().noVisualPadding(),

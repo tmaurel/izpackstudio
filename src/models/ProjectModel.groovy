@@ -35,8 +35,8 @@ class ProjectModel {
     {
         installerframe = new InstallerFrame()
         load()
-        width = 800
-        height = 600
+        width = 600
+        height = 450
     }
 
     public getSize()
@@ -53,11 +53,13 @@ class ProjectModel {
 
     private addInfos()
     {
-        installerframe.info.setAppName("Test")
-        installerframe.info.setAppVersion("1.0")
-        installerframe.info.addAuthor(new Author("Alexis Plantin", "alexis@roux.com"))
-        installerframe.info.addAuthor(new Author("Thomas Maurel", "thomas@roux.com"))
-        installerframe.info.setAppURL("http://www.roux.com")
+        installerframe.info.setAppName("IzPackStudio")
+        installerframe.info.setAppVersion("0.1")
+        installerframe.info.addAuthor(new Author("Alexis Plantin", "alexis@izs.com"))
+        installerframe.info.addAuthor(new Author("Thomas Maurel", "thomas@izs.com"))
+        installerframe.info.addAuthor(new Author("Mickael Lasnes", "mickael@izs.com"))
+        installerframe.info.addAuthor(new Author("Samuel Djian", "samuel@izs.com"))
+        installerframe.info.setAppURL("http://www.izpack.org")
         installerframe.installdata.info = installerframe.info
     }
 

@@ -3,11 +3,10 @@ package views
 import models.PanelModel
 import controllers.HelloPanelController
 import controllers.FinishPanelController
-import java.awt.BorderLayout
 
 
 toolBar(
-    constraints: BorderLayout.NORTH
+    constraints: 'dock north, grow'
 ) {
 
     button(
