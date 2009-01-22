@@ -79,14 +79,30 @@ class AnimationController {
 
         Point current = scrollpane.getViewport().getViewPosition()
         Point to = new Point((int) (getInitialPosition() + index * (gap * 2 + component.getSize().width)), (int) current.y)
+        int diff = Math.abs(to.x - current.x)
+        Point to2 = null
+        Point to3 = null
+
+        if(current.x > to.x)
+        {
+            to2 = new Point((int) (to.x - diff/50), (int) to.y)
+            to3 = new Point((int) (to.x + diff/100), (int) to.y)
+        }
+        else
+        {
+            to2 = new Point((int) (to.x + diff/50), (int) to.y)
+            to3 = new Point((int) (to.x - diff/100), (int) to.y)
+        }
 
         Animator.Direction direction = Animator.Direction.FORWARD
         Animator.RepeatBehavior repeatBehavior = Animator.RepeatBehavior.REVERSE
         Animator.EndBehavior behavior = Animator.EndBehavior.HOLD
 
-        KeyTimes keyTimes = new KeyTimes(0.0f, 1.0f);
+        KeyTimes keyTimes = new KeyTimes(0.0f, 0.7f, 0.9f, 1.0f);
         KeyValues keyValues = KeyValues.create(
              current,
+             to2,
+             to3,
              to
         );
 

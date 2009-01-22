@@ -15,7 +15,7 @@ import java.awt.*;
  * IzPackStudio version of the IzPack InstallerFrame
  *
  */
-public class InstallerFrame
+public class InstallerFrame extends JFrame
 {
 
     /**
