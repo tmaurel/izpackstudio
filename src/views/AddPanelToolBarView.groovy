@@ -3,6 +3,9 @@ package views
 import models.PanelModel
 import controllers.HelloPanelController
 import controllers.FinishPanelController
+import controllers.InfoPanelController
+import controllers.LicencePanelController
+import controllers.SummaryPanelController
 
 
 toolBar(
@@ -19,6 +22,35 @@ toolBar(
         }
     )
 
+    button(
+        id: 'addInfoPanel',
+        icon: imageIcon(resource: '../images/infopanel.png'),
+        actionPerformed: {
+            def info = new InfoPanelController(new PanelModel(), null, controller.project)
+            info.start()
+            controller.project.addPanel(info)
+        }
+    )
+
+    button(
+        id: 'addLicencePanel',
+        icon: imageIcon(resource: '../images/licencepanel.png'),
+        actionPerformed: {
+            def licence = new LicencePanelController(new PanelModel(), null, controller.project)
+            licence.start()
+            controller.project.addPanel(licence)
+        }
+    )
+
+    button(
+        id: 'addSummaryPanel',
+        icon: imageIcon(resource: '../images/summarypanel.png'),
+        actionPerformed: {
+            def summary = new SummaryPanelController(new PanelModel(), null, controller.project)
+            summary.start()
+            controller.project.addPanel(summary)
+        }
+    )
 
     button(
         id: 'addFinishPanel',
