@@ -5,7 +5,7 @@ package controllers
 * Controller for IzPack FinishPanels
 *
 */
-class FinishPanelController extends PanelController
+class SimpleFinishPanelController extends PanelController
 {
 
     /**
@@ -15,10 +15,10 @@ class FinishPanelController extends PanelController
     * @param    v   The view used by the constructor
     * @param    p   Parent controller
     */
-    FinishPanelController(m = null, v = null, p = null)
+    SimpleFinishPanelController(m = null, v = null, p = null)
     {
         super(m, v, p)
-        model.setName("com.izforge.izpack.panels.FinishPanel")
+        model.setName("com.izforge.izpack.panels.SimpleFinishPanel")
     }
 
     /**
@@ -45,10 +45,9 @@ class FinishPanelController extends PanelController
 
     }
 
-    public refresh()
-        {
+   public refresh()
+    {
 
-        }
-
+    }
 
 }

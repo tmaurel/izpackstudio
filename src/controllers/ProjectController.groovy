@@ -58,7 +58,12 @@ class ProjectController extends Controller {
 
     }
 
-
+    public refresh()
+    {
+        model.panels.each(){
+            it.refresh()
+        }
+    }
     
 
 }

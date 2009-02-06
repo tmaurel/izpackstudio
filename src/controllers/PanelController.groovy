@@ -189,5 +189,9 @@ abstract class PanelController extends Controller {
         showPanel()
     }
 
+     public refresh()
+      {
+
+      }
 
 }

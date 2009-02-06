@@ -2,6 +2,8 @@ package com.izforge.izpack.installer;
 
 import com.izforge.izpack.Info;
 import com.izforge.izpack.LocaleDatabase;
+import com.izforge.izpack.rules.RulesEngine;
+import com.izforge.izpack.util.AbstractUIProgressHandler;
 import com.izforge.izpack.gui.IconsDatabase;
 import com.izforge.izpack.gui.EtchedLineBorder;
 import com.izforge.izpack.gui.ButtonFactory;
@@ -9,6 +11,8 @@ import com.izforge.izpack.gui.ButtonFactory;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.util.Hashtable;
+import java.io.InputStream;
 
 
 /**
@@ -17,6 +21,7 @@ import java.awt.*;
  */
 public class InstallerFrame extends JFrame
 {
+
 
     /**
     * IzPack InstallData used to instantiate panels.
@@ -101,6 +106,42 @@ public class InstallerFrame extends JFrame
 
     }
 
+
+
+    public Dimension getPanelsContainerSize()
+    {
+        return createNavPanel().getSize();
+    }
+
+    public void install(AbstractUIProgressHandler listener)
+    {
+        IUnpacker unpacker = UnpackerFactory.getUnpacker(this.installdata.info
+                .getUnpackerClassName(), installdata, listener);
+        Thread unpackerthread = new Thread(unpacker, "IzPack - Unpacker thread");
+        unpackerthread.start();
+    }
+
+    public RulesEngine getRules()
+    {
+        return new RulesEngine(new Hashtable(),installdata);
+    }
+
+    public InputStream getResource(String a)
+    {
+        return getClass().getResourceAsStream("/");
+    }
+
+    public void skipPanel()
+    {
+        
+    }
+
+    public void buildConstraints(GridBagConstraints gbc, int gx, int gy, int gw, int gh, double wx,
+            double wy)
+    {
+        
+    }
+
     /**
     * Locks the 'previous' button.
     */
@@ -127,7 +168,7 @@ public class InstallerFrame extends JFrame
     */
     public void unlockNextButton()
     {
-    }    
+    }
 
     public void setQuitButtonText(String text)
     {

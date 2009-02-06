@@ -5,7 +5,7 @@ package controllers
 * Controller for IzPack HelloPanels
 *
 */
-class InfoPanelController extends PanelController
+class InstallPanelController extends PanelController
 {
 
     /**
@@ -15,10 +15,10 @@ class InfoPanelController extends PanelController
     * @param    v   The view used by the constructor
     * @param    p   Parent controller
     */
-    InfoPanelController(m = null, v = null, p = null)
+    InstallPanelController(m = null, v = null, p = null)
     {
         super(m, v, p)
-        model.setName("com.izforge.izpack.panels.InfoPanel")
+        model.setName("com.izforge.izpack.panels.InstallPanel")
     }
 
     /**
@@ -31,10 +31,8 @@ class InfoPanelController extends PanelController
         buildPanel()
     }
 
+       public refresh()
+        {
 
-     public refresh()
-    {
-        
-    }
-
+        }
 }

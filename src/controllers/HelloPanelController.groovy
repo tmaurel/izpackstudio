@@ -31,4 +31,9 @@ class HelloPanelController extends PanelController
         buildPanel()        
     }
 
+       public refresh()
+        {
+
+        }
+
 }

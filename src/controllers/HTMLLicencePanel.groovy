@@ -10,7 +10,7 @@ import java.awt.Color
 * Controller for IzPack HelloPanels
 *
 */
-class LicencePanelController extends PanelController
+class HTMLLicencePanelController extends PanelController
 {
 
     /**
@@ -20,10 +20,10 @@ class LicencePanelController extends PanelController
     * @param    v   The view used by the constructor
     * @param    p   Parent controller
     */
-    LicencePanelController(m = null, v = null, p = null)
+    HTMLLicencePanelController(m = null, v = null, p = null)
     {
         super(m, v, p)
-        model.setName("com.izforge.izpack.panels.LicencePanel")
+        model.setName("com.izforge.izpack.panels.HTMLLicencePanel")
     }
 
     /*
@@ -44,7 +44,7 @@ class LicencePanelController extends PanelController
             container.add(panelsContainer, BorderLayout.CENTER);
 
             // Instantiate a new IzPack HelloPanel using the parent model
-            def panel = Class.forName(model.getName()).newInstance(parent.getInstallerFrame(), parent.getInstallerFrame().installdata)
+            def panel = Class.forName(model.getName()[model.panelType]).newInstance(parent.getInstallerFrame(), parent.getInstallerFrame().installdata)
             panel.panelActivate()
 
             this.removeAL(panel)
@@ -68,7 +68,7 @@ class LicencePanelController extends PanelController
 
 
         return container
-    }*/
+    }         */
 
     /**
     * Start method of the Controller
@@ -85,5 +85,5 @@ class LicencePanelController extends PanelController
         
     }
 
-    
+
 }
