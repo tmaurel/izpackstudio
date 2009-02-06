@@ -29,9 +29,6 @@ frame(
 
      menuBar(id: 'studioMenu') { menu(text: 'Menu')}
 
-
-    //build(PanelPropertiesView)
-
     def toolWindowManager
 
     // Create a new instance of MyDoggyToolWindowManager passing the frame.
@@ -76,14 +73,6 @@ frame(
 
     setPanelPropertiesProperties(panelProperties)
 
-    for (ToolWindow window : toolWindowManager.getToolWindows())
-    {
-      setDefaultProperties(window)
-      window.setVisible(true)
-      window.setAvailable(true)
-
-    }
-
     ContentManager contentManager = toolWindowManager.getContentManager()
     contentManager.addContent(
                         "Panels Previews",
@@ -107,6 +96,15 @@ frame(
                         FileInputStream inputStream = new FileInputStream("workspace.xml");
                         toolWindowManager.getPersistenceDelegate().apply(inputStream);
                         inputStream.close();
+                    }
+                    else
+                    {
+                        for (ToolWindow window : toolWindowManager.getToolWindows())
+                        {
+                            setDefaultProperties(window)
+                            window.setVisible(true)
+                            window.setAvailable(true)                         
+                        }
                     }
                 }
                 catch (Exception e1)
