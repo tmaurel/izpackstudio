@@ -10,6 +10,8 @@ import org.noos.xing.mydoggy.*
 import org.noos.xing.mydoggy.plaf.MyDoggyToolWindowManager
 import java.awt.event.WindowEvent
 import java.awt.event.WindowListener
+import javax.swing.ImageIcon
+import org.noos.xing.mydoggy.plaf.ui.util.SwingUtil
 
 frame(
         id: 'mainFrame',
@@ -38,7 +40,7 @@ frame(
     // Register a Tool.
     toolWindowManager.registerToolWindow("Thumbs List",       // Id
                                        "",                 // Title
-                                       null,                         // Icon
+                                       SwingUtil.loadIcon("images/movie.png"),    // Icon
                                        build(ThumbListView),    // Component
                                        ToolWindowAnchor.LEFT)       // Anchor
 
@@ -47,7 +49,7 @@ frame(
 
     toolWindowManager.registerToolWindow("Quick Actions",       // Id
                                        "",                 // Title
-                                       null,                         // Icon
+                                       SwingUtil.loadIcon("images/folder-option-insert.png"),                         // Icon
                                        build(ProjectActionsView),    // Component
                                        ToolWindowAnchor.TOP)       // Anchor
 
@@ -56,7 +58,7 @@ frame(
 
     toolWindowManager.registerToolWindow("Create Panel",       // Id
                                        "",                 // Title
-                                       null,                         // Icon
+                                       SwingUtil.loadIcon("images/photo-option-add.png"),                         // Icon
                                        build(AddPanelToolBarView),    // Component
                                        ToolWindowAnchor.TOP)       // Anchor
 
@@ -65,7 +67,7 @@ frame(
 
     toolWindowManager.registerToolWindow("Panel Properties",       // Id
                                        "",                 // Title
-                                       null,                         // Icon
+                                       SwingUtil.loadIcon("images/doc-option-edit.png"),                         // Icon
                                        build(PanelPropertiesView),    // Component
                                        ToolWindowAnchor.RIGHT)       // Anchor
 
@@ -77,7 +79,7 @@ frame(
     contentManager.addContent(
                         "Panels Previews",
                         "Panel Previews",
-                        null,           // An icon
+                        SwingUtil.loadIcon("images/photo-multiple.png"),           // An icon
                         build(PanelPreviewView)
     )
 
