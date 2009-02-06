@@ -1,9 +1,10 @@
 package controllers
 
 import models.*
-import views.*
 import javax.swing.DefaultListModel
 import javax.swing.Box
+import views.*
+
 
 
 /**
@@ -61,10 +62,10 @@ class IzPackStudio extends Controller
 
         setProgressBar(1, "Loading GUI...")
 
-        // Build the main View
-        GUI = view.build(IzPackStudioView)
-
         setProgressBar(10, "Loaded !")
+
+
+        GUI = view.build(IzPackStudioView)
 
         // Assign the our own List Model to the ThumbList
         view.thumbList.setModel(listModel)
@@ -88,7 +89,7 @@ class IzPackStudio extends Controller
     */
     private displaySplash()
     {
-        // Build SplashView
+
         def splash = view.build(SplashView)
 
         // Display SplashView

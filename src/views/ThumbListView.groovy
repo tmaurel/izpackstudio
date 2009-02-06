@@ -51,8 +51,8 @@ class ThumbCellRenderer extends JLabel implements ListCellRenderer {
 
 panel(
     id: 'thumbPanel',
-    constraints: 'width 173px, growy',    
-    layout: new MigLayout(),
+    layout: new MigLayout('fill'),
+    constraints: '0, 0'
 ) {
 
     scrollPane(

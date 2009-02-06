@@ -8,7 +8,7 @@ import java.awt.Color
 
 panel(
     id: 'stuckPanel',
-    constraints: 'width 30%, height 60%, grow',
+    constraints: '0, 0',
     layout: new MigLayout(
         new LC().fill().noVisualPadding(),
         new AC().gap("0"),

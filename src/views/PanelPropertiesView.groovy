@@ -3,14 +3,12 @@ package views
 import net.miginfocom.swing.MigLayout
 import net.miginfocom.layout.AC
 import net.miginfocom.layout.LC
-import javax.swing.JToolBar
 
 
 
-toolBar(
+panel(
     id: 'propertiesPanel',
-    constraints: 'dock east, grow',
-    orientation: JToolBar.VERTICAL,
+    constraints: '0, 0',
     layout: new MigLayout(
         new LC().fill().noVisualPadding(),
         new AC().gap("0"),
