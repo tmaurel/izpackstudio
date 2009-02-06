@@ -62,10 +62,9 @@ class IzPackStudio extends Controller
 
         setProgressBar(1, "Loading GUI...")
 
+        GUI = view.build(IzPackStudioView)            
+
         setProgressBar(10, "Loaded !")
-
-
-        GUI = view.build(IzPackStudioView)
 
         // Assign the our own List Model to the ThumbList
         view.thumbList.setModel(listModel)
