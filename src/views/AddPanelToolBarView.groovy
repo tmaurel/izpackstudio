@@ -18,6 +18,7 @@ import controllers.InstallPanelController
 import controllers.PathInputPanelController
 import controllers.XInfoPanelController
 import controllers.TargetPanelController
+import java.awt.Insets
 
 
 scrollPane(
@@ -29,9 +30,13 @@ scrollPane(
         layout: new MigLayout("align left")
     ) {
 
+        def inset = new Insets(0,0,0,0)
+
         button(
         id: 'addHelloPanel',
         icon: imageIcon(resource: '../images/hellopanel.png'),
+        size: [100,100],
+        margin: inset,
         actionPerformed: {def hello = new HelloPanelController(new PanelModel(), null, controller.project)
             hello.start()
             controller.project.addPanel(hello)
@@ -42,6 +47,7 @@ scrollPane(
     button(
         id: 'addFinishPanel',
         icon: imageIcon(resource: '../images/finishpanel.png'),
+        margin: inset,
         actionPerformed: {
             def finish = new FinishPanelController(new PanelModel(), null, controller.project)
             finish.start()
@@ -53,6 +59,7 @@ scrollPane(
     button(
         id: 'addLicencePanel',
         icon: imageIcon(resource: '../images/licencepanel.png'),
+        margin: inset,
         actionPerformed: {def licence = new GeneralLicencePanelController(new PanelModel(), null, controller.project,0)
             licence.start()
             controller.project.addPanel(licence)
@@ -63,6 +70,7 @@ scrollPane(
      button(
         id: 'addInfoPanel',
         icon: imageIcon(resource: '../images/infopanel.png'),
+        margin: inset,
         actionPerformed: {def info = new GeneralInfoPanelController(new PanelModel(), null, controller.project,1)
             info.start()
             controller.project.addPanel(info)
@@ -72,6 +80,7 @@ scrollPane(
     button(
         id: 'addSummaryPanel',
         icon: imageIcon(resource: '../images/summarypanel.png'),
+        margin: inset,
         actionPerformed: {def summary = new SummaryPanelController(new PanelModel(), null, controller.project)
             summary.start()
             controller.project.addPanel(summary)
@@ -80,7 +89,8 @@ scrollPane(
 
      button(
         id: 'addInstallPanel',
-        icon: imageIcon(resource: '../images/hellopanel.png'),
+        icon: imageIcon(resource: '../images/installpanel.png'),
+        margin: inset,
         actionPerformed: {def install = new InstallPanelController(new PanelModel(), null, controller.project)
             install.start()
             controller.project.addPanel(install)
@@ -89,7 +99,8 @@ scrollPane(
 
     button(
         id: 'addPathInputPanel',
-        icon: imageIcon(resource: '../images/hellopanel.png'),
+        icon: imageIcon(resource: '../images/pathinputpanel.png'),
+        margin: inset,
         actionPerformed: {def pathInput = new PathInputPanelController(new PanelModel(), null, controller.project)
             pathInput.start()
             controller.project.addPanel(pathInput)
@@ -98,7 +109,8 @@ scrollPane(
 
     button(
         id: 'addTargetPanel',
-        icon: imageIcon(resource: '../images/hellopanel.png'),
+        icon: imageIcon(resource: '../images/targetpanel.png'),
+        margin: inset,
         actionPerformed: {def target = new TargetPanelController(new PanelModel(), null, controller.project)
             target.start()
             controller.project.addPanel(target)
@@ -107,7 +119,8 @@ scrollPane(
 
     button(
         id: 'addXInfoPanel',
-        icon: imageIcon(resource: '../images/hellopanel.png'),
+        icon: imageIcon(resource: '../images/xinfopanel.png'),
+        margin: inset,
         actionPerformed: {def xInfo = new XInfoPanelController(new PanelModel(), null, controller.project)
             xInfo.start()
             controller.project.addPanel(xInfo)
@@ -115,17 +128,9 @@ scrollPane(
     )
 
     button(
-        id: 'addSimpleFinishPanel',
-        icon: imageIcon(resource: '../images/hellopanel.png'),
-        actionPerformed: {def simpleFinish = new SimpleFinishPanelController(new PanelModel(), null, controller.project)
-            simpleFinish.start()
-            controller.project.addPanel(simpleFinish)
-        }
-    )
-
-    button(
         id: 'addPacksPanel',
-        icon: imageIcon(resource: '../images/hellopanel.png'),
+        icon: imageIcon(resource: '../images/packspanel.png'),
+        margin: inset,    
         actionPerformed: {def packs = new PacksPanelController(new PanelModel(), null, controller.project)
             packs.start()
             controller.project.addPanel(packs)

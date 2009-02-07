@@ -64,6 +64,7 @@ class IzPackStudio extends Controller
 
         GUI = view.build(IzPackStudioView)            
 
+        sleep(1000)
         setProgressBar(10, "Loaded !")
 
         // Assign the our own List Model to the ThumbList
