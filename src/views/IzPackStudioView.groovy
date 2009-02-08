@@ -18,11 +18,12 @@ actions
 {
     action(
             id: 'restoreDefault',
-            name: 'RestoreDefault',
+            name: 'Restore perspective',
             closure: perspective.&restoreDefault,
             mnemonic: 'D',
             accelerator: 'ctrl D',
-            shortDescription: 'Restore default perspective'
+            shortDescription: 'Restore default perspective',
+            smallIcon: imageIcon(resource:"/images/photo-multiple.png")
     )
 }
 
