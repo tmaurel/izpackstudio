@@ -20,8 +20,8 @@ actions
             id: 'restoreDefault',
             name: 'Restore perspective',
             closure: perspective.&restoreDefault,
-            mnemonic: 'D',
-            accelerator: 'ctrl D',
+            mnemonic: 'R',
+            accelerator: 'ctrl R',
             shortDescription: 'Restore default perspective',
             smallIcon: imageIcon(resource:"/images/photo-multiple.png")
     )
