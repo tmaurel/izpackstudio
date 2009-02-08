@@ -47,6 +47,14 @@ frame(
      menuBar(
              id: 'studioMenu'
      ) {
+          menu(
+                 text: 'File',
+                 mnemonic: 'F'
+         ) { }
+          menu(
+                 text: 'Edit',
+                 mnemonic: 'E'
+         ) {}
          menu(
                  text: 'Window',
                  mnemonic: 'W'
