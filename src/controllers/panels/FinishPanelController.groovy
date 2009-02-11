@@ -30,7 +30,7 @@ class FinishPanelController extends PanelController
         // Build Panel
         buildPanel()
 
-        def nav = getPanel().getComponents()[1].getComponents()
+        def nav = getNavPanel().getComponents()
         nav[1].setEnabled(false)
         nav[3].setEnabled(false)
         nav[5].setText(parent.getInstallerFrame().langpack.getString("FinishPanel.done"))

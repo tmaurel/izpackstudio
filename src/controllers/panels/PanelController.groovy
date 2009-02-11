@@ -109,8 +109,8 @@ abstract class PanelController extends Controller {
   
 
     /**
-    * Getter for the IzPack Panel Object
-    * @return IzPack HelloPanel
+    * Getter for the Panel container
+    * @return JPanel container
     *
     */
     public getPanel()
@@ -119,10 +119,27 @@ abstract class PanelController extends Controller {
         return model.getPanel()
     }
 
+    /**
+    * Getter for the IzPanel Object
+    * @return IzPanel Object
+    *
+    */
     public getIzPanel()
     {
         return model.getPanel().getComponents()[0].getComponents()[0]
     }
+
+
+    /**
+    * Getter for the navPanel
+    * @return JPanel container the navigation panel
+    *
+    */
+    public getNavPanel()
+    {
+        return model.getPanel().getComponents()[1]
+    }
+
 
     /**
     * Getter for the IzPack Panel Thumb

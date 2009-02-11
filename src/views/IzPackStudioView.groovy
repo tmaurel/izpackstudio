@@ -6,11 +6,8 @@ import java.awt.Color
 import javax.swing.SwingUtilities
 import javax.swing.UIManager
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE
-import org.noos.xing.mydoggy.*
-import org.noos.xing.mydoggy.plaf.MyDoggyToolWindowManager
 import java.awt.event.WindowEvent
 import java.awt.event.WindowListener
-import org.noos.xing.mydoggy.plaf.ui.util.SwingUtil
 
 def perspective = new Perspective(this)
 

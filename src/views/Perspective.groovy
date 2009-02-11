@@ -7,6 +7,8 @@ import org.noos.xing.mydoggy.FloatingTypeDescriptor
 import org.noos.xing.mydoggy.SlidingTypeDescriptor
 import org.noos.xing.mydoggy.ToolWindowAnchor
 import org.noos.xing.mydoggy.plaf.ui.util.SwingUtil
+import org.noos.xing.mydoggy.ToolWindowType
+import helpers.Positionning
 
 class Perspective
 {
@@ -111,6 +113,7 @@ class Perspective
                                                parent.build(it.view),    // Component
                                                it.anchor)       // Anchor
 
+            setDefaultProperties(toolWindowManager.getToolWindow(it.id))
         }
     }
 
@@ -217,6 +220,7 @@ class Perspective
     */
     def setDefaultProperties(ToolWindow toolwindow)
     {
+        toolwindow.setIndex(-1)          
         toolwindow.setType(ToolWindowType.DOCKED)
         DockedTypeDescriptor dockedTypeDescriptor = (DockedTypeDescriptor) toolwindow.getTypeDescriptor(ToolWindowType.DOCKED)
         dockedTypeDescriptor.setAnimating(true)

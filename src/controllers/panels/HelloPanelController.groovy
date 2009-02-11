@@ -28,12 +28,14 @@ class HelloPanelController extends PanelController
     public start()
     {
         // Build Panel
-        buildPanel()        
+        buildPanel()
+        def nav = getNavPanel().getComponents()
+        nav[1].setEnabled(false)
     }
 
-       public refresh()
-        {
+   public refresh()
+    {
 
-        }
+    }
 
 }
