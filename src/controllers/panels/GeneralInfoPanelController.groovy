@@ -1,9 +1,5 @@
 package controllers.panels
 
-import java.awt.GridLayout
-import java.awt.BorderLayout
-import javax.swing.BorderFactory
-import java.awt.Color
 
 
 /**
@@ -92,7 +88,8 @@ class GeneralInfoPanelController extends PanelController
         if(panelType == 0)
         {
             getPanel().getComponents()[0].getComponents()[0].loadInfo()
-            getPanel().getComponents()[0].getComponents()[0].getComponents()[1].getComponents()[0].getComponents()[0].setText(getPanel().getComponents()[0].getComponents()[0].info)
+            getIzPanel().getTextArea().setText(getIzPanel().info)
+            //getPanel().getComponents()[0].getComponents()[0].getComponents()[1].getComponents()[0].getComponents()[0].setText(getPanel().getComponents()[0].getComponents()[0].info)
         }
 
     }

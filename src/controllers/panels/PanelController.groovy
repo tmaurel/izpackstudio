@@ -119,6 +119,11 @@ abstract class PanelController extends Controller {
         return model.getPanel()
     }
 
+    public getIzPanel()
+    {
+        return model.getPanel().getComponents()[0].getComponents()[0]
+    }
+
     /**
     * Getter for the IzPack Panel Thumb
     * @return IzPack HelloPanel

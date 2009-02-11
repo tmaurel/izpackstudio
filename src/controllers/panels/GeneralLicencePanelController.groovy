@@ -1,8 +1,6 @@
 package controllers.panels
 
 
-import controllers.panels.PanelController
-
 
 /**
 * Controller for IzPack HelloPanels
@@ -89,8 +87,9 @@ class GeneralLicencePanelController extends PanelController
     {
         if(panelType == 0)
         {
-            getPanel().getComponents()[0].getComponents()[0].loadLicence()
-            getPanel().getComponents()[0].getComponents()[0].getComponents()[1].getComponents()[0].getComponents()[0].setText(getPanel().getComponents()[0].getComponents()[0].licence)
+            getIzPanel().loadLicence()
+            getIzPanel().getTextArea().setText(getIzPanel().licence)
+            //getPanel().getComponents()[0].getComponents()[0].getComponents()[1].getComponents()[0].getComponents()[0].setText(getPanel().getComponents()[0].getComponents()[0].licence)
         }
 
     }
