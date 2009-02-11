@@ -220,7 +220,7 @@ class IzPackStudio extends Controller
     * Main method called when launching app
     *
     */
-    def static public main(args)
+    static void main(args)     
     {
         def m = null
         def c = new IzPackStudio(m)

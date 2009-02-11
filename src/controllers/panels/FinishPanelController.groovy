@@ -1,4 +1,4 @@
-package controllers
+package controllers.panels
 
 
 /**
@@ -46,9 +46,9 @@ class FinishPanelController extends PanelController
     }
 
     public refresh()
-        {
+    {
 
-        }
+    }
 
 
 }

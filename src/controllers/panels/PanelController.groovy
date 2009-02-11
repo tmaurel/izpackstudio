@@ -1,4 +1,4 @@
-package controllers
+package controllers.panels
 
 import java.awt.geom.AffineTransform
 import java.awt.image.BufferedImage
@@ -11,6 +11,7 @@ import java.awt.GridLayout
 import java.awt.BorderLayout
 import javax.swing.JButton
 import java.awt.Container
+import controllers.Controller
 
 /**
 * Controller for IzPack Panels

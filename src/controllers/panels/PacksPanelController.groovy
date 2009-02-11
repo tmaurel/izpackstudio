@@ -1,4 +1,4 @@
-package controllers
+package controllers.panels
 
 import java.awt.GridLayout
 import java.awt.BorderLayout
@@ -10,7 +10,7 @@ import java.awt.Color
 * Controller for IzPack HelloPanels
 *
 */
-class LicencePanelController extends PanelController
+class PacksPanelController extends PanelController
 {
 
     /**
@@ -20,13 +20,12 @@ class LicencePanelController extends PanelController
     * @param    v   The view used by the constructor
     * @param    p   Parent controller
     */
-    LicencePanelController(m = null, v = null, p = null)
+    PacksPanelController(m = null, v = null, p = null)
     {
         super(m, v, p)
-        model.setName("com.izforge.izpack.panels.LicencePanel")
+        model.setName("com.izforge.izpack.panels.PacksPanel")
     }
 
-    /*
     protected buildPanel()
     {
         def container
@@ -45,7 +44,7 @@ class LicencePanelController extends PanelController
 
             // Instantiate a new IzPack HelloPanel using the parent model
             def panel = Class.forName(model.getName()).newInstance(parent.getInstallerFrame(), parent.getInstallerFrame().installdata)
-            panel.panelActivate()
+            //panel.panelActivate()
 
             this.removeAL(panel)
 
@@ -68,7 +67,7 @@ class LicencePanelController extends PanelController
 
 
         return container
-    }*/
+    }
 
     /**
     * Start method of the Controller
@@ -80,10 +79,4 @@ class LicencePanelController extends PanelController
         buildPanel()
     }
 
-    public refresh()
-    {
-        
-    }
-
-    
 }

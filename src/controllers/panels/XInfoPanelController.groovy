@@ -1,11 +1,11 @@
-package controllers
+package controllers.panels
 
 
 /**
 * Controller for IzPack HelloPanels
 *
 */
-class HTMLInfoPanelController extends PanelController
+class XInfoPanelController extends PanelController
 {
 
     /**
@@ -15,10 +15,10 @@ class HTMLInfoPanelController extends PanelController
     * @param    v   The view used by the constructor
     * @param    p   Parent controller
     */
-    HTMLInfoPanelController(m = null, v = null, p = null)
+    XInfoPanelController(m = null, v = null, p = null)
     {
         super(m, v, p)
-        model.setName("com.izforge.izpack.panels.HTMLInfoPanel")
+        model.setName("com.izforge.izpack.panels.XInfoPanel")
     }
 
     /**
@@ -31,8 +31,7 @@ class HTMLInfoPanelController extends PanelController
         buildPanel()
     }
 
-    
-     public refresh()
+   public refresh()
     {
 
     }

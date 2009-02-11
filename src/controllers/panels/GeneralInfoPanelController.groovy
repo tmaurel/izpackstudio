@@ -1,4 +1,4 @@
-package controllers
+package controllers.panels
 
 import java.awt.GridLayout
 import java.awt.BorderLayout
@@ -10,8 +10,11 @@ import java.awt.Color
 * Controller for IzPack HelloPanels
 *
 */
-class PacksPanelController extends PanelController
+class GeneralInfoPanelController extends PanelController
 {
+
+
+    def panelType
 
     /**
     * HelloPanel Constructor
@@ -20,12 +23,17 @@ class PacksPanelController extends PanelController
     * @param    v   The view used by the constructor
     * @param    p   Parent controller
     */
-    PacksPanelController(m = null, v = null, p = null)
+    GeneralInfoPanelController(m = null, v = null, p = null, choice = 0)
     {
         super(m, v, p)
-        model.setName("com.izforge.izpack.panels.PacksPanel")
+        panelType = choice
+        if(choice == 0)
+            model.setName("com.izforge.izpack.panels.InfoPanel")
+        else if(choice == 1)
+            model.setName("com.izforge.izpack.panels.HTMLInfoPanel")
     }
 
+    /*
     protected buildPanel()
     {
         def container
@@ -44,7 +52,7 @@ class PacksPanelController extends PanelController
 
             // Instantiate a new IzPack HelloPanel using the parent model
             def panel = Class.forName(model.getName()).newInstance(parent.getInstallerFrame(), parent.getInstallerFrame().installdata)
-            //panel.panelActivate()
+            panel.panelActivate()
 
             this.removeAL(panel)
 
@@ -67,7 +75,7 @@ class PacksPanelController extends PanelController
 
 
         return container
-    }
+    }*/
 
     /**
     * Start method of the Controller
@@ -78,5 +86,16 @@ class PacksPanelController extends PanelController
         // Build Panel
         buildPanel()
     }
+
+    public refresh()
+    {
+        if(panelType == 0)
+        {
+            getPanel().getComponents()[0].getComponents()[0].loadInfo()
+            getPanel().getComponents()[0].getComponents()[0].getComponents()[1].getComponents()[0].getComponents()[0].setText(getPanel().getComponents()[0].getComponents()[0].info)
+        }
+
+    }
+
 
 }

@@ -1,11 +1,11 @@
-package controllers
+package controllers.panels
 
 
 /**
 * Controller for IzPack HelloPanels
 *
 */
-class TargetPanelController extends PanelController
+class PathInputPanelController extends PanelController
 {
 
     /**
@@ -15,11 +15,12 @@ class TargetPanelController extends PanelController
     * @param    v   The view used by the constructor
     * @param    p   Parent controller
     */
-    TargetPanelController(m = null, v = null, p = null)
+    PathInputPanelController(m = null, v = null, p = null)
     {
         super(m, v, p)
-        model.setName("com.izforge.izpack.panels.TargetPanel")
+        model.setName("com.izforge.izpack.panels.PathInputPanel")
     }
+    
 
     /**
     * Start method of the Controller

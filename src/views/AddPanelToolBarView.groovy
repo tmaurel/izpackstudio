@@ -1,18 +1,17 @@
 package views
 
-import models.PanelModel
-import controllers.HelloPanelController
-import controllers.FinishPanelController
-import controllers.SummaryPanelController
-import controllers.PacksPanelController
-import controllers.GeneralInfoPanelController
-import controllers.GeneralLicencePanelController
-import controllers.InstallPanelController
-import controllers.PathInputPanelController
-import controllers.XInfoPanelController
-import controllers.TargetPanelController
+import models.panels.PanelModel
+import controllers.panels.HelloPanelController
+import controllers.panels.FinishPanelController
+import controllers.panels.SummaryPanelController
+import controllers.panels.PacksPanelController
+import controllers.panels.GeneralInfoPanelController
+import controllers.panels.GeneralLicencePanelController
+import controllers.panels.InstallPanelController
+import controllers.panels.PathInputPanelController
+import controllers.panels.XInfoPanelController
+import controllers.panels.TargetPanelController
 import helpers.WrapLayout
-
 
 
 scrollPane(

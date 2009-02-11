@@ -1,11 +1,11 @@
-package controllers
+package controllers.panels
 
 
 /**
 * Controller for IzPack HelloPanels
 *
 */
-class InstallPanelController extends PanelController
+class TargetPanelController extends PanelController
 {
 
     /**
@@ -15,10 +15,10 @@ class InstallPanelController extends PanelController
     * @param    v   The view used by the constructor
     * @param    p   Parent controller
     */
-    InstallPanelController(m = null, v = null, p = null)
+    TargetPanelController(m = null, v = null, p = null)
     {
         super(m, v, p)
-        model.setName("com.izforge.izpack.panels.InstallPanel")
+        model.setName("com.izforge.izpack.panels.TargetPanel")
     }
 
     /**
@@ -31,8 +31,9 @@ class InstallPanelController extends PanelController
         buildPanel()
     }
 
-       public refresh()
-        {
+   public refresh()
+    {
 
-        }
+    }
+
 }

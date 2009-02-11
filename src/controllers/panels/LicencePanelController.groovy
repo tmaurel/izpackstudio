@@ -1,4 +1,4 @@
-package controllers
+package controllers.panels
 
 import java.awt.GridLayout
 import java.awt.BorderLayout
@@ -10,11 +10,8 @@ import java.awt.Color
 * Controller for IzPack HelloPanels
 *
 */
-class GeneralInfoPanelController extends PanelController
+class LicencePanelController extends PanelController
 {
-
-
-    def panelType
 
     /**
     * HelloPanel Constructor
@@ -23,14 +20,10 @@ class GeneralInfoPanelController extends PanelController
     * @param    v   The view used by the constructor
     * @param    p   Parent controller
     */
-    GeneralInfoPanelController(m = null, v = null, p = null, choice = 0)
+    LicencePanelController(m = null, v = null, p = null)
     {
         super(m, v, p)
-        panelType = choice
-        if(choice == 0)
-            model.setName("com.izforge.izpack.panels.InfoPanel")
-        else if(choice == 1)
-            model.setName("com.izforge.izpack.panels.HTMLInfoPanel")
+        model.setName("com.izforge.izpack.panels.LicencePanel")
     }
 
     /*
@@ -89,13 +82,8 @@ class GeneralInfoPanelController extends PanelController
 
     public refresh()
     {
-        if(panelType == 0)
-        {
-            getPanel().getComponents()[0].getComponents()[0].loadInfo()
-            getPanel().getComponents()[0].getComponents()[0].getComponents()[1].getComponents()[0].getComponents()[0].setText(getPanel().getComponents()[0].getComponents()[0].info)
-        }
-
+        
     }
 
-
+    
 }
