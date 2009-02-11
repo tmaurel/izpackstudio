@@ -1,9 +1,7 @@
-package controllers
+package controllers.panels
 
-import java.awt.GridLayout
-import java.awt.BorderLayout
-import javax.swing.BorderFactory
-import java.awt.Color
+
+import controllers.panels.PanelController
 
 
 /**
