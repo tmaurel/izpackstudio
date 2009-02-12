@@ -44,7 +44,7 @@ class ProjectModel {
         return new Dimension(width, height)
     }
 
-
+    
     public getInstallerFrame()
     {
         return installerframe

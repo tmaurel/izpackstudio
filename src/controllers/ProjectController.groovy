@@ -31,6 +31,17 @@ class ProjectController extends Controller {
         parent.printPanel(controller)
     }
 
+
+    /**
+    * Returns the panels list
+    *
+    * @return The panels list
+    */
+    public getPanels() {
+        return model.panels
+    }
+
+
     /**
     * Get the model's installerframe
     *

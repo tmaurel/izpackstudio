@@ -4,6 +4,7 @@ import models.*
 import javax.swing.DefaultListModel
 import javax.swing.Box
 import views.*
+import javax.swing.JPanel
 
 
 
@@ -30,7 +31,7 @@ class IzPackStudio extends Controller
     * Thumbs list
     *
     */
-    private listModel = new DefaultListModel()
+    private listModel
 
    /**
     * Animation used to slide between panels
@@ -62,13 +63,13 @@ class IzPackStudio extends Controller
 
         setProgressBar(1, "Loading GUI...")
 
-        GUI = view.build(IzPackStudioView)            
+        GUI = view.build(IzPackStudioView)
 
         sleep(1000)
         setProgressBar(10, "Loaded !")
 
         // Assign the our own List Model to the ThumbList
-        view.thumbList.setModel(listModel)
+        listModel = view.thumbList.getModel()
 
         // Display the GUI
         GUI.show()
@@ -146,6 +147,39 @@ class IzPackStudio extends Controller
     }
 
 
+    /**
+    * Switch two Thumbs
+    *
+    * @param from The first thumb
+    * @param to The second thumb
+    */
+    def switchThumbs(from, to)
+    {
+        Object obj = (Object) listModel.remove(from);
+        listModel.add(to,obj);
+    }
+
+
+    /**
+    * Switch two panels
+    *
+    * @param from The first panel
+    * @param to The second panel
+    */
+    def movePanel(from, to)
+    {
+        def panels = project.getPanels()
+        def controller = panels.get(from)
+        panels.remove(from)
+        panels.add(to, controller)
+
+        view.build
+        {
+            JPanel obj = view.panelPreview.getComponent(from);
+            view.panelPreview.remove(from)
+            addPreview(obj, to)
+        }
+    }
 
 
     /**
@@ -169,8 +203,6 @@ class IzPackStudio extends Controller
             }
 
             GUI.validate()
-
-
         }
     }
 
@@ -183,24 +215,34 @@ class IzPackStudio extends Controller
     def printPreview(controller)
     {
 
+        def index = view.panelPreview.getComponents().size()
+
+        view.build
+        {
+            // Make sure it is visible
+            controller.showPanel()
+            addPreview(controller.getPanel(), index)
+
+        }
+
+    }
+
+
+    def addPreview(panel, index)
+    {
         view.build
         {
             view.panelPreview.with
             {
-                add(Box.createHorizontalGlue())
-                // Add the Panel to the preview section of the GUI
-                add(controller.getPanel(), "gapleft "
+                 // Add the Panel to the preview section of the GUI
+                add(panel, "gapleft "
                         + animation.getGap() +
                         ", gapright "
-                        + animation.getGap())
-
-                // Make sure it is visible
-                controller.showPanel()
+                        + animation.getGap(), index)
 
                 validate()
             }
         }
-
     }
 
 
@@ -220,7 +262,7 @@ class IzPackStudio extends Controller
     * Main method called when launching app
     *
     */
-    static void main(args)     
+    static void main(args)
     {
         def m = null
         def c = new IzPackStudio(m)
