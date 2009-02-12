@@ -1,23 +1,10 @@
 package views
 
-import javax.swing.ListSelectionModel
-import javax.swing.JList
-import net.miginfocom.swing.MigLayout
-import javax.swing.BorderFactory
-import javax.swing.event.ListSelectionListener
-import javax.swing.JScrollPane
-import javax.swing.DropMode
-import javax.swing.TransferHandler
-import javax.swing.DefaultListModel
-import java.awt.datatransfer.DataFlavor
-import java.awt.datatransfer.Transferable
-import javax.swing.JComponent
-import java.awt.datatransfer.StringSelection
-import java.awt.event.MouseMotionAdapter
-import java.awt.event.MouseEvent
-import java.awt.event.MouseAdapter
 import java.awt.event.MouseListener
-
+import java.awt.event.MouseMotionAdapter
+import javax.swing.*
+import javax.swing.event.ListSelectionListener
+import net.miginfocom.swing.MigLayout
 
 panel(
     id: 'thumbPanel',
@@ -42,7 +29,6 @@ panel(
             def from = null
             def fromBuff = null
             def to = null
-            def model = thumbList.getModel()
             def dragged = false
 
             thumbList.addListSelectionListener( {e ->

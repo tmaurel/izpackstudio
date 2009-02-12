@@ -1,8 +1,6 @@
 package controllers
 
 import models.*
-import javax.swing.DefaultListModel
-import javax.swing.Box
 import views.*
 import javax.swing.JPanel
 
