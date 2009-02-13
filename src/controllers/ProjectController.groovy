@@ -43,6 +43,33 @@ class ProjectController extends Controller {
 
 
     /**
+    * Move a panel
+    *
+    * @param from The first panel
+    * @param to The second panel
+    */
+    def movePanel(from, to)
+    {
+        def panels = getPanels()
+        def controller = panels.get(from)
+        panels.remove(from)
+        panels.add(to, controller)
+    }
+
+
+    /**
+    * Delete a panel
+    *
+    * @param index Index of the panel to be deleted
+    */
+    def deletePanel(index)
+    {
+        def panels = getPanels()
+        panels.remove(index)
+    }
+    
+
+    /**
     * Get the model's installerframe
     *
     * @return Current installer frame

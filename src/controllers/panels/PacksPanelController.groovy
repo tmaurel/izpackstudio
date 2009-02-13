@@ -28,7 +28,7 @@ class PacksPanelController extends PanelController
 
     protected buildPanel()
     {
-        def container
+        def container = null
         view.build {
 
             container = panel(

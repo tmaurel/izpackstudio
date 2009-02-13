@@ -5,6 +5,30 @@ import java.awt.event.MouseMotionAdapter
 import javax.swing.*
 import javax.swing.event.ListSelectionListener
 import net.miginfocom.swing.MigLayout
+import java.awt.Robot
+import java.awt.AWTException
+import java.awt.event.InputEvent
+
+
+actions
+{
+    action(
+            id: 'deletePanel',
+            name: 'Delete Panel',
+            closure: controller.&deletePanel,
+            mnemonic: 'R',
+            accelerator: 'ctrl D',
+            shortDescription: 'Delete selected panel',
+            smallIcon: imageIcon(resource:"/images/photo-multiple.png")
+    )
+}
+
+popupMenu(
+    id: 'thumbPopupMenu'
+) {
+    menuItem(deletePanel)
+}
+
 
 panel(
     id: 'thumbPanel',
@@ -43,9 +67,26 @@ panel(
 
 
             def mouselistener = [
-                    mouseClicked: {},
-                    mousePressed: { from = fromBuff = thumbList.getSelectedIndex() }, 
-                    mouseReleased: { if((to != from) && dragged) { controller.movePanel(from, to) ; changed = false ; dragged = false } },
+                    mouseClicked: {
+                    },
+                    mousePressed: {
+                        from = fromBuff = thumbList.getSelectedIndex()
+                    },
+                    mouseReleased: {
+                        if(it.isPopupTrigger()) {
+                            thumbList.setSelectedIndex( thumbList.locationToIndex(it.getPoint()) );
+                            thumbPopupMenu.show(thumbList, it.getX(), it.getY() );
+                        }
+                        else
+                        {
+                            if((to != from) && dragged)
+                            {
+                                controller.movePanel(from, to)
+                                changed = false
+                                dragged = false
+                            }
+                        }
+                    },
                     mouseEntered: {},
                     mouseExited: {},
             ] as MouseListener
@@ -71,4 +112,5 @@ panel(
 
         }
     }
+  
 }

@@ -11,31 +11,33 @@ panel(
     constraints: '0, 0',
     layout: new MigLayout(
         new LC().fill().noVisualPadding(),
-        new AC().gap("0"),
+        new AC(),
         new AC().align("center")),
  ) {
 
     panel(
         id: 'centerPanel',
         constraints: 'w 100%, h 100%',
-        background: Color.WHITE,
-        border: BorderFactory.createMatteBorder(1,1,1,1,Color.lightGray),
-        layout: new MigLayout()
+        layout: new MigLayout(),
     ) {
 
         scrollPane(
             id: 'panelScrollPane',
             constraints: 'w 100%, h 100%',
-            border: BorderFactory.createEmptyBorder(),
+            opaque: false
         ) {
 
-            panel(
-            id: 'panelPreview',
-            background: Color.WHITE,
-            layout: new MigLayout(
-                    new LC().fillY(),
-                    new AC().gap("0"),
-                    new AC().align("center"))
+            panelScrollPane.getViewport().setOpaque(false)
+            panelScrollPane.getViewport().setBorder(null)
+
+            container(
+                new GradientPanel(),    
+                id: 'panelPreview',
+                background: Color.WHITE,
+                layout: new MigLayout(
+                        new LC().fillY().insets("0"),
+                        new AC(),
+                        new AC().align("center")),                
             ) { }
         }
     }

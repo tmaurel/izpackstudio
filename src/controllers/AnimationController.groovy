@@ -39,6 +39,13 @@ class AnimationController {
     def gap
 
     /**
+    * Size of the viewport
+    *
+    */
+    def size
+
+
+    /**
     * Slide the given ScrollPane to the right index
     *
     * @param    compo   Component included
@@ -48,7 +55,8 @@ class AnimationController {
     {
         component = compo
         scrollpane = sp
-        gap = scrollpane.getViewport().getSize().width / 2
+        size = scrollpane.getViewport().getSize().width
+        gap = size / 2
     }
 
 
@@ -70,18 +78,18 @@ class AnimationController {
     *
     * @param    index       Where you need to slide to
     */
-    def slideViewPositionTo(index)
+    def slideViewPositionTo(position)
     {
 
-     if (animation != null && animation.isRunning()) {
+        if (animation != null && animation.isRunning()) {
             animation.stop();
         }
 
         Point current = scrollpane.getViewport().getViewPosition()
-        Point to = new Point((int) (getInitialPosition() + index * (gap * 2 + component.getSize().width)), (int) current.y)
+        Point to = new Point((int) (position - getInitialPosition()), (int) current.y)
         int diff = Math.abs(to.x - current.x)
-        Point to2 = null
-        Point to3 = null
+        Point to2
+        Point to3
 
         if(current.x > to.x)
         {
@@ -132,9 +140,8 @@ class AnimationController {
     */
     def getInitialPosition()
     {
-        int dec = (int) (scrollpane.getSize().width - component.getSize().width) / 2
-        int pos = (int) gap - dec
-        return (int) pos
+        int dec = (int) (scrollpane.getViewport().getSize().width - component.getSize().width) / 2
+        return (int) dec
     }
 
 

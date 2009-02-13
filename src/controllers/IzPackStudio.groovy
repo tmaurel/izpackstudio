@@ -2,7 +2,6 @@ package controllers
 
 import models.*
 import views.*
-import javax.swing.JPanel
 
 
 
@@ -133,7 +132,6 @@ class IzPackStudio extends Controller
     }
 
 
-
     /**
     * Slide the scroll pane to the right index
     *
@@ -141,7 +139,8 @@ class IzPackStudio extends Controller
     */
     def slideTo(index)
     {
-        animation.slideViewPositionTo(index)
+        def pos = view.panelPreview.getComponents()[index].getX()
+        animation.slideViewPositionTo(pos)
     }
 
 
@@ -159,24 +158,41 @@ class IzPackStudio extends Controller
 
 
     /**
-    * Switch two panels
+    * Move a panel 
     *
     * @param from The first panel
     * @param to The second panel
     */
     def movePanel(from, to)
     {
-        def panels = project.getPanels()
-        def controller = panels.get(from)
-        panels.remove(from)
-        panels.add(to, controller)
+
+        project.movePanel(from, to)
 
         view.build
         {
-            JPanel obj = view.panelPreview.getComponent(from);
+            def obj = view.panelPreview.getComponent(from);
             view.panelPreview.remove(from)
             addPreview(obj, to)
         }
+    }
+
+
+    /**
+    * Delete a panel
+    *
+    * @param ae ActionEvent thrown by view 
+    */
+    def deletePanel(ae)
+    {
+        def panel = view.thumbList.getSelectedIndex()
+        view.build
+        {
+            listModel.remove(panel)
+            view.panelPreview.remove(panel)
+
+            GUI.validate()
+        }       
+        project.deletePanel(panel)
     }
 
 
@@ -219,19 +235,36 @@ class IzPackStudio extends Controller
         {
             // Make sure it is visible
             controller.showPanel()
-            addPreview(controller.getPanel(), index)
+
+            def panelPreview = view.build(PanelWithReflectionView)
+
+            panelPreview.add(controller.getPanel(), 'wrap')
+
+            addPreview(panelPreview, index)
+
+            doLater
+            {
+                panelPreview.add(controller.getReflection())                   
+            }
 
         }
 
     }
 
 
+    /**
+    * Add the preview inside the panelPreview container
+    *
+    * @param panel Panel to be added
+    * @param index Where you want it to be added 
+    */
     def addPreview(panel, index)
     {
         view.build
         {
             view.panelPreview.with
             {
+
                  // Add the Panel to the preview section of the GUI
                 add(panel, "gapleft "
                         + animation.getGap() +

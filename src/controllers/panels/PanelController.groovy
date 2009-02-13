@@ -1,17 +1,18 @@
 package controllers.panels
 
-import java.awt.geom.AffineTransform
-import java.awt.image.BufferedImage
-import java.awt.image.AffineTransformOp
-import models.ThumbEntry
-import javax.swing.ImageIcon
-import javax.swing.BorderFactory
-import java.awt.Color
-import java.awt.GridLayout
-import java.awt.BorderLayout
-import javax.swing.JButton
-import java.awt.Container
 import controllers.Controller
+import java.awt.BorderLayout
+import java.awt.Color
+import java.awt.Container
+import java.awt.GridLayout
+import java.awt.geom.AffineTransform
+import java.awt.image.AffineTransformOp
+import java.awt.image.BufferedImage
+import javax.swing.BorderFactory
+import javax.swing.ImageIcon
+import javax.swing.JButton
+import models.ThumbEntry
+import views.Reflection
 
 /**
 * Controller for IzPack Panels
@@ -19,7 +20,7 @@ import controllers.Controller
 */
 abstract class PanelController extends Controller {
 
-   
+
     /**
     * Constructor
     *
@@ -39,7 +40,9 @@ abstract class PanelController extends Controller {
     */
     protected buildPanel()
     {
-        def container
+
+        def container = null
+        
         view.build {
 
             container = panel(
@@ -73,10 +76,10 @@ abstract class PanelController extends Controller {
             container.validate()
 
             model.setPanel(container)
-            
+
         }
 
-        
+
         return container
     }
 
@@ -106,7 +109,7 @@ abstract class PanelController extends Controller {
         }
     }
 
-  
+
 
     /**
     * Getter for the Panel container
@@ -181,8 +184,33 @@ abstract class PanelController extends Controller {
 
         // Return a new ThumbEntry containing the image and the title of the thumb
         return new ThumbEntry(new ImageIcon(op.filter(image, biNew)), model.getName().substring(model.getName().lastIndexOf ('.') + 1))
- 
+
     }
+
+
+    /**
+    * Getter for the IzPack Panel reflection effect
+    * @return Component containing the reflection effect
+    *
+    */
+    public getReflection()
+    {
+
+        // Create a new BufferedImage
+        def image = new BufferedImage((int) parent.getSize().width, (int) parent.getSize().height, BufferedImage.TYPE_INT_RGB)
+
+        // Create a new Graphic using the buffered image
+        def g2 = image.createGraphics()
+
+        panel.paint(g2)
+
+        // Dispose of g2
+        g2.dispose()
+
+        return new Reflection(image)
+    }
+
+
 
     /**
      * Show the Panel
@@ -211,10 +239,11 @@ abstract class PanelController extends Controller {
     {
         showPanel()
     }
+    
 
-     public refresh()
-      {
+    public refresh()
+    {
 
-      }
+    }
 
 }
