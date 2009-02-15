@@ -64,7 +64,7 @@ abstract class PanelController extends Controller {
 
 
             panelsContainer.add(panel)
-            container.add(parent.getInstallerFrame().createNavPanel(), BorderLayout.SOUTH)
+            container.add(parent.getInstallerFrame().createNavPanel().addNextButton(), BorderLayout.SOUTH)
 
 
             // Define PreferredSize for the Container
@@ -108,7 +108,6 @@ abstract class PanelController extends Controller {
             }
         }
     }
-
 
 
     /**
