@@ -31,7 +31,7 @@ panel(
 
             panelScrollPane.getViewport().setOpaque(false)
             panelScrollPane.getViewport().setBorder(null)
-            def v = new Vector()
+            //def v = new Vector()
 
             container(
                 new GradientPanel(),
@@ -46,10 +46,10 @@ panel(
                                  {
                                      def location = panelScrollPane.getHorizontalScrollBar().getValue()
                                      width = panelScrollPane.getHorizontalScrollBar().getMaximum()-405
-                                     if(!v.contains(width))
-                                        v.add(width)
+                                     //if(!v.contains(width))
+                                        //v.add(width)
                                      i=0
-                                     while(location>v[i])
+                                     while(location>controller.project.vectorWidth[i])
                                      {
                                         i++
                                      }

@@ -7,7 +7,7 @@ package controllers
 */
 class ProjectController extends Controller {
 
-
+    def vectorWidth
     /**
     * ProjectController Constructor
     *
@@ -18,6 +18,7 @@ class ProjectController extends Controller {
     ProjectController(m = null, v = null, p = null)
     {
         super(m, v, p)
+        vectorWidth = new Vector()
     }
 
 
@@ -29,6 +30,8 @@ class ProjectController extends Controller {
     public addPanel(controller) {
         model.panels.add(controller)
         parent.printPanel(controller)
+        if(!vectorWidth.contains(parent.view.panelScrollPane.getHorizontalScrollBar().getMaximum()-405))
+            vectorWidth.add(parent.view.panelScrollPane.getHorizontalScrollBar().getMaximum()-405)
     }
 
 
