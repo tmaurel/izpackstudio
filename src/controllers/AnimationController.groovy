@@ -72,6 +72,17 @@ class AnimationController {
     }
 
 
+    /**
+    * Break the current animation if any
+    *
+    */
+    def breakAnimation()
+    {
+        if (animation != null && animation.isRunning()) {
+            animation.stop();
+        }
+    }
+
 
     /**
     * Slide the given ScrollPane to the right index
@@ -81,9 +92,7 @@ class AnimationController {
     def slideViewPositionTo(position)
     {
 
-        if (animation != null && animation.isRunning()) {
-            animation.stop();
-        }
+        breakAnimation()        
 
         Point current = scrollpane.getViewport().getViewPosition()
         Point to = new Point((int) (position - getInitialPosition()), (int) current.y)

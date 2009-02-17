@@ -2,6 +2,7 @@ package controllers
 
 import models.*
 import views.*
+import java.awt.Dimension
 
 
 
@@ -145,6 +146,51 @@ class IzPackStudio extends Controller
 
 
     /**
+    * Slide the scroll pane to the right index
+    * using the given X position
+    *
+    * @param position  MouseListener click position in viewport
+    */
+    def slideOnPosition(position)
+    {
+        def vpYnitSize = animation.size
+        def size = project.getSize()
+        def index = (int) Math.floor(position / (vpYnitSize + size.width + 1))
+        if(index < listModel.size())
+        {
+            if(view.thumbList.getSelectedIndex() == index)
+            {
+                slideTo(index)
+            }
+            else
+            {
+                view.thumbList.setSelectedIndex(index)
+            }
+        }
+    }
+
+    /**
+    * Break the current animation if any
+    *
+    */
+    def breakAnimation()
+    {
+        animation.breakAnimation()
+    }
+
+    /**
+    * Get the preview size, including the reflection
+    *
+    * @return Dimension of the preview panel
+    */
+    def getPreviewSize()
+    {
+        def size = project.getSize()
+        return new Dimension((int) size.width, (int) (size.height * 4/3))
+    }
+
+
+    /**
     * Switch two Thumbs
     *
     * @param from The first thumb
@@ -152,8 +198,12 @@ class IzPackStudio extends Controller
     */
     def switchThumbs(from, to)
     {
-        Object obj = (Object) listModel.remove(from);
-        listModel.add(to,obj);
+        def size = listModel.size()
+        if(from < size && to < size)
+        {
+            Object obj = (Object) listModel.remove(from);
+            listModel.add(to,obj);
+        }
     }
 
 
@@ -165,14 +215,15 @@ class IzPackStudio extends Controller
     */
     def movePanel(from, to)
     {
-
-        project.movePanel(from, to)
-
         view.build
         {
-            def obj = view.panelPreview.getComponent(from);
-            view.panelPreview.remove(from)
-            addPreview(obj, to)
+            project.movePanel(from, to)
+            doLater
+            {
+                def obj = view.panelPreview.getComponent(from);
+                view.panelPreview.remove(from)
+                addPreview(obj, to)
+            }
         }
     }
 
@@ -187,10 +238,13 @@ class IzPackStudio extends Controller
         def panel = view.thumbList.getSelectedIndex()
         view.build
         {
-            listModel.remove(panel)
-            view.panelPreview.remove(panel)
+            doLater
+            {
+                listModel.remove(panel)
+                view.panelPreview.remove(panel)
 
-            GUI.validate()
+                GUI.validate()
+            }
         }       
         project.deletePanel(panel)
     }
@@ -244,7 +298,7 @@ class IzPackStudio extends Controller
 
             doLater
             {
-                panelPreview.add(controller.getReflection())                   
+                panelPreview.add(controller.getReflection())
             }
 
         }

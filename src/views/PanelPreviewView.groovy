@@ -3,10 +3,9 @@ package views
 import net.miginfocom.layout.AC
 import net.miginfocom.swing.MigLayout
 import net.miginfocom.layout.LC
-import javax.swing.BorderFactory
 import java.awt.Color
 import java.awt.event.MouseListener
-import java.awt.Point
+
 
 panel(
     id: 'stuckPanel',
@@ -29,9 +28,24 @@ panel(
             opaque: false
         ) {
 
-            panelScrollPane.getViewport().setOpaque(false)
-            panelScrollPane.getViewport().setBorder(null)
-            //def v = new Vector()
+            def vp = panelScrollPane.getViewport()
+            vp.setOpaque(false)
+            vp.setBorder(null)
+
+            def sBListener =
+            [
+                mouseClicked: {},
+                mousePressed:
+                {
+                    controller.breakAnimation()
+                },
+                mouseReleased: {},
+                mouseEntered: {},
+                mouseExited: {},
+            ] as MouseListener
+
+            panelScrollPane.getHorizontalScrollBar().addMouseListener(sBListener)
+
 
             container(
                 new GradientPanel(),
@@ -39,32 +53,21 @@ panel(
                 background: Color.WHITE,
                 layout: new MigLayout(
                         new LC().fillY().insets("0"),
-                        new AC(),
-                        new AC().align("center")),                
+                        new AC().gap("0"),
+                        new AC().align("center")),
             ) {
-                def listener = [ mouseClicked:
-                                 {
-                                     def location = panelScrollPane.getHorizontalScrollBar().getValue()
-                                     width = panelScrollPane.getHorizontalScrollBar().getMaximum()-405
-                                     //if(!v.contains(width))
-                                        //v.add(width)
-                                     i=0
-                                     while(location>controller.project.vectorWidth[i])
-                                     {
-                                        i++
-                                     }
-                                     if(i == controller.view.thumbList.getSelectedIndex())
-                                     {
-                                         pos = panelPreview.getComponents()[i].getX()
-                                         controller.animation.slideViewPositionTo(pos)
-                                     }
-                                     else
-                                         controller.view.thumbList.setSelectedIndex(i)
-                                 },
-                                 mousePressed: {},
-                                 mouseReleased: {},
-                                 mouseEntered: {},
-                                 mouseExited: {}, ] as MouseListener
+
+                def listener =
+                [
+                    mouseClicked: {},
+                    mousePressed: {},
+                    mouseReleased:
+                    {
+                        controller.slideOnPosition(it.getX())
+                    },
+                    mouseEntered: {},
+                    mouseExited: {},
+                ] as MouseListener
 
                 panelPreview.addMouseListener(listener)
                 }

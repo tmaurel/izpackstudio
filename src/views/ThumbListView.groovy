@@ -73,8 +73,9 @@ panel(
                         from = fromBuff = thumbList.getSelectedIndex()
                     },
                     mouseReleased: {
-                        if(it.isPopupTrigger()) {
-                            thumbList.setSelectedIndex( thumbList.locationToIndex(it.getPoint()) );
+                        if(it.isPopupTrigger() && !dragged)
+                        {
+                            thumbList.setSelectedIndex( thumbList.locationToIndex(it.getPoint()) )
                             thumbPopupMenu.show(thumbList, it.getX(), it.getY() );
                         }
                         else
@@ -83,9 +84,10 @@ panel(
                             {
                                 controller.movePanel(from, to)
                                 changed = false
-                                dragged = false
+
                             }
                         }
+                        dragged = false
                     },
                     mouseEntered: {},
                     mouseExited: {},
