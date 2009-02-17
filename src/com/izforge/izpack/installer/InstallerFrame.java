@@ -11,6 +11,8 @@ import com.izforge.izpack.gui.ButtonFactory;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import java.awt.*;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseEvent;
 import java.util.Hashtable;
 import java.io.InputStream;
 
@@ -88,6 +90,32 @@ public class InstallerFrame extends JFrame
         prevButton.setName("prevButton");
         navPanel.add(prevButton);
 
+
+        prevButton.addMouseListener(new MouseListener() {
+
+            public void mouseClicked(MouseEvent e)
+            {
+            }
+
+            public void mousePressed(MouseEvent e)
+            {
+            }
+
+            public void mouseReleased(MouseEvent e)
+            {
+            }
+
+            public void mouseEntered(MouseEvent e)
+            {
+            }
+
+            public void mouseExited(MouseEvent e)
+            {
+            }
+        });
+
+
+
         navPanel.add(Box.createRigidArea(new Dimension(5, 0)));
 
         JButton nextButton = ButtonFactory.createButton(langpack.getString("installer.next"), icons
@@ -101,6 +129,8 @@ public class InstallerFrame extends JFrame
                 .getImageIcon("stop"), installdata.buttonsHColor);
         quitButton.setName("quitButton");
         navPanel.add(quitButton);
+
+
 
         return(navPanel);
 

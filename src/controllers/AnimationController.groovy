@@ -9,7 +9,7 @@ import org.jdesktop.animation.timing.interpolation.KeyFrames
 import org.jdesktop.animation.timing.interpolation.PropertySetter
 
 
-class AnimationController {
+class AnimationController extends Controller {
 
 
     /**
@@ -17,20 +17,6 @@ class AnimationController {
     *
     */
     def animation = null
-
-
-    /**
-    * Component type that will be added to the ScrollPane
-    *
-    */
-    def component
-
-    /**
-    * ScrollPane where the animation will happen
-    *
-    */
-    def scrollpane
-
 
     /**
     * Gap needed between each component to only display 1 at once
@@ -46,17 +32,18 @@ class AnimationController {
 
 
     /**
-    * Slide the given ScrollPane to the right index
+    * Animation Constructor
     *
-    * @param    compo   Component included
-    * @param    sp  Scrollpane where the component is included
+    * @param    m   The model used by the constructor
+    * @param    v   The view used by the constructor
+    * @param    p   Parent controller
     */
-    AnimationController(compo, sp)
+    AnimationController(m = null, v = null, p = null)
     {
-        component = compo
-        scrollpane = sp
-        size = scrollpane.getViewport().getSize().width
-        gap = size / 2
+        model = m
+        view = v
+        parent = p
+        start()
     }
 
 
@@ -94,7 +81,7 @@ class AnimationController {
 
         breakAnimation()        
 
-        Point current = scrollpane.getViewport().getViewPosition()
+        Point current = view.getViewport().getViewPosition()
         Point to = new Point((int) (position - getInitialPosition()), (int) current.y)
         int diff = Math.abs(to.x - current.x)
         Point to2
@@ -126,7 +113,7 @@ class AnimationController {
         def keyFrames = new KeyFrames(keyValues, keyTimes, (Interpolator)null);
 
         animation = new Animator(2000, 1, repeatBehavior,
-                new PropertySetter(scrollpane.getViewport(), "ViewPosition", keyFrames));
+                new PropertySetter(view.getViewport(), "ViewPosition", keyFrames));
         animation.setResolution(0)
         animation.setStartDelay(0)
         animation.setEndBehavior(behavior)
@@ -142,15 +129,26 @@ class AnimationController {
 
 
     /**
-    * Calc the initial poisition of the container considering the component size
+    * Calc the initial poisition of the container considering the parent size
     * and the gap
     *
     * @return   Initial position needed for a container
     */
     def getInitialPosition()
     {
-        int dec = (int) (scrollpane.getViewport().getSize().width - component.getSize().width) / 2
+        int dec = (int) (view.getViewport().getSize().width - parent.getSize().width) / 2
         return (int) dec
+    }
+
+    
+    /**
+    * Start method of the Controller
+    *
+    */
+    def start()
+    {
+        size = view.getViewport().getSize().width
+        gap = size / 2
     }
 
 
