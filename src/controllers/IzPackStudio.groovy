@@ -38,6 +38,8 @@ class IzPackStudio extends Controller
     */
     private animation
 
+    private loaded
+
    /**
     * IzPackStudio Constructor
     *
@@ -48,6 +50,7 @@ class IzPackStudio extends Controller
     IzPackStudio(m = null, v = null, p = null)
     {
         super(m, v, p)
+        loaded = false
     }
 
     /**
@@ -80,6 +83,7 @@ class IzPackStudio extends Controller
 
         // Create a new Animation Controller to slide between panels
         animation = new AnimationController(null, view.panelScrollPane, project)
+        loaded = true
 
     }
 

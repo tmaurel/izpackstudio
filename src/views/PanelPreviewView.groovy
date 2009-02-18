@@ -5,6 +5,8 @@ import net.miginfocom.swing.MigLayout
 import net.miginfocom.layout.LC
 import java.awt.Color
 import java.awt.event.MouseListener
+import java.awt.event.ComponentListener
+import org.codehaus.groovy.runtime.InvokerInvocationException
 
 
 panel(
@@ -21,7 +23,21 @@ panel(
         constraints: 'w 100%, h 100%',
         layout: new MigLayout(),
     ) {
+         def sizeListener =
+        [
+                componentHidden: {},
+                componentMoved: {},
+                componentResized:
+                {
+                    if(controller.loaded && controller.project.getPanels().size>0)
+                    {
+                        controller.slideTo(controller.view.thumbList.getSelectedIndex())
+                    }
+                },
+                componentShown: {}
+        ] as ComponentListener
 
+        centerPanel.addComponentListener(sizeListener)
         scrollPane(
             id: 'panelScrollPane',
             constraints: 'w 100%, h 100%',
