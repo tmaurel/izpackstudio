@@ -1,6 +1,6 @@
 package controllers.panels
 
-
+import views.panels.GeneralLicencePanelPropertiesView
 
 /**
 * Controller for IzPack HelloPanels
@@ -29,50 +29,6 @@ class GeneralLicencePanelController extends PanelController
             model.setName("com.izforge.izpack.panels.HTMLLicencePanel")
     }
 
-    /*
-    protected buildPanel()
-    {
-        def container
-        view.build {
-
-            container = panel(
-                layout: new BorderLayout()
-            )
-
-            panelsContainer = panel(
-                border: BorderFactory.createEmptyBorder(10, 10, 0, 10),
-                layout: new GridLayout(1, 1)
-            )
-
-            container.add(panelsContainer, BorderLayout.CENTER);
-
-            // Instantiate a new IzPack HelloPanel using the parent model
-            def panel = Class.forName(model.getName()).newInstance(parent.getInstallerFrame(), parent.getInstallerFrame().installdata)
-            panel.panelActivate()
-
-            this.removeAL(panel)
-
-
-            panelsContainer.add(panel)
-            container.add(parent.getInstallerFrame().createNavPanel(), BorderLayout.SOUTH)
-
-
-            // Define PreferredSize for the Container
-            container.setPreferredSize(parent.getSize())
-
-            // Define Black Borders for the IzPack HelloPanel
-            container.setBorder(BorderFactory.createMatteBorder(1,1,1,1,Color.BLACK))
-
-            container.validate()
-
-            model.setPanel(container)
-
-        }
-
-
-        return container
-    }*/
-
     /**
     * Start method of the Controller
     *
@@ -81,15 +37,19 @@ class GeneralLicencePanelController extends PanelController
     {
         // Build Panel
         buildPanel()
+        buildPropertiesPanel(GeneralLicencePanelPropertiesView)
     }
 
+    /**
+    * Refresh this panel
+    *
+    */
     public refresh()
     {
         if(panelType == 0)
         {
             getIzPanel().loadLicence()
             getIzPanel().getTextArea().setText(getIzPanel().licence)
-            //getPanel().getComponents()[0].getComponents()[0].getComponents()[1].getComponents()[0].getComponents()[0].setText(getPanel().getComponents()[0].getComponents()[0].licence)
         }
 
     }

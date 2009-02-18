@@ -48,31 +48,38 @@ panel(
 
 
             container(
-                new GradientPanel(),
-                id: 'panelPreview',
-                background: Color.WHITE,
+                new GradientContainer((float) 0.5, Color.white, new Color(210,220,230)),
                 layout: new MigLayout(
                         new LC().fillY().insets("0"),
                         new AC().gap("0"),
                         new AC().align("center")),
             ) {
+                panel(
+                id: 'panelPreview',
+                background: Color.WHITE,
+                opaque: false,
+                layout: new MigLayout(
+                        new LC().fillY().insets("0"),
+                        new AC().gap("0"),
+                        new AC().align("center")),
+                ) {
 
-                def listener =
-                [
-                    mouseClicked: {},
-                    mousePressed: {},
-                    mouseReleased:
-                    {
-                        controller.slideOnPosition(it.getX())
-                    },
-                    mouseEntered: {},
-                    mouseExited: {},
-                ] as MouseListener
+                    def listener =
+                    [
+                        mouseClicked: {},
+                        mousePressed: {},
+                        mouseReleased:
+                        {
+                            controller.slideOnPosition(it.getX())
+                        },
+                        mouseEntered: {},
+                        mouseExited: {},
+                    ] as MouseListener
 
-                panelPreview.addMouseListener(listener)
+                    panelPreview.addMouseListener(listener)
                 }
 
-
+            }
         }
     }
 }

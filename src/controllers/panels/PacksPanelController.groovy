@@ -4,6 +4,7 @@ import java.awt.GridLayout
 import java.awt.BorderLayout
 import javax.swing.BorderFactory
 import java.awt.Color
+import views.panels.PacksPanelPropertiesView
 
 
 /**
@@ -77,6 +78,7 @@ class PacksPanelController extends PanelController
     {
         // Build Panel
         buildPanel()
+        buildPropertiesPanel(PacksPanelPropertiesView)
     }
 
 }

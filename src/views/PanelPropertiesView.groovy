@@ -1,20 +1,19 @@
 package views
 
+import helpers.WrapLayout
+import javax.swing.BorderFactory
 import net.miginfocom.swing.MigLayout
-import net.miginfocom.layout.AC
-import net.miginfocom.layout.LC
 
 
 
-panel(
-    id: 'propertiesPanel',
-    constraints: '0, 0',
-    layout: new MigLayout(
-        new LC().fill().noVisualPadding(),
-        new AC().gap("0"),
-        new AC().align("center").align("top"))
+scrollPane(
+    constraints: '0,0',
+    border: BorderFactory.createEmptyBorder()
 ) {
-
-   label(text: "Panel Properties")
-
+    toolBar(
+        id: 'propertiesPanel',
+        floatable: false,
+        rollover: true,
+        layout: new MigLayout("fill", "left", "top")
+    ) 
 }

@@ -5,9 +5,6 @@ import java.awt.event.MouseMotionAdapter
 import javax.swing.*
 import javax.swing.event.ListSelectionListener
 import net.miginfocom.swing.MigLayout
-import java.awt.Robot
-import java.awt.AWTException
-import java.awt.event.InputEvent
 
 
 actions
@@ -99,7 +96,7 @@ panel(
                     dragged = true
                     to  = thumbList.getSelectedIndex()
                     if(to == fromBuff)
-                        return    
+                        return
                     controller.switchThumbs(fromBuff, to)
                     fromBuff = to
                 },
@@ -110,9 +107,9 @@ panel(
             thumbList.addMouseListener(mouselistener)
             thumbList.addMouseMotionListener(motionlistener)
 
-  
+
 
         }
     }
-  
+
 }

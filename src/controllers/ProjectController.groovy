@@ -88,6 +88,39 @@ class ProjectController extends Controller {
         return model.getSize()
     }
 
+
+
+    /**
+    * Slide to next panel
+    *
+    * @param controller Current Panel
+    */
+    def slideNext(controller)
+    {
+        def index = getPanels().indexOf(controller) + 1
+        if(index < getPanels().size() && index >= 0)
+        {
+            parent.slideTo(index)
+        }
+    }
+
+
+    /**
+    * Slide to previous panel
+    *
+    * @param controller Current Panel
+    */
+    def slidePrev(controller)
+    {
+        def index = getPanels().indexOf(controller) - 1
+        if(index < getPanels().size() && index >= 0)
+        {
+            parent.slideTo(index)
+        }
+    }
+
+
+
     /**
     * Start method of the Controller
     *
@@ -96,6 +129,10 @@ class ProjectController extends Controller {
 
     }
 
+    /**
+    * Refresh all panels
+    *
+    */
     public refresh()
     {
         model.panels.each(){

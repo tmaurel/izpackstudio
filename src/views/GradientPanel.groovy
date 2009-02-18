@@ -1,23 +1,33 @@
 package views
 
-import javax.swing.JPanel
 import java.awt.Graphics2D
 import java.awt.Graphics
 import java.awt.GradientPaint
 import java.awt.Color
+import javax.swing.JComponent
 
 
 
-class GradientPanel extends JPanel {
+class GradientContainer extends JComponent {
 
-    GradientPanel()
+    def percentage
+
+    def firstColor
+
+    def secondColor
+
+
+    GradientContainer(float percent, Color first, Color second)
     {
         super()
+        percentage = percent 
+        firstColor = first
+        secondColor = second
     }
 
     public void paintComponent( Graphics g ) {
         Graphics2D g2d = (Graphics2D)g;
-        g2d.setPaint( new GradientPaint( 0, (int)(getHeight()/2), Color.white, 0, getHeight(), new Color(180,200,230) ) );
+        g2d.setPaint( new GradientPaint( 0, (int)(getHeight() * percentage), (Color) firstColor, 0, getHeight(), (Color) secondColor) );
         g2d.fillRect( 0, 0, getWidth(), getHeight() );
     }
 

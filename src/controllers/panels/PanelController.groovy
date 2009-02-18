@@ -13,6 +13,8 @@ import javax.swing.ImageIcon
 import javax.swing.JButton
 import models.ThumbEntry
 import views.Reflection
+import groovy.swing.SwingBuilder
+import java.awt.event.ActionListener
 
 /**
 * Controller for IzPack Panels
@@ -20,6 +22,12 @@ import views.Reflection
 */
 abstract class PanelController extends Controller {
 
+
+    /**
+    * The properties toolbar for this Panel
+    *
+    */
+    def propertiesPanel
 
     /**
     * Constructor
@@ -64,7 +72,30 @@ abstract class PanelController extends Controller {
 
 
             panelsContainer.add(panel)
-            container.add(parent.getInstallerFrame().createNavPanel(), BorderLayout.SOUTH)
+
+            def navPanel = parent.getInstallerFrame().createNavPanel()
+            def navCompo = navPanel.getComponents()
+            def actionListener =
+            [
+                actionPerformed:
+                {
+                    def source = it.getSource();
+                    if (source == navCompo[1])
+                    {
+                        parent.slidePrev(this)
+                    }
+                    else if (source == navCompo[3])
+                    {
+                        parent.slideNext(this)
+                    }
+                }
+            ] as ActionListener
+
+            navCompo[1].addActionListener(actionListener)
+            navCompo[3].addActionListener(actionListener)
+            
+
+            container.add(navPanel, BorderLayout.SOUTH)
 
 
             // Define PreferredSize for the Container
@@ -230,6 +261,21 @@ abstract class PanelController extends Controller {
         model.getPanel().setVisible(false)
     }
 
+
+    /**
+     * Build the properties toolbar for this panel
+     *
+     * @param toolbar The Toolbar
+     */
+    protected buildPropertiesPanel(toolbar)
+    {
+        if(view instanceof SwingBuilder)
+        {
+            propertiesPanel = view.build(toolbar)
+        }
+    }
+
+
     /**
      * Start the controller
      *
@@ -239,7 +285,10 @@ abstract class PanelController extends Controller {
         showPanel()
     }
     
-
+    /**
+    * Refresh this panel
+    *
+    */
     public refresh()
     {
 

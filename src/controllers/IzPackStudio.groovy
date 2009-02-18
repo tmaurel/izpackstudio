@@ -3,6 +3,7 @@ package controllers
 import models.*
 import views.*
 import java.awt.Dimension
+import javax.swing.JComponent
 
 
 
@@ -141,7 +142,20 @@ class IzPackStudio extends Controller
     def slideTo(index)
     {
         def pos = view.panelPreview.getComponents()[index].getX()
+
         animation.slideViewPositionTo(pos)
+
+        view.propertiesPanel.removeAll()
+
+        def prop = project.getPanels()[index].propertiesPanel
+
+        if(prop instanceof JComponent)
+        {
+            view.propertiesPanel.add(prop)
+        }
+
+        GUI.validate()
+        GUI.repaint()
     }
 
 

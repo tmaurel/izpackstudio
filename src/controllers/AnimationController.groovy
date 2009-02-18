@@ -40,6 +40,7 @@ class AnimationController extends Controller {
     */
     AnimationController(m = null, v = null, p = null)
     {
+        super()
         model = m
         view = v
         parent = p

@@ -116,7 +116,7 @@ public class WrapLayout extends FlowLayout
 
 				if (rowWidth + d.width > maxWidth)
 				{
-					addRow(dim, rowWidth, rowHeight);
+					addRow(dim, (int) rowWidth, (int) rowHeight);
 					rowWidth = 0;
 					rowHeight = 0;
 				}
@@ -133,7 +133,7 @@ public class WrapLayout extends FlowLayout
 			}
 		}
 
-		addRow(dim, rowWidth, rowHeight);
+		addRow(dim, (int) rowWidth, (int) rowHeight);
 
 		dim.width += horizontalInsetsAndGap;
 		dim.height += insets.top + insets.bottom + vgap * 2;
