@@ -74,7 +74,7 @@ class ToolBarButton extends JButton
 
             synchronized (convolvedImage) {
                 Graphics2D g2 = (Graphics2D) g;
-
+                def plus = 0
                 g2.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
@@ -82,6 +82,7 @@ class ToolBarButton extends JButton
                 ButtonModel model = this.getModel()
                 if(model.isArmed())
                 {
+                    plus = -alt
                     def rightShape = new QuadCurve2D.Float ((float)(width - defaultDec), 0.0f, (float)(width - defaultDec - alt), (float)(height/2),
                                 (float)(width - defaultDec), (float)height)
 
@@ -98,6 +99,7 @@ class ToolBarButton extends JButton
                 }
                 else if(model.isRollover() || alt != 0.0f)
                 {
+                    plus = alt
                     def leftShape = new QuadCurve2D.Float (0.0f, 0.0f, alt, (float)(height/2),
                                 0.0f, (float)height)
                     g2.setColor(new Color(110,120,160))
@@ -121,7 +123,7 @@ class ToolBarButton extends JButton
                 TextLayout layout = new TextLayout((String) title, getFont().deriveFont((float)(10.0f + alt/20)), context);
                 Rectangle2D bounds = layout.getBounds();
 
-                int x = (alt/2) + (width - convolvedImage.getWidth(null)) / 2;
+                int x = (plus/2) + (width - convolvedImage.getWidth(null)) / 2;
                 int y = (int) (height - (convolvedImage.getHeight(null) + bounds.getHeight() + layout.getAscent())) / 2;
 
                 g2.drawImage(convolvedImage, x, y, this);                 
