@@ -38,6 +38,10 @@ class IzPackStudio extends Controller
     */
     private animation
 
+   /**
+    * Is GUI Loaded ?
+    *
+    */
     private loaded
 
    /**

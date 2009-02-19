@@ -130,25 +130,23 @@ class ProjectController extends Controller {
         }
     }
 
+    /**
+    * Toggle the project settings view
+    *
 
+    */
     def toggleProjectSettings()
     {
         projectSettingsView.setVisible(true)        
     }
 
+    /**
+    * Display the Authors view
+    *
+    */
     def dispAuthors()
     {
           view.addAuthors.setVisible(true)
-    }
-
-    def undispAuthors()
-    {
-          view.addAuthors.setVisible(false)
-    }
-
-    def addAuthorTest()
-    {
-       //   view.projectSettings.listAuthors.
     }
 
     /**
