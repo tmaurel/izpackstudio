@@ -1,11 +1,21 @@
 package controllers
 
+import views.ProjectSettingsView
+
 
 /**
 * Controller for Projects
 *
 */
 class ProjectController extends Controller {
+
+
+
+    /**
+    * The Project Settings View
+    *
+    */    
+    def projectSettingsView
 
 
     /**
@@ -18,6 +28,7 @@ class ProjectController extends Controller {
     ProjectController(m = null, v = null, p = null)
     {
         super(m, v, p)
+        projectSettingsView = view.build(ProjectSettingsView)
     }
 
 
@@ -119,15 +130,24 @@ class ProjectController extends Controller {
         }
     }
 
-    public dispAuthors(){
+
+    def toggleProjectSettings()
+    {
+        projectSettingsView.setVisible(true)        
+    }
+
+    def dispAuthors()
+    {
           view.addAuthors.setVisible(true)
     }
 
-    public undispAuthors(){
+    def undispAuthors()
+    {
           view.addAuthors.setVisible(false)
     }
 
-    public addAuthorTest(){
+    def addAuthorTest()
+    {
        //   view.projectSettings.listAuthors.
     }
 

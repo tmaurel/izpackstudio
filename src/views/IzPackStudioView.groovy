@@ -14,23 +14,23 @@ def perspective = new Perspective(this)
 actions
 {
     action(
-            id: 'restoreDefault',
-            name: 'Restore perspective',
-            closure: perspective.&restoreDefault,
-            mnemonic: 'R',
-            accelerator: 'ctrl R',
-            shortDescription: 'Restore default perspective',
-            smallIcon: imageIcon(resource:"/images/photo-multiple.png")
+        id: 'restoreDefault',
+        name: 'Restore perspective',
+        closure: perspective.&restoreDefault,
+        mnemonic: 'R',
+        accelerator: 'ctrl R',
+        shortDescription: 'Restore default perspective',
+        smallIcon: imageIcon(resource:"/images/photo-multiple.png")
     )
 	
 	action(
 		id: 'toggleProjectSettings',
 		name: 'Toggle Project Settings',
-		closure: perspective.&toggleProjectSettings,
+		closure: controller.&toggleProjectSettings,
 		mnemonic: 'P',
 		accelerator: 'ctrl P',
 		shortDescription: 'toggle project settings'
-)
+    )
 }
 
 

@@ -7,17 +7,20 @@ import java.awt.BorderLayout
 import javax.swing.SwingConstants
 import javax.swing.BorderFactory
 import java.awt.Dimension
+import helpers.Positionning
 
 
 
 
-frame(
+dialog(
         id: 'projectSettings',
         title: 'Project Settings',
-        location: [250, 100],
+        location: Positionning.CenterPosition([500,600]),
         size: [500,600],
         resizable : false,
+        visible: false,
         background: Color.DARK_GRAY,
+        modal: true,
         layout: new MigLayout()
      
 ) {
@@ -81,7 +84,7 @@ frame(
                                    preferredSize : new Dimension(80,25),
                                    text :'Add',
                                    actionPerformed: {
-                                            this.controller.project.dispAuthors()
+                                            controller.dispAuthors()
                                         }
                                  )
 
@@ -151,7 +154,7 @@ frame(
 
             id : 'addAuthors',
             title : 'Add an author',
-            location : [750,100],
+            location : Positionning.CenterPosition([310,210]),
             size : [310,210],
             resizable : false,
             background: Color.DARK_GRAY,
@@ -190,19 +193,19 @@ frame(
                    preferredSize : new Dimension(70,20),
                    text :'Valid',
                    actionPerformed: {
-                     //   this.controller.project.addAuthorTest()
+                     //   controller.addAuthorTest()
                     }
                    )
 
             button (
-                   id: 'cancel',
-                   preferredSize : new Dimension(70,20),
-                   text :'Cancel',
-                   constraints : 'align right',
-                   actionPerformed: {
-                        addAuthors.setVisible(false)           // not so clean ?
-                       }
-                   )
+               id: 'cancel',
+               preferredSize : new Dimension(70,20),
+               text :'Cancel',
+               constraints : 'align right',
+               actionPerformed: {
+                    addAuthors.setVisible(false)           // not so clean ?
+                   }
+               )
         }
     }
     

@@ -55,7 +55,7 @@ class ToolBarButton extends JButton
         g.dispose();
 
         setBorderPainted(false)
-        setBrightness(0.7f)
+        setBrightness(0.9f)
         setOpaque(false)
         setPreferredSize(new Dimension(90,80))
         setFocusPainted(false)
@@ -154,7 +154,7 @@ class ToolBarButton extends JButton
     def addTriggers()
     {
         Animator animator = PropertySetter.createAnimator(250, this,
-                "brightness", 0.7f, 1.2f);
+                "brightness", 0.9f, 1.2f);
         MouseTrigger.addTrigger(this, animator, MouseTriggerEvent.ENTER, true)
 
         Animator animator2 = PropertySetter.createAnimator(100, this,
