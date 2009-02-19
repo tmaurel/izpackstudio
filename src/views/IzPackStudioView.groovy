@@ -22,6 +22,15 @@ actions
             shortDescription: 'Restore default perspective',
             smallIcon: imageIcon(resource:"/images/photo-multiple.png")
     )
+	
+	action(
+		id: 'toggleProjectSettings',
+		name: 'Toggle Project Settings',
+		closure: perspective.&toggleProjectSettings,
+		mnemonic: 'P',
+		accelerator: 'ctrl P',
+		shortDescription: 'toggle project settings'
+)
 }
 
 
@@ -57,6 +66,7 @@ frame(
                  mnemonic: 'W'
          ) {
                 menuItem(restoreDefault)
+				menuItem(toggleProjectSettings)
          }
      }
 

@@ -119,7 +119,17 @@ class ProjectController extends Controller {
         }
     }
 
+    public dispAuthors(){
+          view.addAuthors.setVisible(true)
+    }
 
+    public undispAuthors(){
+          view.addAuthors.setVisible(false)
+    }
+
+    public addAuthorTest(){
+       //   view.projectSettings.listAuthors.
+    }
 
     /**
     * Start method of the Controller

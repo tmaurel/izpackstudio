@@ -211,8 +211,16 @@ class Perspective
         restoreDefault()
     }
 
+    def toggleProjectSettings()                                              //TEMPORAIRE
+    {
+        parent.controller.ps.show()
+    }
 
-
+    def toggleProjectSettings(e)                                             //TEMPORAIRE
+    {
+        toggleProjectSettings()
+    }	
+	
     /**
     * Set default properties for ToolBars
     *

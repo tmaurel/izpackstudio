@@ -26,6 +26,10 @@ class IzPackStudio extends Controller
     */
     private GUI
 
+	
+	private ps						 //TEMPORAIRE
+	
+	
    /**
     * Thumbs list
     *
@@ -66,7 +70,9 @@ class IzPackStudio extends Controller
         setProgressBar(1, "Loading GUI...")
 
         GUI = view.build(IzPackStudioView)
-
+		ps = view.build(ProjectSettingsView)						// TEMPORAIRE
+		
+		
         sleep(1000)
         setProgressBar(10, "Loaded !")
 
