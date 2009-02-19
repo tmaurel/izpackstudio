@@ -137,6 +137,19 @@ class IzPackStudio extends Controller
 
     }
 
+    /**
+    * Set the current selected panel
+    *
+    * @param index  Index of the panel in the list
+    */
+    def setSelectedPanel(index)
+    {
+        if(index < listModel.size())
+        {
+            view.thumbList.setSelectedIndex(index)
+        }
+    }
+
 
     /**
     * Slide the scroll pane to the right index
@@ -145,21 +158,25 @@ class IzPackStudio extends Controller
     */
     def slideTo(index)
     {
-        def pos = view.panelPreview.getComponents()[index].getX()
-
-        animation.slideViewPositionTo(pos)
-
-        view.propertiesPanel.removeAll()
-
-        def prop = project.getPanels()[index].propertiesPanel
-
-        if(prop instanceof JComponent)
+        if(index < listModel.size())
         {
-            view.propertiesPanel.add(prop)
-        }
 
-        GUI.validate()
-        GUI.repaint()
+            def pos = view.panelPreview.getComponents()[index].getX()
+
+            animation.slideViewPositionTo(pos)
+
+            view.propertiesPanel.removeAll()
+
+            def prop = project.getPanels()[index].propertiesPanel
+
+            if(prop instanceof JComponent)
+            {
+                view.propertiesPanel.add(prop)
+            }
+
+            GUI.validate()
+            GUI.repaint()
+        }
     }
 
 
@@ -258,10 +275,19 @@ class IzPackStudio extends Controller
         {
             doLater
             {
+                breakAnimation()
+               
                 listModel.remove(panel)
                 view.panelPreview.remove(panel)
 
                 GUI.validate()
+                
+                def prev = panel - 1
+                if(prev >= 0 && prev < listModel.size())
+                {
+                    view.thumbList.setSelectedIndex(prev)
+                }
+
             }
         }       
         project.deletePanel(panel)

@@ -100,7 +100,7 @@ class ProjectController extends Controller {
         def index = getPanels().indexOf(controller) + 1
         if(index < getPanels().size() && index >= 0)
         {
-            parent.slideTo(index)
+            parent.setSelectedPanel(index)
         }
     }
 
@@ -115,7 +115,7 @@ class ProjectController extends Controller {
         def index = getPanels().indexOf(controller) - 1
         if(index < getPanels().size() && index >= 0)
         {
-            parent.slideTo(index)
+            parent.setSelectedPanel(index)
         }
     }
 

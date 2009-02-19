@@ -267,12 +267,12 @@ class Perspective
     def setProjectActionsProperties(ToolWindow toolwindow)
     {
         DockedTypeDescriptor dockedTypeDescriptor = (DockedTypeDescriptor) toolwindow.getTypeDescriptor(ToolWindowType.DOCKED)
-        dockedTypeDescriptor.setDockLength(127)
-        dockedTypeDescriptor.setMinimumDockLength(127)
-        def pos = Positionning.CenterPosition([500,140])
+        dockedTypeDescriptor.setDockLength(115)
+        dockedTypeDescriptor.setMinimumDockLength(115)
+        def pos = Positionning.CenterPosition([495,300])
         FloatingTypeDescriptor floatingTypeDescriptor = (FloatingTypeDescriptor) toolwindow.getTypeDescriptor(ToolWindowType.FLOATING)
         floatingTypeDescriptor.setLocation((int)pos[0], (int)pos[1])
-        floatingTypeDescriptor.setSize(500,140)
+        floatingTypeDescriptor.setSize(495,300)
     }
 
     /**
@@ -284,12 +284,12 @@ class Perspective
     {
 
         DockedTypeDescriptor dockedTypeDescriptor = (DockedTypeDescriptor) toolwindow.getTypeDescriptor(ToolWindowType.DOCKED)
-        dockedTypeDescriptor.setDockLength(127)
-        dockedTypeDescriptor.setMinimumDockLength(127)
-        def pos = Positionning.CenterPosition([500,140])
+        dockedTypeDescriptor.setDockLength(115)
+        dockedTypeDescriptor.setMinimumDockLength(115)
+        def pos = Positionning.CenterPosition([495,300])
         FloatingTypeDescriptor floatingTypeDescriptor = (FloatingTypeDescriptor) toolwindow.getTypeDescriptor(ToolWindowType.FLOATING)
         floatingTypeDescriptor.setLocation((int)pos[0], (int)pos[1])
-        floatingTypeDescriptor.setSize(500,140)
+        floatingTypeDescriptor.setSize(495,300)
     }
 
 

@@ -14,21 +14,27 @@ scrollPane(
             layout: new WrapLayout(WrapLayout.LEFT)
     ) {
 
-        button(
-        id: 'addHelloPanel',
-        icon: imageIcon(resource: '../images/hellopanel.png'),
-        size: [100,100],
-        actionPerformed: {
-            def hello = new HelloPanelController(new PanelModel(), null, controller.project)
-            hello.start()
-            controller.project.addPanel(hello)
+
+        widget(
+            new ToolBarButton(
+                    'HelloPanel',
+                    imageIcon(resource: '../images/hellopanel.png')
+            ),
+            id: 'addHelloPanel',
+            actionPerformed: {
+                def hello = new HelloPanelController(new PanelModel(), null, controller.project)
+                hello.start()
+                controller.project.addPanel(hello)
             }
         )
 
 
-        button(
+        widget(
+            new ToolBarButton(
+                    'FinishPanel',
+                    imageIcon(resource: '../images/finishpanel.png')
+            ),
             id: 'addFinishPanel',
-            icon: imageIcon(resource: '../images/finishpanel.png'),
             actionPerformed: {
                 def finish = new FinishPanelController(new PanelModel(), null, controller.project)
                 finish.start()
@@ -37,9 +43,12 @@ scrollPane(
         )
 
 
-        button(
+        widget(
+            new ToolBarButton(
+                    'LicencePanel',
+                    imageIcon(resource: '../images/licencepanel.png')
+            ),
             id: 'addLicencePanel',
-            icon: imageIcon(resource: '../images/licencepanel.png'),
             actionPerformed: {
                 def licence = new GeneralLicencePanelController(new PanelModel(), null, controller.project,0)
                 licence.start()
@@ -47,9 +56,12 @@ scrollPane(
             }
         )
 
-         button(
+        widget(
+            new ToolBarButton(
+                    'InfoPanel',
+                    imageIcon(resource: '../images/infopanel.png')
+            ),
             id: 'addInfoPanel',
-            icon: imageIcon(resource: '../images/infopanel.png'),
             actionPerformed: {
                 def info = new GeneralInfoPanelController(new PanelModel(), null, controller.project,1)
                 info.start()
@@ -57,9 +69,12 @@ scrollPane(
             }
         )
 
-        button(
+        widget(
+            new ToolBarButton(
+                    'SummaryPanel',
+                    imageIcon(resource: '../images/summarypanel.png')
+            ),
             id: 'addSummaryPanel',
-            icon: imageIcon(resource: '../images/summarypanel.png'),
             actionPerformed: {
                 def summary = new SummaryPanelController(new PanelModel(), null, controller.project)
                 summary.start()
@@ -67,9 +82,12 @@ scrollPane(
             }
         )
 
-        button(
-            id: 'addInstallPanel',
-            icon: imageIcon(resource: '../images/installpanel.png'),
+        widget(
+            new ToolBarButton(
+                    'InstallPanel',
+                    imageIcon(resource: '../images/installpanel.png')
+            ),
+            id: 'addInstalPanel',
             actionPerformed: {
                 def install = new InstallPanelController(new PanelModel(), null, controller.project)
                 install.start()
@@ -77,9 +95,12 @@ scrollPane(
             }
         )
 
-        button(
+        widget(
+            new ToolBarButton(
+                    'PathInputPanel',
+                    imageIcon(resource: '../images/pathinputpanel.png')
+            ),
             id: 'addPathInputPanel',
-            icon: imageIcon(resource: '../images/pathinputpanel.png'),
             actionPerformed: {
                 def pathInput = new PathInputPanelController(new PanelModel(), null, controller.project)
                 pathInput.start()
@@ -87,18 +108,24 @@ scrollPane(
             }
         )
 
-        button(
+        widget(
+            new ToolBarButton(
+                    'TargetPanel',
+                    imageIcon(resource: '../images/targetpanel.png')
+            ),
             id: 'addTargetPanel',
-            icon: imageIcon(resource: '../images/targetpanel.png'),
             actionPerformed: {def target = new TargetPanelController(new PanelModel(), null, controller.project)
                 target.start()
                 controller.project.addPanel(target)
             }
         )
 
-        button(
+        widget(
+            new ToolBarButton(
+                    'XInfoPanel',
+                    imageIcon(resource: '../images/xinfopanel.png')
+            ),
             id: 'addXInfoPanel',
-            icon: imageIcon(resource: '../images/xinfopanel.png'),
             actionPerformed: {
                 def xInfo = new XInfoPanelController(new PanelModel(), null, controller.project)
                 xInfo.start()
@@ -106,9 +133,12 @@ scrollPane(
             }
         )
 
-        button(
+        widget(
+            new ToolBarButton(
+                    'PacksPanel',
+                    imageIcon(resource: '../images/packspanel.png')
+            ),
             id: 'addPacksPanel',
-            icon: imageIcon(resource: '../images/packspanel.png'),
             actionPerformed: {
                 def packs = new PacksPanelController(new PanelModel(), null, controller.project)
                 packs.start()
