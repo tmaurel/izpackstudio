@@ -15,11 +15,9 @@ import java.awt.image.ConvolveOp
 import java.awt.image.BufferedImageOp
 import java.awt.image.Kernel
 import org.jdesktop.animation.timing.triggers.MouseTrigger
-import org.jdesktop.animation.timing.Animator
 import org.jdesktop.animation.timing.interpolation.PropertySetter
 import org.jdesktop.animation.timing.triggers.MouseTriggerEvent
 import java.awt.geom.QuadCurve2D
-import javax.swing.ButtonModel
 import java.awt.geom.Line2D
 
 
@@ -36,15 +34,11 @@ class ToolBarButton extends JButton
 
     def defaultDec = 5.0f
 
-
-
-
     ToolBarButton(msg, icon)
     {
         super()
-
+        addTriggers()
         title = msg
-
         Image image = icon.getImage();
         originalImage = new BufferedImage((int) icon.getIconWidth(), (int) icon.getIconHeight(),
             BufferedImage.TYPE_INT_ARGB);
@@ -53,19 +47,30 @@ class ToolBarButton extends JButton
         Graphics g = originalImage.createGraphics();
         g.drawImage(image, 0, 0, this);
         g.dispose();
-
         setBorderPainted(false)
         setBrightness(0.9f)
         setOpaque(false)
         setPreferredSize(new Dimension(90,80))
         setFocusPainted(false)
-        addTriggers()
+        setEnabled(false)          
+    }
 
+    public void setEnabled(boolean enabled)
+    {
+        super.setEnabled(enabled)
+        if(enabled)
+        {
+            addTriggers();
+        }
+        else
+        {
+            removeTriggers();
+            setBrightness(0.1f)
+        }
     }
 
     public void paintComponent(Graphics g)
     {
-        
 
         if (convolvedImage != null) {
 
@@ -79,43 +84,51 @@ class ToolBarButton extends JButton
                 g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 g2.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
 
-                ButtonModel model = this.getModel()
-                if(model.isArmed())
+                g2.setColor(Color.lightGray)
+                
+                if(model.isEnabled())
                 {
-                    plus = -alt
-                    def rightShape = new QuadCurve2D.Float ((float)(width - defaultDec), 0.0f, (float)(width - defaultDec - alt), (float)(height/2),
-                                (float)(width - defaultDec), (float)height)
+                    if(model.isArmed())
+                    {
+                        plus = -alt
+                        def rightShape = new QuadCurve2D.Float ((float)(width - defaultDec), 0.0f, (float)(width - defaultDec - alt), (float)(height/2),
+                                    (float)(width - defaultDec), (float)height)
 
-                    g2.setColor(new Color(200,200,220))
-                    g2.draw(new Line2D.Float(0.0f, 0.0f, 0.0f, (float)height))
-                    g2.draw(new Line2D.Float (0.0f, 0.0f, (float)(width - defaultDec), 0.0f))
-                                                             
-                    g2.draw(rightShape)                     
-                    g2.draw(new Line2D.Float (0.0f, (float)(height-1), (float)(width - defaultDec), (float)(height-1)))
-                    g2.setColor(new Color(185,185,185))
-                    g2.fill(rightShape)
-                    g2.setColor(Color.blue)
+                        g2.setColor(new Color(200,200,220))
+                        g2.draw(new Line2D.Float(0.0f, 0.0f, 0.0f, (float)height))
+                        g2.draw(new Line2D.Float (0.0f, 0.0f, (float)(width - defaultDec), 0.0f))
 
-                }
-                else if(model.isRollover() || alt != 0.0f)
-                {
-                    plus = alt
-                    def leftShape = new QuadCurve2D.Float (0.0f, 0.0f, alt, (float)(height/2),
-                                0.0f, (float)height)
-                    g2.setColor(new Color(110,120,160))
-                    g2.draw(leftShape)
-                    g2.draw(new Line2D.Float (0.0f, 0.0f, (float)(width - defaultDec), 0.0f))
+                        g2.draw(rightShape)
+                        g2.draw(new Line2D.Float (0.0f, (float)(height-1), (float)(width - defaultDec), (float)(height-1)))
+                        g2.setColor(new Color(185,185,185))
+                        g2.fill(rightShape)
+                        g2.setColor(Color.blue)
 
-                    g2.setColor(new Color(185,185,185))
-                    g2.fill(leftShape)
+                    }
+                    else if(model.isRollover() || alt != 0.0f)
+                    {
+                        plus = alt
+                        def leftShape = new QuadCurve2D.Float (0.0f, 0.0f, alt, (float)(height/2),
+                                    0.0f, (float)height)
+                        g2.setColor(new Color(110,120,160))
+                        g2.draw(leftShape)
+                        g2.draw(new Line2D.Float (0.0f, 0.0f, (float)(width - defaultDec), 0.0f))
+
+                        g2.setColor(new Color(185,185,185))
+                        g2.fill(leftShape)
 
 
-                    g2.setColor(new Color(200,200,220))
-                    g2.draw(new QuadCurve2D.Float ((float)(width - defaultDec), 0.0f, (float)(width - defaultDec + alt), (float)(height/2),
-                                (float)(width - defaultDec), (float)height))
-                    g2.draw(new Line2D.Float (0.0f, (float)(height-1), (float)(width - defaultDec), (float)(height-1)))
+                        g2.setColor(new Color(200,200,220))
+                        g2.draw(new QuadCurve2D.Float ((float)(width - defaultDec), 0.0f, (float)(width - defaultDec + alt), (float)(height/2),
+                                    (float)(width - defaultDec), (float)height))
+                        g2.draw(new Line2D.Float (0.0f, (float)(height-1), (float)(width - defaultDec), (float)(height-1)))
 
-                    g2.setColor(Color.blue)
+                        g2.setColor(Color.blue)
+                    }
+                    else
+                    {
+                        g2.setColor(Color.black)   
+                    }
                 }
 
 
@@ -153,13 +166,20 @@ class ToolBarButton extends JButton
 
     def addTriggers()
     {
-        Animator animator = PropertySetter.createAnimator(250, this,
+        def animatorBrightness = PropertySetter.createAnimator(250, this,
                 "brightness", 0.9f, 1.2f);
-        MouseTrigger.addTrigger(this, animator, MouseTriggerEvent.ENTER, true)
+        MouseTrigger.addTrigger(this, animatorBrightness, MouseTriggerEvent.ENTER, true)
 
-        Animator animator2 = PropertySetter.createAnimator(100, this,
+        def animatorAltitude = PropertySetter.createAnimator(100, this,
                 "altitude", 0.0f, 5.0f);
-        MouseTrigger.addTrigger(this, animator2, MouseTriggerEvent.ENTER, true)
+        MouseTrigger.addTrigger(this, animatorAltitude, MouseTriggerEvent.ENTER, true)
+    }
+
+    def removeTriggers()
+    {
+        getMouseListeners().each() {
+            removeMouseListener(it)    
+        }
     }
 
 }

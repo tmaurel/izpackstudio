@@ -4,6 +4,8 @@ import models.*
 import views.*
 import java.awt.Dimension
 import javax.swing.JComponent
+import java.awt.Container
+import javax.swing.JButton
 
 
 
@@ -399,6 +401,29 @@ class IzPackStudio extends Controller
     {
         // Add the Thumb to the Thumbs List
         listModel.addElement(controller.getThumb())
+    }
+
+
+    /**
+    * Enable/Disable all the buttons of the given component
+    *
+    * @param component The component containing the buttons you wanna enable/disable
+    * @param enabled True or false 
+    */
+    def setButtonsEnabled(component, enabled = true)
+    {
+        if(component instanceof JButton)
+        {
+            component.setEnabled(enabled)
+        }
+
+        if(component instanceof Container)
+        {
+            component.getComponents().each
+            {
+                setButtonsEnabled(it, enabled)
+            }
+        }
     }
 
 
