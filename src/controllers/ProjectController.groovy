@@ -1,6 +1,8 @@
 package controllers
 
 import views.ProjectSettingsView
+import controllers.panels.*
+import models.panels.PanelModel
 
 
 /**
@@ -167,6 +169,72 @@ class ProjectController extends Controller {
             it.refresh()
         }
     }
-    
+
+    public createPanel(String panelName)
+    {
+           def panel
+           switch(panelName)
+                {
+                    case "FinishPanel":
+                        panel = new FinishPanelController(new PanelModel(), null, parent.project)
+                        break
+                    case "InfoPanel":
+                    case "HTMLInfoPanel":
+                    case "GeneralInfoPanel":
+                        panel = new GeneralInfoPanelController(new PanelModel(), null, parent.project)
+                        break
+                    case "LicencePanel":
+                    case "HTMLLicencePanel":
+                    case "GeneralLicencePanel":
+                        panel = new GeneralLicencePanelController(new PanelModel(), null, parent.project)
+                        break
+                     case "HelloPanel":
+                        panel = new HelloPanelController(new PanelModel(), null, parent.project)
+                        break
+                     case "InstallPanel":
+                        panel = new InstallPanelController(new PanelModel(), null, parent.project)
+                        break
+                     case "PacksPanel":
+                        panel = new PacksPanelController(new PanelModel(), null, parent.project)
+                        break
+                     case "PathInputPanel":
+                        panel = new PathInputPanelController(new PanelModel(), null, parent.project)
+                        break
+                     case "SimpleFinishPanel":
+                        panel = new SimpleFinishPanelController(new PanelModel(), null, parent.project)
+                        break
+                     case "SummaryPanel":
+                        panel = new SummaryPanelController(new PanelModel(), null, parent.project)
+                        break
+                     case "TargetPanel":
+                        panel = new TargetPanelController(new PanelModel(), null, parent.project)
+                        break
+                    default:
+                        println "And this is not"
+                }
+          panel.start()
+          addPanel(panel)
+    }
+
+    def loadXML(String fileName)
+    {
+        StringBuffer fileData = new StringBuffer(1000)
+        BufferedReader reader = new BufferedReader(new FileReader(fileName))
+        char[] buf = new char[1024]
+        int numRead=0
+        while((numRead=reader.read(buf)) != -1)
+        {
+            String readData = String.valueOf(buf, 0, numRead)
+            fileData.append(readData)
+            buf = new char[1024]
+        }
+        reader.close()
+        def xml = new XmlParser().parseText(fileData.toString())
+        def panelsToBeInstanciated = xml.panels.panel
+        panelsToBeInstanciated.each
+        {panel ->
+            createPanel("${panel.'@classname'}")
+        }
+     }
 
 }

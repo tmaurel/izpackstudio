@@ -91,6 +91,8 @@ class IzPackStudio extends Controller
         animation = new AnimationController(null, view.panelScrollPane, project)
         loaded = true
 
+        project.loadXML("install.xml")
+
     }
 
     /**
