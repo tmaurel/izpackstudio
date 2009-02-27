@@ -51,16 +51,16 @@ class ToolBarButton extends JButton
         setBrightness(0.9f)
         setOpaque(false)
         setPreferredSize(new Dimension(90,80))
-        setFocusPainted(false)
-        setEnabled(false)          
+        setFocusPainted(false)       
     }
 
-    public void setEnabled(boolean enabled)
+    public void setEnabled(boolean b)
     {
-        super.setEnabled(enabled)
-        if(enabled)
+        super.setEnabled(b)
+        if(b)
         {
             addTriggers();
+            setBrightness(0.9f)
         }
         else
         {
@@ -178,7 +178,10 @@ class ToolBarButton extends JButton
     def removeTriggers()
     {
         getMouseListeners().each() {
-            removeMouseListener(it)    
+            if(it instanceof MouseTrigger)
+            {
+                removeMouseListener(it)
+            }
         }
     }
 

@@ -146,7 +146,7 @@ class AnimationController extends Controller {
     * Start method of the Controller
     *
     */
-    def start()
+    def start(args = null)
     {
         size = view.getViewport().getSize().width
         gap = size / 2

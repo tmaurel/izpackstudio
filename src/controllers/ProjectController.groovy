@@ -21,6 +21,13 @@ class ProjectController extends Controller {
 
 
     /**
+    * Boolean telling if u'r currently in a project or not
+    *
+    */
+    def isInProject = false
+
+    
+    /**
     * ProjectController Constructor
     *
     * @param    m   The model used by the constructor
@@ -32,8 +39,8 @@ class ProjectController extends Controller {
         super(m, v, p)
         projectSettingsView = view.build(ProjectSettingsView)
     }
-
-
+    
+    
     /**
     * Add a controller to panel's list
     *
@@ -155,9 +162,18 @@ class ProjectController extends Controller {
     * Start method of the Controller
     *
     */
-    public start() {
-
+    public start(args = null) {
+        isInProject = true
     }
+
+    /**
+    * Stop method of the Controller
+    *
+    */
+    public stop() {
+        isInProject = false
+    }
+
 
     /**
     * Refresh all panels
@@ -170,52 +186,67 @@ class ProjectController extends Controller {
         }
     }
 
+    /**
+    * Create a new panel
+    *
+    * @param panelName Name of the panel 
+    */
     public createPanel(String panelName)
     {
-           def panel
-           switch(panelName)
-                {
-                    case "FinishPanel":
-                        panel = new FinishPanelController(new PanelModel(), null, parent.project)
-                        break
-                    case "InfoPanel":
-                    case "HTMLInfoPanel":
-                    case "GeneralInfoPanel":
-                        panel = new GeneralInfoPanelController(new PanelModel(), null, parent.project)
-                        break
-                    case "LicencePanel":
-                    case "HTMLLicencePanel":
-                    case "GeneralLicencePanel":
-                        panel = new GeneralLicencePanelController(new PanelModel(), null, parent.project)
-                        break
-                     case "HelloPanel":
-                        panel = new HelloPanelController(new PanelModel(), null, parent.project)
-                        break
-                     case "InstallPanel":
-                        panel = new InstallPanelController(new PanelModel(), null, parent.project)
-                        break
-                     case "PacksPanel":
-                        panel = new PacksPanelController(new PanelModel(), null, parent.project)
-                        break
-                     case "PathInputPanel":
-                        panel = new PathInputPanelController(new PanelModel(), null, parent.project)
-                        break
-                     case "SimpleFinishPanel":
-                        panel = new SimpleFinishPanelController(new PanelModel(), null, parent.project)
-                        break
-                     case "SummaryPanel":
-                        panel = new SummaryPanelController(new PanelModel(), null, parent.project)
-                        break
-                     case "TargetPanel":
-                        panel = new TargetPanelController(new PanelModel(), null, parent.project)
-                        break
-                    default:
-                        println "And this is not"
-                }
-          panel.start()
-          addPanel(panel)
+        def panel
+        switch(panelName)
+            {
+                case "FinishPanel":
+                    panel = new FinishPanelController(new PanelModel(), null, parent.project)
+                    break
+                case "InfoPanel":
+                case "HTMLInfoPanel":
+                case "GeneralInfoPanel":
+                    panel = new GeneralInfoPanelController(new PanelModel(), null, parent.project)
+                    break
+                case "LicencePanel":
+                case "HTMLLicencePanel":
+                case "GeneralLicencePanel":
+                    panel = new GeneralLicencePanelController(new PanelModel(), null, parent.project)
+                    break
+                 case "HelloPanel":
+                    panel = new HelloPanelController(new PanelModel(), null, parent.project)
+                    break
+                 case "InstallPanel":
+                    panel = new InstallPanelController(new PanelModel(), null, parent.project)
+                    break
+                 case "PacksPanel":
+                    panel = new PacksPanelController(new PanelModel(), null, parent.project)
+                    break
+                 case "PathInputPanel":
+                    panel = new PathInputPanelController(new PanelModel(), null, parent.project)
+                    break
+                 case "SimpleFinishPanel":
+                    panel = new SimpleFinishPanelController(new PanelModel(), null, parent.project)
+                    break
+                 case "SummaryPanel":
+                    panel = new SummaryPanelController(new PanelModel(), null, parent.project)
+                    break
+                 case "TargetPanel":
+                    panel = new TargetPanelController(new PanelModel(), null, parent.project)
+                    break
+                default:
+                    println "And this is not"
+            }
+        panel.start()
+        view.build {
+            doLater
+            {
+                addPanel(panel)
+            }
+        }
     }
 
+    /**
+    * Load an XML file
+    *
+    * @param fileName File to be loaded
+    */
     def loadXML(String fileName)
     {
         StringBuffer fileData = new StringBuffer(1000)

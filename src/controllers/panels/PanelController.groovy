@@ -280,7 +280,7 @@ abstract class PanelController extends Controller {
      * Start the controller
      *
      */
-    public start()
+    public start(args = null)
     {
         showPanel()
     }

@@ -9,32 +9,11 @@ import static javax.swing.WindowConstants.EXIT_ON_CLOSE
 import java.awt.event.WindowEvent
 import java.awt.event.WindowListener
 
-def perspective = new Perspective(this)
 
-actions
-{
-    action(
-        id: 'restoreDefault',
-        name: 'Restore perspective',
-        closure: perspective.&restoreDefault,
-        mnemonic: 'R',
-        accelerator: 'ctrl R',
-        shortDescription: 'Restore default perspective',
-        smallIcon: imageIcon(resource:"/images/photo-multiple.png")
-    )
-	
-	action(
-		id: 'toggleProjectSettings',
-		name: 'Toggle Project Settings',
-		closure: controller.&toggleProjectSettings,
-		mnemonic: 'P',
-		accelerator: 'ctrl P',
-		shortDescription: 'toggle project settings'
-    )
-}
-
-
-
+/**
+ * Building GUI
+ *
+ */
 frame(
         id: 'mainFrame',
         title: 'IzPack Studio',
@@ -53,35 +32,52 @@ frame(
      menuBar(
              id: 'studioMenu'
      ) {
-          menu(
-                 text: 'File',
-                 mnemonic: 'F'
-         ) { }
-          menu(
-                 text: 'Edit',
-                 mnemonic: 'E'
-         ) {}
-         menu(
-                 text: 'Window',
-                 mnemonic: 'W'
-         ) {
-                menuItem(restoreDefault)
-				menuItem(toggleProjectSettings)
-         }
+        menu(
+             text: 'File',
+             mnemonic: 'F'
+        ) {
+            menuItem(newProject)
+            menuItem(closeProject)  
+            menuItem(toggleProjectSettings)        
+        }
+        menu(
+             text: 'Edit',
+             mnemonic: 'E'
+        ) {}
+        menu(
+             text: 'Insert',
+             mnemonic: 'I'
+        ) {
+            menuItem(addHelloPanel)
+            menuItem(addFinishPanel)
+            menuItem(addLicencePanel)
+            menuItem(addInfoPanel)
+            menuItem(addSummaryPanel)
+            menuItem(addInstallPanel)
+            menuItem(addPathInputPanel)
+            menuItem(addTargetPanel)
+            menuItem(addPacksPanel)            
+        }
+        menu(
+             text: 'Window',
+             mnemonic: 'W'
+        ) {
+            menuItem(restoreDefault)
+        }
      }
 
 
-     mainFrame.getContentPane().add(perspective.toolWindowManager, "1,1,")
+     mainFrame.getContentPane().add(controller.perspective.toolWindowManager, "1,1,")
 
      mainFrame.addWindowListener( { e ->
         switch (e.getID())
         {
             case WindowEvent.WINDOW_OPENED:
-                perspective.loadPerspective()
+                controller.perspective.loadPerspective()
             break
 
             case WindowEvent.WINDOW_CLOSING:
-                perspective.savePerspective()
+                controller.perspective.savePerspective()
             break
         }
     } as WindowListener)

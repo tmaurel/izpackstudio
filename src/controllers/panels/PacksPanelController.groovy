@@ -5,6 +5,7 @@ import java.awt.BorderLayout
 import javax.swing.BorderFactory
 import java.awt.Color
 import views.panels.PacksPanelPropertiesView
+import java.awt.event.ActionListener
 
 
 /**
@@ -30,6 +31,7 @@ class PacksPanelController extends PanelController
     protected buildPanel()
     {
         def container = null
+
         view.build {
 
             container = panel(
@@ -51,7 +53,30 @@ class PacksPanelController extends PanelController
 
 
             panelsContainer.add(panel)
-            container.add(parent.getInstallerFrame().createNavPanel(), BorderLayout.SOUTH)
+
+            def navPanel = parent.getInstallerFrame().createNavPanel()
+            def navCompo = navPanel.getComponents()
+            def actionListener =
+            [
+                actionPerformed:
+                {
+                    def source = it.getSource();
+                    if (source == navCompo[1])
+                    {
+                        parent.slidePrev(this)
+                    }
+                    else if (source == navCompo[3])
+                    {
+                        parent.slideNext(this)
+                    }
+                }
+            ] as ActionListener
+
+            navCompo[1].addActionListener(actionListener)
+            navCompo[3].addActionListener(actionListener)
+
+
+            container.add(navPanel, BorderLayout.SOUTH)
 
 
             // Define PreferredSize for the Container
@@ -74,7 +99,7 @@ class PacksPanelController extends PanelController
     * Start method of the Controller
     *
     */
-    public start()
+    public start(args = null)
     {
         // Build Panel
         buildPanel()

@@ -25,13 +25,13 @@ class TargetPanelController extends PanelController
     * Start method of the Controller
     *
     */
-    public start()
+    public start(args = null)
     {
         // Build Panel
         buildPanel()
     }
 
-   public refresh()
+    public refresh()
     {
 
     }

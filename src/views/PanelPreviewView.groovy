@@ -29,9 +29,11 @@ panel(
                 componentMoved: {},
                 componentResized:
                 {
-                    if(controller.loaded && controller.project.getPanels().size>0)
+                    if(controller.loaded && controller.project.getPanels().size>0 && controller.view.thumbList.getSelectedIndex() != -1)
                     {
-                        controller.slideTo(controller.view.thumbList.getSelectedIndex())
+                        doLater{
+                            controller.slideTo(controller.view.thumbList.getSelectedIndex())
+                        }
                     }
                 },
                 componentShown: {}

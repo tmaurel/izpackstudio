@@ -17,10 +17,7 @@ scrollPane(
                     'New Project',
                     imageIcon(resource: '../images/newproject.png')
             ),
-            id: 'startNewProject',
-            actionPerformed: {
-
-            }
+            action: newProject
         )
 
         widget(
@@ -28,10 +25,7 @@ scrollPane(
                     'Close Project',
                     imageIcon(resource: '../images/closeproject.png')
             ),
-            id: 'closeProject',
-            actionPerformed: {
-
-            }
+            action: closeProject
         )
 
     }

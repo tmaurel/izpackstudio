@@ -25,7 +25,7 @@ class SummaryPanelController extends PanelController
     * Start method of the Controller
     *
     */
-    public start()
+    public start(args = null)
     {
         // Build Panel
         buildPanel()

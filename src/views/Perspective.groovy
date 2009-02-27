@@ -46,18 +46,18 @@ class Perspective
             "settings" : "setThumbListProperties"
         ],
         [
-            "id": "Quick Actions",
-            "anchor" : ToolWindowAnchor.TOP,
-            "icon" : "images/folder-option-insert.png",
-            "view" : ProjectActionsView,
-            "settings" : "setProjectActionsProperties"
-        ],
-        [
             "id": "Create Panel",
             "anchor" : ToolWindowAnchor.TOP,
             "icon" : "images/photo-option-add.png",
             "view" : AddPanelToolBarView,
             "settings" : "setCreatePanelProperties"
+        ],            
+        [
+            "id": "Quick Actions",
+            "anchor" : ToolWindowAnchor.TOP,
+            "icon" : "images/folder-option-insert.png",
+            "view" : ProjectActionsView,
+            "settings" : "setProjectActionsProperties"
         ],
         [
             "id": "Panel Properties",

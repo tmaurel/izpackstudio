@@ -57,6 +57,6 @@ abstract class Controller
     * Define the controller start method
     *
     */
-    def abstract public start() {}
+    def abstract public start(args = null) {}
 
 }

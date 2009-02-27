@@ -55,7 +55,7 @@ panel(
             thumbList.addListSelectionListener( {e ->
                 if (!e.getValueIsAdjusting())
                 {
-                    if (thumbList.getSelectedIndex() != -1)
+                    if (thumbList.getSelectedIndex() != -1 && thumbList.getModel().getSize() != 0)
                     {
                         controller.slideTo(thumbList.getSelectedIndex())
                     }

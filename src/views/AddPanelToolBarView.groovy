@@ -1,10 +1,12 @@
 package views
 
-import models.panels.PanelModel
-import controllers.panels.*
 import helpers.WrapLayout
 
 
+/**
+ * Building GUI
+ *
+ */
 scrollPane(
     constraints: '0,0',
 ) {
@@ -20,13 +22,8 @@ scrollPane(
                     'HelloPanel',
                     imageIcon(resource: '../images/hellopanel.png')
             ),
-            id: 'addHelloPanel',
-            actionPerformed: {
-                def hello = new HelloPanelController(new PanelModel(), null, controller.project)
-                hello.start()
-                controller.project.addPanel(hello)
-            }
-        )
+            action: addHelloPanel
+        ) 
 
 
         widget(
@@ -34,12 +31,7 @@ scrollPane(
                     'FinishPanel',
                     imageIcon(resource: '../images/finishpanel.png')
             ),
-            id: 'addFinishPanel',
-            actionPerformed: {
-                def finish = new FinishPanelController(new PanelModel(), null, controller.project)
-                finish.start()
-                controller.project.addPanel(finish)
-            }
+            action: addFinishPanel
         )
 
 
@@ -48,12 +40,7 @@ scrollPane(
                     'LicencePanel',
                     imageIcon(resource: '../images/licencepanel.png')
             ),
-            id: 'addLicencePanel',
-            actionPerformed: {
-                def licence = new GeneralLicencePanelController(new PanelModel(), null, controller.project,0)
-                licence.start()
-                controller.project.addPanel(licence)
-            }
+            action: addLicencePanel
         )
 
         widget(
@@ -61,12 +48,7 @@ scrollPane(
                     'InfoPanel',
                     imageIcon(resource: '../images/infopanel.png')
             ),
-            id: 'addInfoPanel',
-            actionPerformed: {
-                def info = new GeneralInfoPanelController(new PanelModel(), null, controller.project,1)
-                info.start()
-                controller.project.addPanel(info)
-            }
+            action: addInfoPanel
         )
 
         widget(
@@ -74,12 +56,7 @@ scrollPane(
                     'SummaryPanel',
                     imageIcon(resource: '../images/summarypanel.png')
             ),
-            id: 'addSummaryPanel',
-            actionPerformed: {
-                def summary = new SummaryPanelController(new PanelModel(), null, controller.project)
-                summary.start()
-                controller.project.addPanel(summary)
-            }
+            action: addSummaryPanel
         )
 
         widget(
@@ -87,12 +64,7 @@ scrollPane(
                     'InstallPanel',
                     imageIcon(resource: '../images/installpanel.png')
             ),
-            id: 'addInstalPanel',
-            actionPerformed: {
-                def install = new InstallPanelController(new PanelModel(), null, controller.project)
-                install.start()
-                controller.project.addPanel(install)
-            }
+            action: addInstallPanel
         )
 
         widget(
@@ -100,12 +72,7 @@ scrollPane(
                     'PathInputPanel',
                     imageIcon(resource: '../images/pathinputpanel.png')
             ),
-            id: 'addPathInputPanel',
-            actionPerformed: {
-                def pathInput = new PathInputPanelController(new PanelModel(), null, controller.project)
-                pathInput.start()
-                controller.project.addPanel(pathInput)
-            }
+            action: addPathInputPanel
         )
 
         widget(
@@ -113,24 +80,7 @@ scrollPane(
                     'TargetPanel',
                     imageIcon(resource: '../images/targetpanel.png')
             ),
-            id: 'addTargetPanel',
-            actionPerformed: {def target = new TargetPanelController(new PanelModel(), null, controller.project)
-                target.start()
-                controller.project.addPanel(target)
-            }
-        )
-
-        widget(
-            new ToolBarButton(
-                    'XInfoPanel',
-                    imageIcon(resource: '../images/xinfopanel.png')
-            ),
-            id: 'addXInfoPanel',
-            actionPerformed: {
-                def xInfo = new XInfoPanelController(new PanelModel(), null, controller.project)
-                xInfo.start()
-                controller.project.addPanel(xInfo)
-            }
+            action: addTargetPanel
         )
 
         widget(
@@ -138,12 +88,7 @@ scrollPane(
                     'PacksPanel',
                     imageIcon(resource: '../images/packspanel.png')
             ),
-            id: 'addPacksPanel',
-            actionPerformed: {
-                def packs = new PacksPanelController(new PanelModel(), null, controller.project)
-                packs.start()
-                controller.project.addPanel(packs)
-            }
+            action: addPacksPanel
         )
     }
 }

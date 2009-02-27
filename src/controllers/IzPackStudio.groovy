@@ -2,10 +2,10 @@ package controllers
 
 import models.*
 import views.*
+import actions.*
 import java.awt.Dimension
 import javax.swing.JComponent
-import java.awt.Container
-import javax.swing.JButton
+import java.awt.event.ActionEvent
 
 
 
@@ -46,6 +46,20 @@ class IzPackStudio extends Controller
     */
     private loaded
 
+    /**
+     * GUI Perspective
+     *
+     */
+    def perspective
+
+    /**
+     * Project Actions
+     *
+     */
+    def projectActions
+
+
+
    /**
     * IzPackStudio Constructor
     *
@@ -63,7 +77,7 @@ class IzPackStudio extends Controller
     * Start IzPack Studio
     *
     */
-    public start()
+    public start(args = null)
     {
 
         // Display the Splash Screen
@@ -71,29 +85,39 @@ class IzPackStudio extends Controller
 
         setProgressBar(1, "Loading GUI...")
 
-        GUI = view.build(IzPackStudioView)
+        /**
+         * Building Actions
+         *
+         */
+        projectActions = view.build(ProjectActions)
+        perspective = new Perspective(view)
+        view.build(PerspectiveActions)
 
-        sleep(1000)
-        setProgressBar(10, "Loaded !")
+        GUI = view.build(IzPackStudioView)
 
         // Assign the our own List Model to the ThumbList
         listModel = view.thumbList.getModel()
 
-        // Display the GUI
-        GUI.show()
-
         // Create the new empty project
         // TO-DO : Args to load projects (no empty project)
         project = new ProjectController(new ProjectModel(), null, this)
-        project.start()
+
+        //setActionsEnabled(false)
+
+        sleep(1000)
+        setProgressBar(10, "Loaded !")        
+
+        // Display the GUI
+        GUI.show()
 
         // Create a new Animation Controller to slide between panels
         animation = new AnimationController(null, view.panelScrollPane, project)
         loaded = true
 
-        project.loadXML("install.xml")
+        //project.loadXML("install.xml")
 
     }
+
 
     /**
     * Start Splash Screen
@@ -283,35 +307,47 @@ class IzPackStudio extends Controller
 
 
     /**
-    * Delete a panel
+    * Delete a panel (through ActionEvent)
     *
     * @param ae ActionEvent thrown by view 
     */
-    def deletePanel(ae)
+    def deletePanel(ActionEvent ae)
     {
         def panel = view.thumbList.getSelectedIndex()
+        deletePanel(panel)
+    }
+
+
+    /**
+    * Delete a panel
+    *
+    * @param panel Panel number
+    */
+    def deletePanel(int panel)
+    {
+        
         view.build
         {
             doLater
             {
                 breakAnimation()
-               
+
                 listModel.remove(panel)
                 view.panelPreview.remove(panel)
 
                 GUI.validate()
-                
+
                 def prev = panel - 1
                 if(prev >= 0 && prev < listModel.size())
                 {
                     view.thumbList.setSelectedIndex(prev)
                 }
+                project.deletePanel(panel)
 
             }
-        }       
-        project.deletePanel(panel)
-    }
+        }
 
+    }
 
     /**
     * Display Panel preview and thumb
@@ -412,23 +448,81 @@ class IzPackStudio extends Controller
     * @param component The component containing the buttons you wanna enable/disable
     * @param enabled True or false 
     */
-    def setButtonsEnabled(component, enabled = true)
+    def setActionsEnabled(enabled = true)
     {
-        if(component instanceof JButton)
-        {
-            component.setEnabled(enabled)
+        projectActions.each {
+            it.enabled = enabled
         }
+        view.newProject.setEnabled(true)
+    }
 
-        if(component instanceof Container)
+
+   /**
+    * Create a panel
+    *
+    * @param panel String for panel name
+    */
+    public createPanel(panel)
+    {
+        if(project != null)
+            project.createPanel(panel)
+    }
+
+
+   /**
+    * Create a new project
+    *
+    */
+    public newProject(e)
+    {
+        if(project.isInProject)
         {
-            component.getComponents().each
-            {
-                setButtonsEnabled(it, enabled)
-            }
+            closeProject(e)
+        }
+        //project.model = new ProjectModel()
+        setActionsEnabled(true)
+        project.start()       
+    }
+
+
+   /**
+    * Close current project project
+    *
+    */
+    public closeProject(e)
+    {
+        /*
+        * TO DO
+        */
+        clean()
+        project.stop()
+    }
+
+   /**
+    * Load an existing project
+    *
+    */
+    public loadProject(e)
+    {
+
+    }
+
+
+    /**
+    * Clean the GUI
+    *
+    */
+    private clean()
+    {
+        setActionsEnabled(false)
+        for(def i=listModel.size(); i> 0; --i)
+        {
+            deletePanel(i-1)
         }
     }
 
 
+    
     /**
     * Main method called when launching app
     *
