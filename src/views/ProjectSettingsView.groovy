@@ -1,11 +1,9 @@
 package views
 
 import helpers.Positionning
-import java.awt.BorderLayout
 import java.awt.Color
 import java.awt.Dimension
 import javax.swing.BorderFactory
-import javax.swing.SwingConstants
 import net.miginfocom.layout.AC
 import net.miginfocom.layout.LC
 import net.miginfocom.swing.MigLayout
