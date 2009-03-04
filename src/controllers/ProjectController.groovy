@@ -12,14 +12,6 @@ import models.panels.PanelModel
 class ProjectController extends Controller {
 
 
-
-    /**
-    * The Project Settings View
-    *
-    */    
-    def projectSettingsView
-
-
     /**
     * Boolean telling if u'r currently in a project or not
     *
@@ -37,7 +29,6 @@ class ProjectController extends Controller {
     ProjectController(m = null, v = null, p = null)
     {
         super(m, v, p)
-        projectSettingsView = view.build(ProjectSettingsView)
     }
     
     
@@ -86,16 +77,6 @@ class ProjectController extends Controller {
     {
         def panels = getPanels()
         panels.remove(index)
-    }
-    
-
-    /**
-    * Get the model's installerframe
-    *
-    * @return Current installer frame
-    */
-    public getInstallerFrame() {
-        return model.getInstallerFrame()
     }
 
 
@@ -146,17 +127,17 @@ class ProjectController extends Controller {
     */
     def toggleProjectSettings()
     {
-        projectSettingsView.setVisible(true)        
+        view.with
+        {
+            doLater
+            {
+                build(ProjectSettingsView)
+                projectSettings.validate()
+            }
+        }
+
     }
 
-    /**
-    * Display the Authors view
-    *
-    */
-    def dispAuthors()
-    {
-          view.addAuthors.setVisible(true)
-    }
 
     /**
     * Start method of the Controller

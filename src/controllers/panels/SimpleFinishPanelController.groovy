@@ -33,13 +33,13 @@ class SimpleFinishPanelController extends PanelController
         def nav = getPanel().getComponents()[1].getComponents()
         nav[1].setEnabled(false)
         nav[3].setEnabled(false)
-        nav[5].setText(parent.getInstallerFrame().langpack.getString("FinishPanel.done"))
+        nav[5].setText(parent.model.langpack.getString("FinishPanel.done"))
 
-        def useButtonIcons = parent.getInstallerFrame().installdata.guiPrefs.modifier.get("useButtonIcons");
+        def useButtonIcons = parent.model.installdata.guiPrefs.modifier.get("useButtonIcons");
 
         if (useButtonIcons == null || "yes".equalsIgnoreCase(useButtonIcons))
         {
-            nav[5].setIcon(parent.getInstallerFrame().icons.getImageIcon("done"))
+            nav[5].setIcon(parent.model.icons.getImageIcon("done"))
         }
 
 

@@ -6,6 +6,7 @@ import actions.*
 import java.awt.Dimension
 import javax.swing.JComponent
 import java.awt.event.ActionEvent
+import xeus.jcl.JarClassLoader
 
 
 
@@ -71,6 +72,7 @@ class IzPackStudio extends Controller
     {
         super(m, v, p)
         loaded = false
+
     }
 
     /**
@@ -92,6 +94,7 @@ class IzPackStudio extends Controller
         projectActions = view.build(ProjectActions)
         perspective = new Perspective(view)
         view.build(PerspectiveActions)
+        
 
         GUI = view.build(IzPackStudioView)
 
@@ -102,7 +105,7 @@ class IzPackStudio extends Controller
         // TO-DO : Args to load projects (no empty project)
         project = new ProjectController(new ProjectModel(), null, this)
 
-        //setActionsEnabled(false)
+        setActionsEnabled(false)
 
         sleep(1000)
         setProgressBar(10, "Loaded !")        
@@ -113,8 +116,6 @@ class IzPackStudio extends Controller
         // Create a new Animation Controller to slide between panels
         animation = new AnimationController(null, view.panelScrollPane, project)
         loaded = true
-
-        //project.loadXML("install.xml")
 
     }
 
@@ -325,7 +326,7 @@ class IzPackStudio extends Controller
     */
     def deletePanel(int panel)
     {
-        
+
         view.build
         {
             doLater

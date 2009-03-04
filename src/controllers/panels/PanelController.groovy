@@ -65,7 +65,7 @@ abstract class PanelController extends Controller {
             container.add(panelsContainer, BorderLayout.CENTER);
 
             // Instantiate a new IzPack HelloPanel using the parent model
-            def panel = Class.forName(model.getName()).newInstance(parent.getInstallerFrame(), parent.getInstallerFrame().installdata)
+            def panel = Class.forName(model.getName()).newInstance(parent.model, parent.model.installdata)
             panel.panelActivate()
 
             this.removeAL(panel)
@@ -73,7 +73,7 @@ abstract class PanelController extends Controller {
 
             panelsContainer.add(panel)
 
-            def navPanel = parent.getInstallerFrame().createNavPanel()
+            def navPanel = parent.model.createNavPanel()
             def navCompo = navPanel.getComponents()
             def actionListener =
             [
@@ -96,7 +96,6 @@ abstract class PanelController extends Controller {
             
 
             container.add(navPanel, BorderLayout.SOUTH)
-
 
             // Define PreferredSize for the Container
             container.setPreferredSize(parent.getSize())

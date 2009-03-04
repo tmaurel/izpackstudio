@@ -1,23 +1,26 @@
 package models
 
-import com.izforge.izpack.installer.InstallerFrame
+import com.izforge.izpack.GUIPrefs
+import com.izforge.izpack.Info
 import com.izforge.izpack.Info.Author
 import com.izforge.izpack.LocaleDatabase
-import com.izforge.izpack.GUIPrefs
-import com.izforge.izpack.installer.ResourceManager
-import java.io.File
-import com.izforge.izpack.gui.IconsDatabase
-import net.n3.nanoxml.*
-import javax.swing.ImageIcon
-import java.awt.Dimension
 import com.izforge.izpack.gui.ButtonFactory
+import com.izforge.izpack.gui.EtchedLineBorder
 import com.izforge.izpack.gui.LabelFactory
+import com.izforge.izpack.installer.InstallData
+import com.izforge.izpack.installer.InstallerBase
+import com.izforge.izpack.installer.InstallerFrame
+import com.izforge.izpack.util.AbstractUIProgressHandler
+import groovy.swing.SwingBuilder
+import java.awt.Dimension
+import java.awt.Font
+import javax.swing.BorderFactory
+import javax.swing.BoxLayout
+import javax.swing.JPanel
+import javax.swing.border.TitledBorder
+import groovy.beans.Bindable
 
-/**
- * Project Model containing all global vars needed for a project
- *
- */
-class ProjectModel {
+class ProjectModel extends InstallerFrame {
 
     /**
     * Container for the panel controllers
@@ -25,69 +28,167 @@ class ProjectModel {
     */
     private panels = []
 
-    private installerframe
+    @Bindable
+    def prefs
 
-    private width
-
-    private height
+    @Bindable
+    def info
 
     ProjectModel()
     {
-        installerframe = new InstallerFrame()
-        load()
-        width = 600
-        height = 450
+        super("", new InstallData(), new InstallerBase())
+        info = new Info()
+        installdata.info = info
+        prefs = new GUIPrefs()
+        installdata.guiPrefs = prefs
+        addInfos()
+        setLangPack("fra")
+        addGUIPrefs()
+        installdata.installSuccess = true
+        setDefaults()
     }
 
-    public getSize()
+    public setDefaults()
     {
-        return new Dimension(width, height)
+        prefs.width = 600;
+        prefs.height = 400;
     }
 
-    
-    public getInstallerFrame()
-    {
-        return installerframe
-    }    
+    @Override
+    protected void loadPanels() throws Exception{}
 
+    @Override
+    protected void buildGUI() {}
+
+    @Override
+    protected void showFrame() {}
+
+    @Override
+    protected void switchPanel(int last) {}
+
+    public Dimension getPanelsContainerSize()
+    {
+        return getSize();
+    }
+
+    public InputStream getResource(String a)
+    {
+        return getClass().getResourceAsStream("/");
+    }
+
+    public void skipPanel() {}
+
+    public void lockPrevButton() {}
+
+    public void lockNextButton() {}
+
+    public void unlockPrevButton() {}
+
+    public void unlockNextButton() {}
+
+    public void setQuitButtonText(String text) {}
+
+    public void setQuitButtonIcon(String iconName) {}
+
+    public void install(AbstractUIProgressHandler listener) {}
+
+
+    /**
+    * Create the Navigation Panel of the Installer Frame
+    *
+    * @return The navigation Panel
+    */
+    public JPanel createNavPanel()
+    {
+        def swing = new SwingBuilder()
+        def navPanel = swing.panel(
+            id: 'navPanel',
+            border: BorderFactory.createCompoundBorder(
+                            BorderFactory.createEmptyBorder(8, 8, 8, 8),
+                            BorderFactory.createTitledBorder(
+                                    new EtchedLineBorder(),
+                                    langpack.getString("installer.madewith") + " ",
+                                    TitledBorder.DEFAULT_JUSTIFICATION,
+                                    TitledBorder.DEFAULT_POSITION,
+                                    new Font("Dialog", Font.PLAIN, 10)))
+        ) {
+
+            navPanel.setLayout(new BoxLayout((JPanel) navPanel, BoxLayout.X_AXIS))
+
+            hglue()
+
+            widget(
+                    ButtonFactory.createButton(
+                        langpack.getString("installer.prev"),
+                        icons.getImageIcon("stepback"),
+                        installdata.buttonsHColor
+                    ),
+                    name: "prevButton"
+            )
+
+            rigidArea(width:5, height:0)
+
+            widget(
+                    ButtonFactory.createButton(
+                        langpack.getString("installer.next"),
+                        icons.getImageIcon("stepforward"),
+                        installdata.buttonsHColor
+                    ),
+                    name: "nextButton"
+            )
+
+            rigidArea(width:5, height:0)
+
+            widget(
+                    ButtonFactory.createButton(
+                        langpack.getString("installer.quit"),
+                        icons.getImageIcon("stop"),
+                        installdata.buttonsHColor
+                    ),
+                    name: "quitButton"
+            )
+        }
+
+        return(navPanel)
+
+    }
+
+    public Dimension getSize()
+    {
+        return new Dimension(installdata.guiPrefs.width, installdata.guiPrefs.height)
+    }
 
     private addInfos()
     {
-        installerframe.info.setAppName("IzPackStudio")
-        installerframe.info.setAppVersion("0.1")
-        installerframe.info.addAuthor(new Author("Alexis Plantin", "alexis@izs.com"))
-        installerframe.info.addAuthor(new Author("Thomas Maurel", "thomas@izs.com"))
-        installerframe.info.addAuthor(new Author("Mickael Lasnes", "mickael@izs.com"))
-        installerframe.info.addAuthor(new Author("Samuel Djian", "samuel@izs.com"))
-        installerframe.info.setAppURL("http://www.izpack.org")
-        installerframe.installdata.info = installerframe.info
+        info.setAppName("IzPackStudio")
+        info.setAppVersion("0.1")
+        info.addAuthor(new Author("Alexis Plantin", "alexis@izs.com"))
+        info.addAuthor(new Author("Thomas Maurel", "thomas@izs.com"))
+        info.addAuthor(new Author("Mickael Lasnes", "mickael@izs.com"))
+        info.addAuthor(new Author("Samuel Djian", "samuel@izs.com"))
+        info.setAppURL("http://www.izpack.org")
     }
 
-    private addLangPack()
+    private setLangPack(lang)
     {
-        installerframe.installdata.xmlData.setAttribute("langpack", "fra")
-        installerframe.installdata.localeISO3 = "fra"
+        installdata.xmlData.setAttribute("langpack", lang)
+        installdata.localeISO3 = lang
 
-        def test = new File('../bin/langpacks/installer/fra.xml')
+        def test = new File('../bin/langpacks/installer/' + lang + '.xml')
 
         InputStream ine = new FileInputStream(test.getAbsolutePath())
-        installerframe.installdata.langpack = new LocaleDatabase(ine)
-        installerframe.langpack = installerframe.installdata.langpack
+        installdata.langpack = new LocaleDatabase(ine)
+        langpack = installdata.langpack
     }
 
     private addGUIPrefs()
     {
-        def prefs = new GUIPrefs()
-        prefs.width = 800;
-        prefs.height = 600;
-        prefs.resizable = false;
         prefs.modifier.put("useButtonIcons", "yes")
         prefs.modifier.put("useLabelIcons", "yes")
-        installerframe.installdata.guiPrefs = prefs
 
         boolean useButtonIcons = true;
-        if (installerframe.installdata.guiPrefs.modifier.containsKey("useButtonIcons")
-                && "no".equalsIgnoreCase(installerframe.installdata.guiPrefs.modifier
+        if (installdata.guiPrefs.modifier.containsKey("useButtonIcons")
+                && "no".equalsIgnoreCase(installdata.guiPrefs.modifier
                 .get("useButtonIcons")))
         {
             useButtonIcons = false;
@@ -95,66 +196,16 @@ class ProjectModel {
         ButtonFactory.useButtonIcons(useButtonIcons)
 
         boolean useLabelIcons = true;
-        if (installerframe.installdata.guiPrefs.modifier.containsKey("useLabelIcons")
-                && "no".equalsIgnoreCase(installerframe.installdata.guiPrefs.modifier
+        if (installdata.guiPrefs.modifier.containsKey("useLabelIcons")
+                && "no".equalsIgnoreCase(installdata.guiPrefs.modifier
                 .get("useLabelIcons")))
         {
             useLabelIcons = false;
         }
         LabelFactory.setUseLabelIcons(useLabelIcons);
-
-
-    }
-
-    private addResourceManager()
-    {
-        ResourceManager.create(installerframe.installdata)
-    }
-
-    private addIcons() throws Exception
-    {
-        // Initialisations
-        installerframe.icons = new IconsDatabase()
-        URL url
-        ImageIcon img
-        XMLElement icon
-
-        InputStream inXML = InstallerFrame.class
-                .getResourceAsStream("/com/izforge/izpack/installer/icons.xml")
-
-        // Initialises the parser
-        StdXMLParser parser = new StdXMLParser()
-        parser.setBuilder(XMLBuilderFactory.createXMLBuilder())
-        parser.setReader(new StdXMLReader(inXML))
-        parser.setValidator(new NonValidator())
-
-        // We get the data
-        XMLElement data = (XMLElement) parser.parse()
-
-        // We load the icons
-        Vector<XMLElement> children = data.getChildrenNamed("icon")
-        int size = children.size()
-        for (int i = 0; i < size; i++)
-        {
-            icon = children.get(i)
-            url = InstallerFrame.class.getResource(icon.getAttribute("res"))
-            img = new ImageIcon(url)
-            installerframe.icons.put(icon.getAttribute("id"), img)
-        }
-
-
     }
 
 
-    private load()
-    {
-        addInfos()
-        addLangPack()
-        addGUIPrefs()
-        addIcons()
-        addResourceManager()
-        installerframe.createNavPanel()
-        installerframe.installdata.installSuccess = true
-    }
 
+ 
 }
