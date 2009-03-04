@@ -1,140 +1,158 @@
 package views
 
+import helpers.Positionning
+import java.awt.BorderLayout
+import java.awt.Color
+import java.awt.Dimension
+import javax.swing.BorderFactory
+import javax.swing.SwingConstants
+import net.miginfocom.layout.AC
+import net.miginfocom.layout.LC
 import net.miginfocom.swing.MigLayout
 
-import java.awt.Color
-import java.awt.BorderLayout
-import javax.swing.SwingConstants
-import javax.swing.BorderFactory
-import java.awt.Dimension
-import helpers.Positionning
-
-
-
-
 dialog(
-        id: 'projectSettings',
-        title: 'Project Settings',
-        location: Positionning.CenterPosition([500,600]),
-        size: [500,600],
-        resizable : false,
-        visible: true,
-        background: Color.DARK_GRAY,
-        modal: true,
-        layout: new MigLayout()      
+    id: 'projectSettings',    
+    modal: true,
+    title: 'Project Settings',
+    location: Positionning.CenterPosition([400,400]),
+    size: [400,400],
+    resizable : false,     
+    layout: new MigLayout()
 ) {
-
-    panel(
-        id: 'toppanel',
-        constraints:'span, w 100%, h 10%',
-        layout: new BorderLayout(),
-    ) {
-        label(
-            text : 'Application Settings',
-            horizontalAlignment : SwingConstants.CENTER
-        )
-    }
-
-    panel(
+    tabbedPane(
         id: 'middlepanel',
-        constraints:' w 100%, h 80%, wrap',
-        border: BorderFactory.createMatteBorder(1,1,1,1,Color.lightGray),
-        layout: new MigLayout("fill","[right w 150px]20px[left w 150px]","")
-    ) {
-
-        label (
-            text : 'Project Name',
-        )
-
-        textField(
-            id:'projName',
-            text: bind { controller.model.info.appName },
-            constraints : 'w 150px, wrap'
-        )
-
-        label (
-            text : 'Application Version'
-        )
-
-        textField(
-            id:'appVersion',
-            text: bind { controller.model.info.appVersion },
-            constraints : 'w 150px, wrap'
-        )
-
-        label (
-            text : 'Application URL'
-        )
-
-        textField(
-            id:'appURL',
-            text: bind { controller.model.info.appURL },
-            constraints : 'w 150px, wrap'
-        )
-
-        label (
-            text : 'Author(s)'
-        )
-
-        panel (
-            constraints : 'wrap'
+        constraints:' w 100%, h 90%, wrap'
+    )
+    {
+        panel(
+            title:'Global Settings',
+            tabToolTip:'Global Settings',
+            layout: new MigLayout("fill","[right w 150px]20px[left w 170px]","[top][top]")
         ) {
 
-            button (
-                id: 'addAuthor',
-                preferredSize : new Dimension(70,25),
-                text :'Add',
-                actionPerformed: {
-                    addAuthors.setVisible(true)
+            label (
+                text : 'Project Name',
+            )
+
+            textField(
+                id:'projName',
+                text: controller.model.info.appName,
+                constraints : 'w 150px, wrap'
+            )
+
+            label (
+                text : 'Application Version'
+            )
+
+            textField(
+                id:'appVersion',
+                text: controller.model.info.appVersion,
+                constraints : 'w 150px, wrap'
+            )
+
+            label (
+                text : 'Application URL'
+            )
+
+            textField(
+                id:'appURL',
+                text: controller.model.info.appURL,
+                constraints : 'w 150px, wrap'
+            )
+
+            label (
+                text : 'Author(s)'
+            )
+
+            panel (
+                constraints : 'wrap, growy',
+                layout: new MigLayout(
+                            new LC().insets("0"),
+                            new AC().gap("0"),
+                            new AC())
+            ) {
+
+                button (
+                    id: 'addAuthor',
+                    preferredSize : new Dimension(70,25),
+                    text :'New',
+                    actionPerformed: {
+                        def authors = authorsModel.getRowsModel().getValue()
+                        authors.add([name: "name", email: "email"])
+                        authorsModel.fireTableDataChanged()
+                    }
+                )
+
+                button (
+                    id: 'remAuthor',
+                    preferredSize : new Dimension(70,25),
+                    text :'Remove',
+                    constraints :'wrap',
+                    actionPerformed: {
+                        def authors = authorsModel.getRowsModel().getValue()
+                        def indexes = tableAuthors.getSelectedRows()
+                        indexes.each
+                        {
+                            authors.remove(it)
+                        }
+                        authorsModel.fireTableDataChanged()
+                    }
+                )
+
+                scrollPane(
+                    constraints : 'span 2, w 150px'
+                ) {
+
+                    table (
+                        id : 'tableAuthors',
+                        fillsViewportHeight: true
+                    ) {
+                        tableModel(
+                            id: 'authorsModel',
+                            list: controller.model.info.authors
+                        ) {
+                             propertyColumn(header:'Name',  propertyName:'name')
+                             propertyColumn(header:'Email', propertyName:'email')
+                        }
+                    }
                 }
+
+            }
+
+            label (
+                text : 'Width'
             )
 
-            button (
-                id: 'remAuthor',
-                preferredSize : new Dimension(70,25),
-                text :'Remove',
-                constraints :'wrap'
+            textField(
+                id:'appWidth',
+                text: controller.model.prefs.width,
+                constraints : 'w 150px, wrap'
             )
 
-            table (
-                id : 'listAuthors',
-                constraints : 'w 80px, h 20px'
+            label (
+                text : 'Heigth'
             )
+
+            textField(
+                id:'appHeight',
+                text: controller.model.prefs.height,
+                constraints : 'w 150px, wrap'
+            )
+
         }
-
-        label (
-            text : 'Width'
-        )
-
-        textField(
-            id:'appWidth',
-            text: bind { controller.model.prefs.width },
-            constraints : 'w 150px, wrap'
-        )
-
-        label (
-            text : 'Heigth'
-        )
-
-        textField(
-            id:'appHeight',
-            text: bind { controller.model.prefs.height },
-            constraints : 'w 150px, wrap'
-        )
-
     }
 
     panel(
         id: 'bottompanel',
         constraints:'span, w 100%, h 10%',
         border: BorderFactory.createMatteBorder(1,1,1,1,Color.lightGray),
-        layout: new MigLayout("","57% [] 15px []","19% [] ")
+        layout: new MigLayout("","40% [] 5px [] 5px [] 5px","[center] ")
     ) {
 
         button (
-            id: 'valid',
+            id: 'save',
             preferredSize : new Dimension(90,20),
-            text :'Valid',
+            text :'Save',
         )
 
         button (
@@ -146,75 +164,16 @@ dialog(
                 projectSettings.dispose()                        // not so clean ?
             }
         )
-    }
 
-
-    dialog(
-        id : 'addAuthors',
-        title : 'Add an author',
-        location : Positionning.CenterPosition([310,210]),
-        size : [310,210],
-        resizable : false,
-        background: Color.DARK_GRAY,
-        layout: new MigLayout(),
-        visible: false,
-        modal: true
-    ) {
-
-        panel(
-            id:'mainPanel',
-            constraints : 'w 100%, h 100%',
-            layout: new MigLayout("fill","4% [] [185px] 1%","5% [] 12% [] 12% [] 12% [] 5%")
-        ) {
-
-            label(
-                text : 'First Name'
-            )
-
-            textField(
-                id : 'firstName',
-                constraints : 'w 100%, wrap'
-            )
-
-            label(
-                text : 'Last Name'
-            )
-
-            textField(
-                id : 'lastName',
-                constraints : 'w 100%, wrap'
-            )
-
-            label(
-                text : 'Email Adress'
-            )
-
-            textField(
-                id : 'mail',
-                constraints : 'w 100%, wrap'
-            )
-
-            button (
-                id: 'valid',
-                preferredSize : new Dimension(70,20),
-                text :'Valid',
-                actionPerformed:
-                {
-                //   controller.addAuthorTest()
-                }
-            )
-
-            button (
-                id: 'cancel',
-                preferredSize : new Dimension(70,20),
-                text :'Cancel',
-                constraints : 'align right',
-                actionPerformed:
-                {
-                    addAuthors.setVisible(false)           // not so clean ?
-                }
-            )
-        }
-    }
+        button (
+            id: 'apply',
+            preferredSize : new Dimension(90,20),
+            text :'Apply',
+            actionPerformed:
+            {
+                projectSettings.dispose()                        // not so clean ?
+            }
+        )
+    }    
     
 }

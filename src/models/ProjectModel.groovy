@@ -28,10 +28,8 @@ class ProjectModel extends InstallerFrame {
     */
     private panels = []
 
-    @Bindable
     def prefs
 
-    @Bindable
     def info
 
     ProjectModel()
