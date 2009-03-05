@@ -10,6 +10,7 @@ actions
 		mnemonic: 'N',
 		accelerator: 'ctrl N',
 		shortDescription: 'Create a new installer project',
+        smallIcon: imageIcon(resource:"/images/newproject_mini.png")
     )
 
     action(
@@ -19,6 +20,7 @@ actions
 		mnemonic: 'X',
 		accelerator: 'ctrl X',
 		shortDescription: 'Close the current project',
+        smallIcon: imageIcon(resource:"/images/closeproject_mini.png")
     )
 
     action(
@@ -28,6 +30,7 @@ actions
 		mnemonic: 'P',
 		accelerator: 'ctrl  P',
 		shortDescription: 'Toggle project settings',
+        smallIcon: imageIcon(resource:"/images/projectsettings_mini.png")
     )
 
 	action(
@@ -37,15 +40,6 @@ actions
 		mnemonic: 'H',
 		accelerator: 'ctrl shift H',
 		shortDescription: 'Add HelloPanel',
-    )
-
-	action(
-		id: 'addFinishPanel',
-		name: 'FinishPanel',
-		closure: { controller.createPanel("FinishPanel") },
-		mnemonic: 'F',
-		accelerator: 'ctrl shit F',
-		shortDescription: 'Add FinishPanel',
     )
 
 	action(
@@ -110,5 +104,14 @@ actions
 		accelerator: 'ctrl shift K',
 		shortDescription: 'Add PacksPanel',
     )
+
+    action(
+		id: 'addFinishPanel',
+		name: 'FinishPanel',
+		closure: { controller.createPanel("FinishPanel") },
+		mnemonic: 'F',
+		accelerator: 'ctrl shift F',
+		shortDescription: 'Add FinishPanel',
+    )    
 
 }

@@ -28,5 +28,13 @@ scrollPane(
             action: closeProject
         )
 
+        widget(
+            new ToolBarButton(
+                    'Project Settings',
+                    imageIcon(resource: '../images/projectsettings.png')
+            ),
+            action: toggleProjectSettings
+        )
+
     }
 }

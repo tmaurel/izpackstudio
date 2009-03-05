@@ -6,6 +6,7 @@ import actions.*
 import java.awt.Dimension
 import javax.swing.JComponent
 import java.awt.event.ActionEvent
+import groovy.swing.impl.DefaultAction
 
 
 
@@ -93,7 +94,7 @@ class IzPackStudio extends Controller
         projectActions = view.build(ProjectActions)
         perspective = new Perspective(view)
         view.build(PerspectiveActions)
-        
+
 
         GUI = view.build(IzPackStudioView)
 
@@ -107,7 +108,7 @@ class IzPackStudio extends Controller
         setActionsEnabled(false)
 
         sleep(1000)
-        setProgressBar(10, "Loaded !")        
+        setProgressBar(10, "Loaded !")
 
         // Display the GUI
         GUI.show()
@@ -286,7 +287,7 @@ class IzPackStudio extends Controller
 
 
     /**
-    * Move a panel 
+    * Move a panel
     *
     * @param from The first panel
     * @param to The second panel
@@ -309,7 +310,7 @@ class IzPackStudio extends Controller
     /**
     * Delete a panel (through ActionEvent)
     *
-    * @param ae ActionEvent thrown by view 
+    * @param ae ActionEvent thrown by view
     */
     def deletePanel(ActionEvent ae)
     {
@@ -409,7 +410,7 @@ class IzPackStudio extends Controller
     * Add the preview inside the panelPreview container
     *
     * @param panel Panel to be added
-    * @param index Where you want it to be added 
+    * @param index Where you want it to be added
     */
     def addPreview(panel, index)
     {
@@ -446,12 +447,15 @@ class IzPackStudio extends Controller
     * Enable/Disable all the buttons of the given component
     *
     * @param component The component containing the buttons you wanna enable/disable
-    * @param enabled True or false 
+    * @param enabled True or false
     */
     def setActionsEnabled(enabled = true)
     {
         projectActions.each {
-            it.enabled = enabled
+            if(it instanceof DefaultAction)
+            {
+                it.enabled = enabled
+            }
         }
         view.newProject.setEnabled(true)
     }
@@ -481,7 +485,7 @@ class IzPackStudio extends Controller
         }
         //project.model = new ProjectModel()
         setActionsEnabled(true)
-        project.start()       
+        project.start()
     }
 
 
@@ -522,7 +526,7 @@ class IzPackStudio extends Controller
     }
 
 
-    
+
     /**
     * Main method called when launching app
     *
