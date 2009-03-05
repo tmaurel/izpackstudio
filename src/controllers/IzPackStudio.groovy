@@ -115,6 +115,7 @@ class IzPackStudio extends Controller
 
         // Create a new Animation Controller to slide between panels
         animation = new AnimationController(null, view.panelScrollPane, project)
+        project.loadXML("install.xml")
         loaded = true
 
     }

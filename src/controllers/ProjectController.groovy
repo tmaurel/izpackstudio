@@ -5,6 +5,7 @@ import controllers.panels.*
 import models.panels.PanelModel
 import groovy.xml.MarkupBuilder
 import groovy.xml.StreamingMarkupBuilder
+import com.izforge.izpack.Info.Author
 
 
 /**
@@ -246,6 +247,19 @@ class ProjectController extends Controller {
         }
         reader.close()
         def xml = new XmlParser().parseText(fileData.toString())
+        model.info.setAppName(xml.info.appname.text())
+        model.info.setAppVersion(xml.info.appversion.text())
+        def authorsList = xml.info.authors.author
+        model.info.getAuthors().clear()
+        authorsList.each
+        {
+            def author = new Author(it['@name'],it['@email'])
+            model.info.addAuthor(author)
+        }
+        model.info.setAppURL(xml.info.url.text())
+        model.prefs.width = Integer.parseInt(xml.guiprefs['@width'].text())
+        model.prefs.height = Integer.parseInt(xml.guiprefs['@height'].text())
+        model.prefs.resizable = xml.info.guiprefs['@resizable']
         def panelsToBeInstanciated = xml.panels.panel
         panelsToBeInstanciated.each
         {panel ->
