@@ -134,6 +134,7 @@ class ProjectController extends Controller {
             doLater
             {
                 build(ProjectSettingsView)
+                projectSettings.setVisible(true)
                 projectSettings.validate()
             }
         }
