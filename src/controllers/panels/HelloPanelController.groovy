@@ -33,9 +33,18 @@ class HelloPanelController extends PanelController
         nav[1].setEnabled(false)
     }
 
-   public refresh()
+    public refresh()
     {
 
+    }
+
+    public toXML(builder)
+    {
+         builder
+         {
+             panels()
+             panel(classname:"HelloPanel")
+         }
     }
 
 }

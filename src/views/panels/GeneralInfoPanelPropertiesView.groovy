@@ -9,5 +9,4 @@ panel(
 )
 {
     label(text: 'InfoPanel Properties', constraints: 'span')
-
 }

@@ -3,6 +3,7 @@ package controllers
 import views.ProjectSettingsView
 import controllers.panels.*
 import models.panels.PanelModel
+import groovy.xml.MarkupBuilder
 
 
 /**
@@ -29,6 +30,7 @@ class ProjectController extends Controller {
     ProjectController(m = null, v = null, p = null)
     {
         super(m, v, p)
+        //toXML()
     }
     
     
@@ -247,6 +249,45 @@ class ProjectController extends Controller {
         {panel ->
             createPanel("${panel.'@classname'}")
         }
+        toXML()
+     }
+
+     def toXML()
+     {
+        def writer = new StringWriter()
+        def builder = new MarkupBuilder(writer)
+
+        builder.installation(version:"1.0")
+        {
+            "info"()
+            {
+                "appname"(model.info.getAppName())
+                "appversion"(model.info.getAppVersion())
+                "authors"()
+                {
+                    model.info.getAuthors().each
+                    {
+                        "author"(name:it.getName(), email:it.getEmail())
+                    }
+                }
+                "url"(model.info.getAppURL())
+            }
+            "guiprefs"(width:model.prefs.width,height:model.prefs.height,resizable:"no")
+
+        }
+            
+        //panels.each
+        //{
+           panels[0].toXML(builder)
+        //}
+        def xml = writer.toString()
+        try {
+                 def out = new BufferedWriter(new FileWriter("test.xml"));
+                 out.write(xml);
+                 out.close();
+             } catch (IOException e) {
+             }
+
      }
 
 }

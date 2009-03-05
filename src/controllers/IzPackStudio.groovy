@@ -6,7 +6,6 @@ import actions.*
 import java.awt.Dimension
 import javax.swing.JComponent
 import java.awt.event.ActionEvent
-import xeus.jcl.JarClassLoader
 
 
 
@@ -115,6 +114,7 @@ class IzPackStudio extends Controller
 
         // Create a new Animation Controller to slide between panels
         animation = new AnimationController(null, view.panelScrollPane, project)
+        project.loadXML("install.xml")
         loaded = true
 
     }
