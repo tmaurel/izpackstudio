@@ -50,4 +50,11 @@ class SimpleFinishPanelController extends PanelController
 
     }
 
+    public toXML()
+    {
+             return {
+                        panel(classname:"SimpleFinishPanel")
+                    }
+    }
+
 }

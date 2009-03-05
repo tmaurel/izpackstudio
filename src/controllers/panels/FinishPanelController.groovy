@@ -50,5 +50,11 @@ class FinishPanelController extends PanelController
 
     }
 
+    public toXML()
+    {
+             return {
+                        panel(classname:"FinishPanel")
+                    }
+    }
 
 }

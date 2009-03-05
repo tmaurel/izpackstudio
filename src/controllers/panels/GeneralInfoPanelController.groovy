@@ -57,5 +57,14 @@ class GeneralInfoPanelController extends PanelController
         }
     }
 
+    public toXML()
+    {
+            return {
+                        panel(classname:"InfoPanel")
+                   }
+    }
+
+
+
 
 }

@@ -36,4 +36,11 @@ class XInfoPanelController extends PanelController
 
     }
 
+    public toXML()
+    {
+             return {
+                        panel(classname:"XInfoPanel")
+                    }
+    }
+
 }

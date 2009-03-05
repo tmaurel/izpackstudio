@@ -54,5 +54,10 @@ class GeneralLicencePanelController extends PanelController
 
     }
 
-
+    public toXML()
+    {
+             return {
+                        panel(classname:"LicencePanel")
+                    }
+    }
 }

@@ -36,4 +36,11 @@ class TargetPanelController extends PanelController
 
     }
 
+    public toXML()
+    {
+             return {
+                        panel(classname:"TargetPanel")
+                    }
+    }
+
 }

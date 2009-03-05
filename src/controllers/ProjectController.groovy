@@ -4,6 +4,7 @@ import views.ProjectSettingsView
 import controllers.panels.*
 import models.panels.PanelModel
 import groovy.xml.MarkupBuilder
+import groovy.xml.StreamingMarkupBuilder
 
 
 /**
@@ -30,7 +31,6 @@ class ProjectController extends Controller {
     ProjectController(m = null, v = null, p = null)
     {
         super(m, v, p)
-        //toXML()
     }
     
     
@@ -156,6 +156,7 @@ class ProjectController extends Controller {
     */
     public stop() {
         isInProject = false
+        toXML()
     }
 
 
@@ -250,15 +251,13 @@ class ProjectController extends Controller {
         {panel ->
             createPanel("${panel.'@classname'}")
         }
-        toXML()
      }
 
      def toXML()
      {
-        def writer = new StringWriter()
-        def builder = new MarkupBuilder(writer)
-
-        builder.installation(version:"1.0")
+       def myBuilder = new StreamingMarkupBuilder()
+       def xml = myBuilder.bind{
+        installation(version:"1.0")
         {
             "info"()
             {
@@ -274,17 +273,23 @@ class ProjectController extends Controller {
                 "url"(model.info.getAppURL())
             }
             "guiprefs"(width:model.prefs.width,height:model.prefs.height,resizable:"no")
+            panels{
+                model.panels.each{
+                    it2 ->
+                    mkp.yield it2.toXML()
+                }
+            }
+        }}
 
-        }
-            
+        //println xml.toString()
+        def writer = new StringWriter()
         //panels.each
         //{
-           panels[0].toXML(builder)
+        //   builder = panels[0].toXML(xml)
         //}
-        def xml = writer.toString()
         try {
                  def out = new BufferedWriter(new FileWriter("test.xml"));
-                 out.write(xml);
+                 out.write(xml.toString());
                  out.close();
              } catch (IOException e) {
              }

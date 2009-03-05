@@ -106,4 +106,11 @@ class PacksPanelController extends PanelController
         buildPropertiesPanel(PacksPanelPropertiesView)
     }
 
+    public toXML()
+    {
+             return {
+                        panel(classname:"PacksPanel")
+                    }
+    }
+
 }

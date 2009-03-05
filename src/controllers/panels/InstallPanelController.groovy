@@ -35,4 +35,11 @@ class InstallPanelController extends PanelController
     {
 
     }
+
+    public toXML()
+    {
+             return {
+                        panel(classname:"InstallPanel")
+                    }
+    }
 }

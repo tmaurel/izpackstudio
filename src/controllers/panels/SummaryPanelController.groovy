@@ -36,4 +36,10 @@ class SummaryPanelController extends PanelController
 
     }
 
+    public toXML()
+    {
+             return {
+                        panel(classname:"SummaryPanel")
+                    }
+    }
 }

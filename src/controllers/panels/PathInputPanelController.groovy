@@ -37,4 +37,11 @@ class PathInputPanelController extends PanelController
 
     }
 
+    public toXML()
+    {
+             return {
+                        panel(classname:"PathInputPanel")
+                    }
+    }
+
 }

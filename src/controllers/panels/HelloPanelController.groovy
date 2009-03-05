@@ -38,13 +38,11 @@ class HelloPanelController extends PanelController
 
     }
 
-    public toXML(builder)
+    public toXML()
     {
-         builder
-         {
-             panels()
-             panel(classname:"HelloPanel")
-         }
+             return {
+                        panel(classname:"HelloPanel")
+                    }
     }
 
 }
