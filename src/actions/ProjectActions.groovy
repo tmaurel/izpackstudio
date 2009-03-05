@@ -112,6 +112,16 @@ actions
 		mnemonic: 'F',
 		accelerator: 'ctrl shift F',
 		shortDescription: 'Add FinishPanel',
-    )    
+    )
 
+    action(
+        id: 'deletePanel',
+        name: 'Delete Panel',
+        closure: controller.&deletePanel,
+        mnemonic: 'R',
+        accelerator: 'ctrl D',
+        shortDescription: 'Delete selected panel',
+        smallIcon: imageIcon(resource:"/images/photo-multiple.png")
+    )
+    
 }

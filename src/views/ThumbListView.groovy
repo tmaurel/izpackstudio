@@ -7,18 +7,6 @@ import javax.swing.event.ListSelectionListener
 import net.miginfocom.swing.MigLayout
 
 
-actions
-{
-    action(
-            id: 'deletePanel',
-            name: 'Delete Panel',
-            closure: controller.&deletePanel,
-            mnemonic: 'R',
-            accelerator: 'ctrl D',
-            shortDescription: 'Delete selected panel',
-            smallIcon: imageIcon(resource:"/images/photo-multiple.png")
-    )
-}
 
 popupMenu(
     id: 'thumbPopupMenu'

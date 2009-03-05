@@ -43,7 +43,9 @@ frame(
         menu(
              text: 'Edit',
              mnemonic: 'E'
-        ) {}
+        ) {
+            menuItem(deletePanel)
+        }
         menu(
              text: 'Insert',
              mnemonic: 'I'

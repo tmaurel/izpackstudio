@@ -115,7 +115,7 @@ class IzPackStudio extends Controller
 
         // Create a new Animation Controller to slide between panels
         animation = new AnimationController(null, view.panelScrollPane, project)
-        project.loadXML("install.xml")
+        //project.loadXML("install.xml")
         loaded = true
 
     }
@@ -334,18 +334,20 @@ class IzPackStudio extends Controller
             {
                 breakAnimation()
 
-                listModel.remove(panel)
-                view.panelPreview.remove(panel)
-
-                GUI.validate()
-
-                def prev = panel - 1
-                if(prev >= 0 && prev < listModel.size())
+                if(panel != -1)
                 {
-                    view.thumbList.setSelectedIndex(prev)
-                }
-                project.deletePanel(panel)
+                  listModel.remove(panel)
+                  view.panelPreview.remove(panel)
 
+                  GUI.validate()
+
+                  def prev = panel - 1
+                  if(prev >= 0 && prev < listModel.size())
+                  {
+                      view.thumbList.setSelectedIndex(prev)
+                  }
+                  project.deletePanel(panel)
+                }
             }
         }
 
