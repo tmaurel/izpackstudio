@@ -295,12 +295,6 @@ class ProjectController extends Controller {
             }
         }}
 
-        //println xml.toString()
-        def writer = new StringWriter()
-        //panels.each
-        //{
-        //   builder = panels[0].toXML(xml)
-        //}
         try {
                  def out = new BufferedWriter(new FileWriter("test.xml"));
                  out.write(xml.toString());
@@ -309,5 +303,12 @@ class ProjectController extends Controller {
              }
 
      }
+
+    public updateProjectSettings(authors, appName, appVersion, appURL, width, height)
+    {
+        model.setInfos(authors, appName, appVersion, appURL)
+        model.setPrefs(width, height)
+        refresh()
+    }    
 
 }

@@ -18,7 +18,6 @@ import javax.swing.BorderFactory
 import javax.swing.BoxLayout
 import javax.swing.JPanel
 import javax.swing.border.TitledBorder
-import groovy.beans.Bindable
 
 class ProjectModel extends InstallerFrame {
 
@@ -39,7 +38,6 @@ class ProjectModel extends InstallerFrame {
         installdata.info = info
         prefs = new GUIPrefs()
         installdata.guiPrefs = prefs
-        addInfos()
         setLangPack("fra")
         addGUIPrefs()
         installdata.installSuccess = true
@@ -156,17 +154,6 @@ class ProjectModel extends InstallerFrame {
         return new Dimension(installdata.guiPrefs.width, installdata.guiPrefs.height)
     }
 
-    private addInfos()
-    {
-        info.setAppName("IzPackStudio")
-        info.setAppVersion("0.1")
-        info.addAuthor(new Author("Alexis Plantin", "alexis@izs.com"))
-        info.addAuthor(new Author("Thomas Maurel", "thomas@izs.com"))
-        info.addAuthor(new Author("Mickael Lasnes", "mickael@izs.com"))
-        info.addAuthor(new Author("Samuel Djian", "samuel@izs.com"))
-        info.setAppURL("http://www.izpack.org")
-    }
-
     private setLangPack(lang)
     {
         installdata.xmlData.setAttribute("langpack", lang)
@@ -203,7 +190,25 @@ class ProjectModel extends InstallerFrame {
         LabelFactory.setUseLabelIcons(useLabelIcons);
     }
 
+    public setInfos(authors, appName, appVersion, appURL)
+    {
+        def newInfo = new Info()
+        newInfo.setAppName(appName)
+        newInfo.setAppVersion(appVersion)
+        authors.each
+        {
+            newInfo.addAuthor(new Author(it.name, it.email))
+        }
+        newInfo.setAppURL(appURL)
+        info = newInfo
+        installdata.info = info
+    }
 
+    public setPrefs(width, height)
+    {
+        prefs.width = width
+        prefs.height = height
+    }
 
  
 }

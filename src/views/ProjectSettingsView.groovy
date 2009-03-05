@@ -137,6 +137,27 @@ dialog(
                 constraints : 'w 150px, wrap'
             )
 
+
+            label (
+                text : 'Resizable'
+            )
+
+            def resizableButtonGroup = buttonGroup()
+
+            box(
+
+            ){
+                radioButton (
+                    text: 'Yes',
+                    buttonGroup: resizableButtonGroup
+                )
+
+                radioButton (
+                    text: 'No',
+                    buttonGroup: resizableButtonGroup
+                )
+            }
+            
         }
     }
 
@@ -148,9 +169,23 @@ dialog(
     ) {
 
         button (
-            id: 'save',
+            id: 'ok',
             preferredSize : new Dimension(90,20),
-            text :'Save',
+            text :'OK',
+            actionPerformed:
+            {
+                controller.updateProjectSettings(
+                        authorsModel.getRowsModel().getValue(),
+                        projName.getText(),
+                        appVersion.getText(),
+                        appURL.getText(),
+                        Integer.parseInt(appWidth.getText()),
+                        Integer.parseInt(appHeight.getText()),
+
+
+                )
+                projectSettings.dispose()
+            }
         )
 
         button (
@@ -163,15 +198,6 @@ dialog(
             }
         )
 
-        button (
-            id: 'apply',
-            preferredSize : new Dimension(90,20),
-            text :'Apply',
-            actionPerformed:
-            {
-                projectSettings.dispose()                        // not so clean ?
-            }
-        )
     }    
     
 }
