@@ -21,6 +21,12 @@ class PanelModel {
     protected panel
 
     /**
+    * Contains the resource of the panel
+    *
+    */
+    protected resource
+
+    /**
     * Constructor
     *
     */
@@ -52,7 +58,7 @@ class PanelModel {
     /**
     * Set the IzPanel name
     *
-    * @param   pan   The IzPack Panel name
+    * @param   nam   The IzPack Panel name
     */
     public setName(nam)
     {
@@ -68,5 +74,27 @@ class PanelModel {
     {
         return name
     }
+
+    /**
+    * Get the resource of the panel
+    *
+    * @return The resource of the panel
+    */
+    public getResource()
+    {
+        return resource
+    }
+
+    /**
+    * Set the resource
+    *
+    * @param   res   The resource
+    */
+    public setResource(res)
+    {
+        resource = res
+    }
+
+
 
 }

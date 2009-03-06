@@ -1,5 +1,7 @@
 package controllers.panels
 
+import com.izforge.izpack.panels.HelloPanel
+
 
 /**
 * Controller for IzPack HelloPanels
@@ -35,7 +37,7 @@ class HelloPanelController extends PanelController
 
     public refresh()
     {
-
+        
     }
 
     public toXML()
