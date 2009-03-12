@@ -7,6 +7,8 @@ import java.awt.Dimension
 import javax.swing.JComponent
 import java.awt.event.ActionEvent
 import groovy.swing.impl.DefaultAction
+import groovy.swing.SwingBuilder
+import java.awt.BorderLayout
 
 
 
@@ -117,6 +119,8 @@ class IzPackStudio extends Controller
         animation = new AnimationController(null, view.panelScrollPane, project)
         //project.loadXML("install.xml")
         loaded = true
+
+        
 
     }
 
@@ -461,6 +465,7 @@ class IzPackStudio extends Controller
             }
         }
         view.newProject.setEnabled(true)
+        view.loadProject.setEnabled(true)
     }
 
 
@@ -488,7 +493,7 @@ class IzPackStudio extends Controller
         }
         //project.model = new ProjectModel()
         setActionsEnabled(true)
-        project.start()
+        project.start("new")
     }
 
 
@@ -511,7 +516,26 @@ class IzPackStudio extends Controller
     */
     public loadProject(e)
     {
+       if(project.isInProject)
+        {
+            closeProject(e)
+        }
+        //project.model = new ProjectModel()
+        setActionsEnabled(true)
+        project.start("load")
+    }
 
+     public saveProject(e)
+    {
+       if(project.isInProject)
+        {
+            project.toXML("test.xml")
+        }
+    }
+
+    public buildProject()
+    {
+        
     }
 
 
@@ -526,6 +550,7 @@ class IzPackStudio extends Controller
         {
             deletePanel(i-1)
         }
+        project.model.clean()
     }
 
 

@@ -7,6 +7,7 @@ import groovy.xml.StreamingMarkupBuilder
 import com.izforge.izpack.Info.Author
 import views.panels.NavigationPanel
 import javax.swing.ImageIcon
+import groovy.swing.SwingXBuilder
 
 
 /**
@@ -150,6 +151,10 @@ class ProjectController extends Controller {
     */
     public start(args = null) {
         isInProject = true
+        if(args == "new")
+            model.setDefaults()
+        else if(args == "load")
+            loadXML(model.fileName)
     }
 
     /**
@@ -158,8 +163,8 @@ class ProjectController extends Controller {
     */
     public stop() {
         isInProject = false
-        toXML()
     }
+
 
 
     /**
@@ -272,14 +277,22 @@ class ProjectController extends Controller {
         model.prefs.width = Integer.parseInt(xml.guiprefs['@width'].text())
         model.prefs.height = Integer.parseInt(xml.guiprefs['@height'].text())
         model.prefs.resizable = xml.info.guiprefs['@resizable']
+        def langs = xml.locale.langpack
+        langs.each
+        {
+            lang ->
+            println "${lang.'@iso3'}"
+            model.selectedLangPacks.add("${lang.'@iso3'}".toString())
+        }
         def panelsToBeInstanciated = xml.panels.panel
         panelsToBeInstanciated.each
-        {panel ->
+        {
+            panel ->
             createPanel("${panel.'@classname'}")
         }
      }
 
-     def toXML()
+     def toXML(String fileName)
      {
        def myBuilder = new StreamingMarkupBuilder()
        def xml = myBuilder.bind{
@@ -308,7 +321,7 @@ class ProjectController extends Controller {
         }}
 
         try {
-                 def out = new BufferedWriter(new FileWriter("test.xml"));
+                 def out = new BufferedWriter(new FileWriter(fileName));
                  out.write(xml.toString());
                  out.close();
              } catch (IOException e) {

@@ -28,6 +28,8 @@ class ProjectModel extends InstallerFrame {
 
     def selectedLangPacks = []
 
+    def fileName
+
     ProjectModel()
     {
         super("", new InstallData(), new InstallerBase())
@@ -42,7 +44,7 @@ class ProjectModel extends InstallerFrame {
         }
         addGUIPrefs()
         installdata.installSuccess = true
-        setDefaults()
+        fileName = "install.xml"
     }
 
     public setDefaults()
@@ -167,6 +169,8 @@ class ProjectModel extends InstallerFrame {
         def selected = []
         selectedLangPacks.each
         {
+            println it
+            println availableLangPacks.indexOf(it)
             selected.add(availableLangPacks.indexOf(it))
         }
         return selected
@@ -186,6 +190,13 @@ class ProjectModel extends InstallerFrame {
             availableLangPacks.add(it)
         }
 
+    }
+
+    public clean()
+    {
+        //panels = []
+        selectedLangPacks.clear()
+        setInfos([],"","","")
     }
 
 }

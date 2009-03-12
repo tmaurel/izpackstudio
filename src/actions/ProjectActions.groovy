@@ -14,12 +14,32 @@ actions
     )
 
     action(
+		id: 'loadProject',
+		name: 'Load Project',
+		closure: controller.&loadProject,
+		mnemonic: 'L',
+		accelerator: 'ctrl L',
+		shortDescription: 'Load a project',
+        smallIcon: imageIcon(resource:"/images/closeproject_mini.png")
+    )
+
+    action(
 		id: 'closeProject',
 		name: 'Close Project',
 		closure: controller.&closeProject,
 		mnemonic: 'X',
 		accelerator: 'ctrl X',
 		shortDescription: 'Close the current project',
+        smallIcon: imageIcon(resource:"/images/closeproject_mini.png")
+    )
+
+    action(
+		id: 'saveProject',
+		name: 'Save Project',
+		closure: controller.&saveProject,
+		mnemonic: 'S',
+		accelerator: 'ctrl S',
+		shortDescription: 'Save the current project',
         smallIcon: imageIcon(resource:"/images/closeproject_mini.png")
     )
 
@@ -33,7 +53,17 @@ actions
         smallIcon: imageIcon(resource:"/images/projectsettings_mini.png")
     )
 
-	action(
+    action(
+		id: 'buildProject',
+		name: 'Build Project',
+		closure: controller.&buildProject,
+		mnemonic: 'B',
+		accelerator: 'ctrl  B',
+		shortDescription: 'Build the Project',
+        smallIcon: imageIcon(resource:"/images/projectsettings_mini.png")
+    )
+
+    action(
 		id: 'addHelloPanel',
 		name: 'HelloPanel',
 		closure: { controller.createPanel("HelloPanel") },
