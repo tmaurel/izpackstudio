@@ -5,19 +5,12 @@ import com.izforge.izpack.Info
 import com.izforge.izpack.Info.Author
 import com.izforge.izpack.LocaleDatabase
 import com.izforge.izpack.gui.ButtonFactory
-import com.izforge.izpack.gui.EtchedLineBorder
 import com.izforge.izpack.gui.LabelFactory
 import com.izforge.izpack.installer.InstallData
 import com.izforge.izpack.installer.InstallerBase
 import com.izforge.izpack.installer.InstallerFrame
 import com.izforge.izpack.util.AbstractUIProgressHandler
-import groovy.swing.SwingBuilder
 import java.awt.Dimension
-import java.awt.Font
-import javax.swing.BorderFactory
-import javax.swing.BoxLayout
-import javax.swing.JPanel
-import javax.swing.border.TitledBorder
 
 class ProjectModel extends InstallerFrame {
 
@@ -31,6 +24,10 @@ class ProjectModel extends InstallerFrame {
 
     def info
 
+    def availableLangPacks = []
+
+    def selectedLangPacks = []
+
     ProjectModel()
     {
         super("", new InstallData(), new InstallerBase())
@@ -38,7 +35,11 @@ class ProjectModel extends InstallerFrame {
         installdata.info = info
         prefs = new GUIPrefs()
         installdata.guiPrefs = prefs
-        setLangPack("fra")
+        loadLangPacks()
+        if(availableLangPacks.contains("eng"))
+        {
+          setLangPack("eng")
+        }
         addGUIPrefs()
         installdata.installSuccess = true
         setDefaults()
@@ -48,6 +49,8 @@ class ProjectModel extends InstallerFrame {
     {
         prefs.width = 600;
         prefs.height = 400;
+        prefs.resizable = false
+        selectedLangPacks = availableLangPacks.clone()
     }
 
     @Override
@@ -87,67 +90,6 @@ class ProjectModel extends InstallerFrame {
     public void setQuitButtonIcon(String iconName) {}
 
     public void install(AbstractUIProgressHandler listener) {}
-
-
-    /**
-    * Create the Navigation Panel of the Installer Frame
-    *
-    * @return The navigation Panel
-    */
-    public JPanel createNavPanel()
-    {
-        def swing = new SwingBuilder()
-        def navPanel = swing.panel(
-            id: 'navPanel',
-            border: BorderFactory.createCompoundBorder(
-                            BorderFactory.createEmptyBorder(8, 8, 8, 8),
-                            BorderFactory.createTitledBorder(
-                                    new EtchedLineBorder(),
-                                    langpack.getString("installer.madewith") + " ",
-                                    TitledBorder.DEFAULT_JUSTIFICATION,
-                                    TitledBorder.DEFAULT_POSITION,
-                                    new Font("Dialog", Font.PLAIN, 10)))
-        ) {
-
-            navPanel.setLayout(new BoxLayout((JPanel) navPanel, BoxLayout.X_AXIS))
-
-            hglue()
-
-            widget(
-                    ButtonFactory.createButton(
-                        langpack.getString("installer.prev"),
-                        icons.getImageIcon("stepback"),
-                        installdata.buttonsHColor
-                    ),
-                    name: "prevButton"
-            )
-
-            rigidArea(width:5, height:0)
-
-            widget(
-                    ButtonFactory.createButton(
-                        langpack.getString("installer.next"),
-                        icons.getImageIcon("stepforward"),
-                        installdata.buttonsHColor
-                    ),
-                    name: "nextButton"
-            )
-
-            rigidArea(width:5, height:0)
-
-            widget(
-                    ButtonFactory.createButton(
-                        langpack.getString("installer.quit"),
-                        icons.getImageIcon("stop"),
-                        installdata.buttonsHColor
-                    ),
-                    name: "quitButton"
-            )
-        }
-
-        return(navPanel)
-
-    }
 
     public Dimension getSize()
     {
@@ -204,11 +146,46 @@ class ProjectModel extends InstallerFrame {
         installdata.info = info
     }
 
-    public setPrefs(width, height)
+    public setPrefs(width, height, resizable)
     {
         prefs.width = width
         prefs.height = height
+        prefs.resizable = resizable
     }
 
- 
+    public setLangs(appLangs)
+    {
+        selectedLangPacks.clear()
+        appLangs.each
+        {
+            selectedLangPacks.add(availableLangPacks[it])
+        }
+    }
+
+    public getSelectedLangPacksIndices()
+    {
+        def selected = []
+        selectedLangPacks.each
+        {
+            selected.add(availableLangPacks.indexOf(it))
+        }
+        return selected
+    }
+
+    public loadLangPacks()
+    {
+        def langPacks = new File('../bin/langpacks/installer/').listFiles(
+                            {
+                              dir, file-> file ==~ /.*?\.xml/
+                            } as FilenameFilter
+                        ).toList()*.name
+
+        langPacks.each
+        {
+            it = it.substring(0, it.lastIndexOf("."))
+            availableLangPacks.add(it)
+        }
+
+    }
+
 }

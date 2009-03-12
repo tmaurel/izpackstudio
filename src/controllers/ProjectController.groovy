@@ -3,9 +3,10 @@ package controllers
 import views.ProjectSettingsView
 import controllers.panels.*
 import models.panels.PanelModel
-import groovy.xml.MarkupBuilder
 import groovy.xml.StreamingMarkupBuilder
 import com.izforge.izpack.Info.Author
+import views.panels.NavigationPanel
+import javax.swing.ImageIcon
 
 
 /**
@@ -173,6 +174,17 @@ class ProjectController extends Controller {
     }
 
     /**
+    * Create the Navigation Panel of the Installer Frame
+    *
+    * @return The navigation Panel
+    */
+    public Object createNavPanel()
+    {
+        def navPanel = view.build(NavigationPanel)
+        return navPanel
+    }
+
+    /**
     * Create a new panel
     *
     * @param panelName Name of the panel 
@@ -183,38 +195,38 @@ class ProjectController extends Controller {
         switch(panelName)
             {
                 case "FinishPanel":
-                    panel = new FinishPanelController(new PanelModel(), null, parent.project)
+                    panel = new FinishPanelController(new PanelModel(), null, this)
                     break
                 case "InfoPanel":
                 case "HTMLInfoPanel":
                 case "GeneralInfoPanel":
-                    panel = new GeneralInfoPanelController(new PanelModel(), null, parent.project)
+                    panel = new GeneralInfoPanelController(new PanelModel(), null, this)
                     break
                 case "LicencePanel":
                 case "HTMLLicencePanel":
                 case "GeneralLicencePanel":
-                    panel = new GeneralLicencePanelController(new PanelModel(), null, parent.project)
+                    panel = new GeneralLicencePanelController(new PanelModel(), null, this)
                     break
                  case "HelloPanel":
-                    panel = new HelloPanelController(new PanelModel(), null, parent.project)
+                    panel = new HelloPanelController(new PanelModel(), null, this)
                     break
                  case "InstallPanel":
-                    panel = new InstallPanelController(new PanelModel(), null, parent.project)
+                    panel = new InstallPanelController(new PanelModel(), null, this)
                     break
                  case "PacksPanel":
-                    panel = new PacksPanelController(new PanelModel(), null, parent.project)
+                    panel = new PacksPanelController(new PanelModel(), null, this)
                     break
                  case "PathInputPanel":
-                    panel = new PathInputPanelController(new PanelModel(), null, parent.project)
+                    panel = new PathInputPanelController(new PanelModel(), null, this)
                     break
                  case "SimpleFinishPanel":
-                    panel = new SimpleFinishPanelController(new PanelModel(), null, parent.project)
+                    panel = new SimpleFinishPanelController(new PanelModel(), null, this)
                     break
                  case "SummaryPanel":
-                    panel = new SummaryPanelController(new PanelModel(), null, parent.project)
+                    panel = new SummaryPanelController(new PanelModel(), null, this)
                     break
                  case "TargetPanel":
-                    panel = new TargetPanelController(new PanelModel(), null, parent.project)
+                    panel = new TargetPanelController(new PanelModel(), null, this)
                     break
                 default:
                     println "And this is not"
@@ -304,11 +316,25 @@ class ProjectController extends Controller {
 
      }
 
-    public updateProjectSettings(authors, appName, appVersion, appURL, width, height)
+    public updateProjectSettings(authors, appName, appVersion, appURL, appLangs, width, height, resizable)
     {
         model.setInfos(authors, appName, appVersion, appURL)
-        model.setPrefs(width, height)
+        model.setPrefs(width, height, resizable)
+        model.setLangs(appLangs)
         refresh()
-    }    
+    }
+
+
+    public getLangIcon(String lang)
+    {
+        def path = "../bin/langpacks/flags/" + lang + ".gif"
+        if (new File(path).exists()) {
+            return new ImageIcon(path, lang);
+        } else {
+            System.err.println("Couldn't find file: " + path);
+            return null;
+        }
+
+    }
 
 }

@@ -73,7 +73,7 @@ abstract class PanelController extends Controller {
 
             panelsContainer.add(panel)
 
-            def navPanel = parent.model.createNavPanel()
+            def navPanel = parent.createNavPanel()
             def navCompo = navPanel.getComponents()
             def actionListener =
             [

@@ -547,7 +547,7 @@ class IzPackStudio extends Controller
     * Exit method to close the app
     *
     */
-    def static public exit()
+    def static public exit(ae)
     {
         System.exit(0)
     }

@@ -38,7 +38,8 @@ frame(
         ) {
             menuItem(newProject)
             menuItem(closeProject)  
-            menuItem(toggleProjectSettings)        
+            menuItem(toggleProjectSettings)
+            menuItem(exit)
         }
         menu(
              text: 'Edit',

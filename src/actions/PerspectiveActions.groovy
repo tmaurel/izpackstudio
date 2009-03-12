@@ -4,6 +4,15 @@ package actions
 actions
 {
     action(
+        id: 'exit',
+        name: 'Quit',
+        closure: controller.&exit,
+        mnemonic: 'Q',
+        accelerator: 'ctrl Q',
+        shortDescription: 'Exit IzPackStudio'
+    )
+
+    action(
         id: 'restoreDefault',
         name: 'Restore perspective',
         closure: controller.perspective.&restoreDefault,
