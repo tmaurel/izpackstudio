@@ -281,7 +281,6 @@ class ProjectController extends Controller {
         langs.each
         {
             lang ->
-            println "${lang.'@iso3'}"
             model.selectedLangPacks.add("${lang.'@iso3'}".toString())
         }
         def panelsToBeInstanciated = xml.panels.panel

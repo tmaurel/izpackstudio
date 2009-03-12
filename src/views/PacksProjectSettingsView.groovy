@@ -5,6 +5,11 @@ import actions.PacksProjectSettingsActions
 import java.awt.Dimension
 import net.miginfocom.layout.LC
 import net.miginfocom.layout.AC
+import helpers.Positionning
+import javax.swing.JList
+import javax.swing.ListSelectionModel
+import java.awt.Color
+import javax.swing.BorderFactory
 
 
 build(PacksProjectSettingsActions)
@@ -60,5 +65,78 @@ panel(
           
         }
     }
+
+}
+
+dialog(
+    id: 'addPackDialog',
+    modal: true,
+    title: 'Add Pack',
+    location: Positionning.CenterPosition([600,515]),
+    size: [600,515],
+    resizable : false,
+    layout: new MigLayout("fill,","[right w 210px]20px[left w 370px]","[top][top]")
+) {
+
+    label (
+        text : 'Pack name :',
+    )
+
+    textField(
+        id:'packName',
+        border: BorderFactory.createMatteBorder(1,1,1,1,Color.gray),
+        constraints : 'growX, wrap'
+    )
+
+    label (
+        text : 'Description :',
+    )
+
+    textArea(
+        id:'packDesc',
+        border: BorderFactory.createMatteBorder(1,1,1,1,Color.gray),
+        constraints : 'growX, h 70px, wrap'
+    )
+
+    label (
+        text : 'Behaviour :',
+    )
+
+    list(
+        id: 'packBehaviour',
+        listData: ['Required','Preselected', 'Optional'],
+        selectionMode: ListSelectionModel.SINGLE_SELECTION,
+        layoutOrientation: JList.VERTICAL,
+        border: BorderFactory.createMatteBorder(1,1,1,1,Color.gray),
+        constraints: 'wrap'
+    )
+
+    label (
+        text : 'Parent :',
+    )
+
+    list(
+        id: 'packParent',
+        listData: ['none'],
+        selectionMode: ListSelectionModel.SINGLE_SELECTION,
+        layoutOrientation: JList.VERTICAL,
+        border: BorderFactory.createMatteBorder(1,1,1,1,Color.gray),
+        constraints: 'wrap'
+    )
+
+
+    panel(
+        constraints: 'w 590px, span 2',
+        border: BorderFactory.createMatteBorder(1,1,1,1,Color.gray)
+    ) {
+      fileChooser(
+          id: 'packFiles',
+          constraints: 'grow'
+      )
+    }
+
+
+
+
 
 }

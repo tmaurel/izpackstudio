@@ -37,8 +37,11 @@ frame(
              mnemonic: 'F'
         ) {
             menuItem(newProject)
-            menuItem(closeProject)  
+            menuItem(loadProject)
+            menuItem(closeProject)
+            menuItem(saveProject)
             menuItem(toggleProjectSettings)
+            menuItem(buildProject)
             menuItem(exit)
         }
         menu(

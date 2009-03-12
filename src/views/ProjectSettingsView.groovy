@@ -1,11 +1,10 @@
 package views
 
+import actions.ProjectSettingsActions
 import helpers.Positionning
-import java.awt.Color
-import javax.swing.BorderFactory
 import net.miginfocom.swing.MigLayout
 import views.GeneralProjectSettingsView
-import actions.ProjectSettingsActions
+import views.PacksProjectSettingsView
 
 build(ProjectSettingsActions)
 

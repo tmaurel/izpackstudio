@@ -1,12 +1,14 @@
 package actions
 
+import javax.swing.JFileChooser
+
 
 actions
 {
 	action(
 		id: 'addPack',
 		closure: {
-
+          
         },
 		shortDescription: 'Add a pack',
         smallIcon: imageIcon(resource:"/images/add.png")

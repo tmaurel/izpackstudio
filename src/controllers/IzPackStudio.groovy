@@ -484,6 +484,7 @@ class IzPackStudio extends Controller
    /**
     * Create a new project
     *
+    * @param e ActionEvent passed by the action
     */
     public newProject(e)
     {
@@ -500,6 +501,7 @@ class IzPackStudio extends Controller
    /**
     * Close current project project
     *
+    * @param e ActionEvent passed by the action
     */
     public closeProject(e)
     {
@@ -513,6 +515,7 @@ class IzPackStudio extends Controller
    /**
     * Load an existing project
     *
+    * @param e ActionEvent passed by the action
     */
     public loadProject(e)
     {
@@ -525,7 +528,12 @@ class IzPackStudio extends Controller
         project.start("load")
     }
 
-     public saveProject(e)
+   /**
+    * Save current project
+    *
+    * @param e ActionEvent passed by the action
+    */
+    public saveProject(e)
     {
        if(project.isInProject)
         {
@@ -533,7 +541,12 @@ class IzPackStudio extends Controller
         }
     }
 
-    public buildProject()
+   /**
+    * Build current project
+    *
+    * @param e ActionEvent passed by the action
+    */
+    public buildProject(e)
     {
         
     }

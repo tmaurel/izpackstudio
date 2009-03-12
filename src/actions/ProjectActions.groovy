@@ -20,7 +20,7 @@ actions
 		mnemonic: 'L',
 		accelerator: 'ctrl L',
 		shortDescription: 'Load a project',
-        smallIcon: imageIcon(resource:"/images/closeproject_mini.png")
+        smallIcon: imageIcon(resource:"/images/loadproject_mini.png")
     )
 
     action(
@@ -40,7 +40,7 @@ actions
 		mnemonic: 'S',
 		accelerator: 'ctrl S',
 		shortDescription: 'Save the current project',
-        smallIcon: imageIcon(resource:"/images/closeproject_mini.png")
+        smallIcon: imageIcon(resource:"/images/saveproject_mini.png")
     )
 
     action(
@@ -60,7 +60,7 @@ actions
 		mnemonic: 'B',
 		accelerator: 'ctrl  B',
 		shortDescription: 'Build the Project',
-        smallIcon: imageIcon(resource:"/images/projectsettings_mini.png")
+        smallIcon: imageIcon(resource:"/images/buildproject_mini.png")
     )
 
     action(

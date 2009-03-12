@@ -169,8 +169,6 @@ class ProjectModel extends InstallerFrame {
         def selected = []
         selectedLangPacks.each
         {
-            println it
-            println availableLangPacks.indexOf(it)
             selected.add(availableLangPacks.indexOf(it))
         }
         return selected

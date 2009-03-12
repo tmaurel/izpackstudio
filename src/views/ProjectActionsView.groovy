@@ -23,7 +23,7 @@ scrollPane(
         widget(
             new ToolBarButton(
                     'Load Project',
-                    imageIcon(resource: '../images/closeproject.png')
+                    imageIcon(resource: '../images/loadproject.png')
             ),
             action: loadProject
         )
@@ -39,7 +39,7 @@ scrollPane(
         widget(
             new ToolBarButton(
                     'Save Project',
-                    imageIcon(resource: '../images/closeproject.png')
+                    imageIcon(resource: '../images/saveproject.png')
             ),
             action: saveProject
         )
@@ -55,7 +55,7 @@ scrollPane(
         widget(
             new ToolBarButton(
                     'Build Project',
-                    imageIcon(resource: '../images/projectsettings.png')
+                    imageIcon(resource: '../images/buildproject.png')
             ),
             action: buildProject
         )
