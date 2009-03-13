@@ -23,7 +23,7 @@ class ProjectController extends Controller {
     */
     def isInProject = false
 
-    
+
     /**
     * ProjectController Constructor
     *
@@ -35,8 +35,8 @@ class ProjectController extends Controller {
     {
         super(m, v, p)
     }
-    
-    
+
+
     /**
     * Add a controller to panel's list
     *
@@ -88,7 +88,7 @@ class ProjectController extends Controller {
     /**
     * Get the model's size
     *
-    * @return Preferred size for the panels 
+    * @return Preferred size for the panels
     */
     public getSize() {
         return model.getSize()
@@ -192,7 +192,7 @@ class ProjectController extends Controller {
     /**
     * Create a new panel
     *
-    * @param panelName Name of the panel 
+    * @param panelName Name of the panel
     */
     public createPanel(String panelName)
     {
@@ -238,10 +238,10 @@ class ProjectController extends Controller {
             }
         panel.start()
         view.build {
-            doLater
-            {
+            //doLater
+            //{
                 addPanel(panel)
-            }
+            //}
         }
     }
 
@@ -289,6 +289,37 @@ class ProjectController extends Controller {
             panel ->
             createPanel("${panel.'@classname'}")
         }
+        def resources = xml.resources.res
+        resources.each
+        {
+            res ->
+            switch("${res.'@id'}".toString())
+            {
+                case "LicencePanel.licence":
+                    def i=0
+                    while(i<model.panels.size() && model.panels[i].model.name!="com.izforge.izpack.panels.LicencePanel")
+                    {
+                        i++
+                    }
+                    if(i<model.panels.size())
+                    {
+                        model.panels[i].model.resource = "${res.'@src'}".toString()
+                    }
+                    break
+                case "InfoPanel.info":
+                    def i=0
+                    while(i<model.panels.size() && model.panels[i].model.name!="com.izforge.izpack.panels.InfoPanel")
+                    {
+                        i++
+                    }
+                    if(i<model.panels.size())
+                    {
+                        model.panels[i].model.resource = "${res.'@src'}".toString()
+                    }
+                    break
+            }
+        }
+        refresh()
      }
 
      def toXML(String fileName)
@@ -333,7 +364,6 @@ class ProjectController extends Controller {
         model.setInfos(authors, appName, appVersion, appURL)
         model.setPrefs(width, height, resizable)
         model.setLangs(appLangs)
-        refresh()
     }
 
 

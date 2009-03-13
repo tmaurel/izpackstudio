@@ -120,7 +120,6 @@ class IzPackStudio extends Controller
         //project.loadXML("install.xml")
         loaded = true
 
-        
 
     }
 
@@ -484,7 +483,6 @@ class IzPackStudio extends Controller
    /**
     * Create a new project
     *
-    * @param e ActionEvent passed by the action
     */
     public newProject(e)
     {
@@ -501,7 +499,6 @@ class IzPackStudio extends Controller
    /**
     * Close current project project
     *
-    * @param e ActionEvent passed by the action
     */
     public closeProject(e)
     {
@@ -515,7 +512,6 @@ class IzPackStudio extends Controller
    /**
     * Load an existing project
     *
-    * @param e ActionEvent passed by the action
     */
     public loadProject(e)
     {
@@ -528,12 +524,7 @@ class IzPackStudio extends Controller
         project.start("load")
     }
 
-   /**
-    * Save current project
-    *
-    * @param e ActionEvent passed by the action
-    */
-    public saveProject(e)
+     public saveProject(e)
     {
        if(project.isInProject)
         {
@@ -541,14 +532,9 @@ class IzPackStudio extends Controller
         }
     }
 
-   /**
-    * Build current project
-    *
-    * @param e ActionEvent passed by the action
-    */
-    public buildProject(e)
+    public buildProject()
     {
-        
+
     }
 
 
