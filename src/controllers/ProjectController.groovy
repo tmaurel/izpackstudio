@@ -341,6 +341,26 @@ class ProjectController extends Controller {
                 "url"(model.info.getAppURL())
             }
             "guiprefs"(width:model.prefs.width,height:model.prefs.height,resizable:"no")
+            "locale"{
+                model.selectedLangPacks.each{
+                    "langpack"(iso3:it)
+                }
+            }
+            "resources"{
+                model.panels.each{
+                    if(it.model.resource != null)
+                    {
+                        if(it instanceof GeneralLicencePanelController)
+                        {
+                            "res"(id:"LicencePanel.licence", src:it.model.resource)
+                        }
+                        if(it instanceof GeneralInfoPanelController)
+                        {
+                            "res"(id:"InfoPanel.info", src:it.model.resource)                            
+                        }
+                    }
+                }
+            }
             panels{
                 model.panels.each{
                     it2 ->

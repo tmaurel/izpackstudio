@@ -6,8 +6,6 @@ import net.miginfocom.layout.LC
 import java.awt.Color
 import java.awt.event.MouseListener
 import java.awt.event.ComponentListener
-import org.codehaus.groovy.runtime.InvokerInvocationException
-
 
 panel(
     id: 'stuckPanel',
@@ -61,6 +59,7 @@ panel(
                 mouseEntered: {},
                 mouseExited: {},
             ] as MouseListener
+
 
             panelScrollPane.getHorizontalScrollBar().addMouseListener(sBListener)
 
