@@ -1,6 +1,5 @@
 package controllers.panels
 
-import com.izforge.izpack.panels.HelloPanel
 
 
 /**
