@@ -54,8 +54,6 @@ actions
 
             int index = model.getIndexOfChild(parent, node)
 
-            println(index)
-
             if(index > 0)
             {
                 model.removeNodeFromParent(node)
@@ -75,6 +73,32 @@ actions
 	action(
 		id: 'downPack',
 		closure: {
+
+            def path = packTree.getPathForRow(packTree.getSelectedRow())
+            if (path == null)
+                return
+
+            def node = path.getLastPathComponent()
+            if(!(node.getUserObject() instanceof PackInfo))
+                return
+
+            def model = packTree.getTreeTableModel()
+            def parent = node.getParent()
+
+            int index = model.getIndexOfChild(parent, node)
+
+
+            if(index < parent.getChildCount() - 1)
+            {
+                model.removeNodeFromParent(node)
+                model.insertNodeInto(node, parent, index+1)
+            }
+            else if(index == parent.getChildCount() - 1 && parent != model.getRoot())
+            {
+                def index2 = model.getIndexOfChild(parent.getParent(), parent)
+                model.removeNodeFromParent(node)
+                model.insertNodeInto(node, parent.getParent(), index2 + 1)
+            }
 
         },
 		shortDescription: 'Take this pack down',
