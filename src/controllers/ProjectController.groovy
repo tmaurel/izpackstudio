@@ -7,6 +7,7 @@ import groovy.xml.StreamingMarkupBuilder
 import com.izforge.izpack.Info.Author
 import views.panels.NavigationPanel
 import javax.swing.ImageIcon
+import com.izforge.izpack.compiler.PackInfo
 
 
 /**
@@ -365,6 +366,35 @@ class ProjectController extends Controller {
                 model.panels.each{
                     it2 ->
                     mkp.yield it2.toXML()
+                }
+            }
+            "packs"{
+                model.packs.getFilteredArray(PackInfo).each{
+                    def myPackInfo = it.getUserObject()
+                    if(myPackInfo.getPack().required)
+                        "pack"(name:myPackInfo.getPack().name,required:"yes")
+                        {
+                            "description"(myPackInfo.getPack().description)
+                            myPackInfo.files.values().each{ currentFileName ->
+                                "file"(src:currentFileName.toString())   
+                            }
+                        }
+                    else if(myPackInfo.getPack().preselected)
+                        "pack"(name:myPackInfo.getPack().name,required:"no",preselected:"yes")
+                        {
+                            "description"(myPackInfo.getPack().description)
+                            myPackInfo.files.values().each{ currentFileName ->
+                                "file"(src:currentFileName.toString())
+                            }
+                        }
+                    else
+                        "pack"(name:myPackInfo.getPack().name,required:"no")
+                        {
+                            "description"(myPackInfo.getPack().description)
+                            myPackInfo.files.values().each{ currentFileName ->
+                                "file"(src:currentFileName.toString())
+                            }
+                        }
                 }
             }
         }}
