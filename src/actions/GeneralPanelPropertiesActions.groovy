@@ -9,9 +9,14 @@ actions
 		id: 'popFileChooser',
         name: 'Find',
 		closure: {
-            if (myFileChooser.showOpenDialog(test)==JFileChooser.APPROVE_OPTION)
+            def fC = fileChooser(
+                        id: 'myFileChooser',
+                        dialogTitle: 'Select a file'
+                     )
+
+            if (fC.showOpenDialog(panelProperties)==JFileChooser.APPROVE_OPTION)
             {
-                File f = myFileChooser.getSelectedFile()
+                File f = fC.getSelectedFile()
                 controller.model.setResource(f.toString())
                 controller.refresh()
             }

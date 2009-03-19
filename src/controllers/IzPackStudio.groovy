@@ -80,7 +80,7 @@ class IzPackStudio extends Controller
         }
         catch (Exception e) {
            // handle exception
-        }
+        } 
 
         loaded = false
 
@@ -492,6 +492,7 @@ class IzPackStudio extends Controller
    /**
     * Create a new project
     *
+    * @param e ActionEvent thrown by action
     */
     public newProject(e)
     {
@@ -508,6 +509,7 @@ class IzPackStudio extends Controller
    /**
     * Close current project project
     *
+    * @param e ActionEvent thrown by action
     */
     public closeProject(e)
     {
@@ -521,6 +523,7 @@ class IzPackStudio extends Controller
    /**
     * Load an existing project
     *
+    * @param e ActionEvent thrown by action
     */
     public loadProject(e)
     {
@@ -533,7 +536,12 @@ class IzPackStudio extends Controller
         project.start("load")
     }
 
-     public saveProject(e)
+   /**
+    * Save current project
+    *
+    * @param e ActionEvent thrown by action
+    */
+    public saveProject(e)
     {
        if(project.isInProject)
         {
@@ -541,13 +549,18 @@ class IzPackStudio extends Controller
         }
     }
 
-    public buildProject()
+   /**
+    * Build current project
+    *
+    * @param e ActionEvent thrown by action
+    */
+    public buildProject(e)
     {
 
     }
 
 
-    /**
+   /**
     * Clean the GUI
     *
     */
@@ -563,7 +576,7 @@ class IzPackStudio extends Controller
 
 
 
-    /**
+   /**
     * Main method called when launching app
     *
     */
@@ -576,11 +589,12 @@ class IzPackStudio extends Controller
     }
 
 
-    /**
-    * Exit method to close the app
+   /**
+    * Close the app
     *
+    * @param e ActionEvent thrown by action
     */
-    def static public exit(ae)
+    def static public exit(e)
     {
         System.exit(0)
     }

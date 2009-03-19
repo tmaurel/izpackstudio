@@ -17,6 +17,9 @@ actions
                         Integer.parseInt(appHeight.getText()),
                         appResizable.isSelected()
                 )
+          controller.updatePacksSettings(
+                  packTree.getTreeTableModel()
+          )
           projectSettings.dispose()
         },
 		shortDescription: 'Save settings'

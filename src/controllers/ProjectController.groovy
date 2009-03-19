@@ -367,6 +367,12 @@ class ProjectController extends Controller {
     }
 
 
+    public updatePacksSettings(packsTree)
+    {
+        model.packs = packsTree
+    }
+
+
     public getLangIcon(String lang)
     {
         def path = "../bin/langpacks/flags/" + lang + ".gif"

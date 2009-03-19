@@ -18,11 +18,13 @@ actions
 		id: 'delAuthor',
 		closure: {
           def authors = authorsModel.getRowsModel().getValue()
-          def indexes = tableAuthors.getSelectedRows()
-          indexes.each
-          {
-              authors.remove(it)
-          }
+          def numSelected = tableAuthors.getSelectedRowCount()
+
+            numSelected.times
+            {
+                def index = tableAuthors.getSelectedRow()
+                authors.remove(index)
+            }
           authorsModel.fireTableDataChanged()
         },
 		shortDescription: 'Remove an author',

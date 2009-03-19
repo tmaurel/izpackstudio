@@ -10,7 +10,7 @@ panel(
         layout: new MigLayout("fill"),
         opaque: false,
         visible: true,
-        id:"test"
+        id:"panelProperties"
 )
 {
     label(
@@ -28,18 +28,6 @@ panel(
             constraints: 'span',
             action: popFileChooser
     )
-    dialog(
-            id: "selectFile",
-            visible: false,
-            size: [600,400]
-    ) {
-        fileChooser(
-                id: "myFileChooser",
-                dialogTitle: "Select a Text File"
-        ) {
-
-        }
-    }
 }
 
 

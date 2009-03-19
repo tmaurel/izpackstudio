@@ -11,6 +11,8 @@ import com.izforge.izpack.installer.InstallerBase
 import com.izforge.izpack.installer.InstallerFrame
 import com.izforge.izpack.util.AbstractUIProgressHandler
 import java.awt.Dimension
+import views.PacksTreeTableModel
+import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode
 
 class ProjectModel extends InstallerFrame {
 
@@ -30,6 +32,8 @@ class ProjectModel extends InstallerFrame {
 
     def fileName
 
+    def packs
+
     ProjectModel()
     {
         super("", new InstallData(), new InstallerBase())
@@ -45,6 +49,7 @@ class ProjectModel extends InstallerFrame {
         addGUIPrefs()
         installdata.installSuccess = true
         fileName = "install.xml"
+        packs = new PacksTreeTableModel(new DefaultMutableTreeTableNode("Installer"), ["Pack", "Behaviour", "Description"])
     }
 
     public setDefaults()
