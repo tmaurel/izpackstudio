@@ -7,7 +7,6 @@ import groovy.xml.StreamingMarkupBuilder
 import com.izforge.izpack.Info.Author
 import views.panels.NavigationPanel
 import javax.swing.ImageIcon
-import groovy.swing.SwingXBuilder
 
 
 /**
