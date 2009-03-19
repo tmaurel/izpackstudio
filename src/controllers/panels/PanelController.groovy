@@ -162,6 +162,26 @@ abstract class PanelController extends Controller {
     }
 
 
+
+    /**
+    * Setter for the IzPanel Object
+    * @param panel The new IzPanel
+    *
+    */
+    public setIzPanel(panel)
+    {
+        def container = model.getPanel().getComponents()[0]
+        container.remove(0)
+        container.add(panel)
+        view.doLater
+        {
+            container.validate()
+            container.repaint()         
+        }
+    }
+
+
+
     /**
     * Getter for the navPanel
     * @return JPanel container the navigation panel

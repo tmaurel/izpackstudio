@@ -63,9 +63,12 @@ dialog(
     scrollPane(
         constraints: 'h 130px, growX, wrap'
     ) {
+
+        def data = packTree.getTreeTableModel().getFilteredArray(PackInfo)
+        data.add(0, "None")
         list(
             id: 'packParent',
-            listData: packTree.getTreeTableModel().getFilteredArray(PackInfo),
+            listData: data,
             selectionMode: ListSelectionModel.SINGLE_SELECTION,
             selectedIndex: 0,
             layoutOrientation: JList.VERTICAL

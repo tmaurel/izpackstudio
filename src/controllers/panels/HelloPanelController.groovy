@@ -37,7 +37,7 @@ class HelloPanelController extends PanelController
 
     public refresh()
     {
-        
+        setIzPanel(Class.forName(model.getName()).newInstance(parent.model, parent.model.installdata))
     }
 
     public toXML()

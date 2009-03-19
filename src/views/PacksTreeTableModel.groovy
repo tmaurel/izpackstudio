@@ -74,7 +74,6 @@ public class PacksTreeTableModel extends DefaultTreeTableModel
     public ArrayList getFilteredArray(Class className)
     {
         def res = new ArrayList()
-        res.add("None")
         Traverse(getRoot(), res, className)
         return res
     }

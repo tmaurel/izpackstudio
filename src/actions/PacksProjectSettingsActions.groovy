@@ -23,7 +23,16 @@ actions
 	action(
 		id: 'delPack',
 		closure: {
+            def path = packTree.getPathForRow(packTree.getSelectedRow())
+            if (path == null)
+                return
 
+            def node = path.getLastPathComponent()
+            if(!(node.getUserObject() instanceof PackInfo))
+                return
+
+            def model = packTree.getTreeTableModel()
+            model.removeNodeFromParent(node)
         },
 		shortDescription: 'Remove a pack',
         smallIcon: imageIcon(resource:"/images/remove.png")
@@ -32,7 +41,32 @@ actions
 	action(
 		id: 'upPack',
 		closure: {
+            def path = packTree.getPathForRow(packTree.getSelectedRow())
+            if (path == null)
+                return
 
+            def node = path.getLastPathComponent()
+            if(!(node.getUserObject() instanceof PackInfo))
+                return
+
+            def model = packTree.getTreeTableModel()
+            def parent = node.getParent()
+
+            int index = model.getIndexOfChild(parent, node)
+
+            println(index)
+
+            if(index > 0)
+            {
+                model.removeNodeFromParent(node)
+                model.insertNodeInto(node, parent, index-1)
+            }
+            else if(index == 0 && parent != model.getRoot())
+            {
+                def index2 = model.getIndexOfChild(parent.getParent(), parent)
+                model.removeNodeFromParent(node)
+                model.insertNodeInto(node, parent.getParent(), index2)
+            }
         },
 		shortDescription: 'Take this pack up',
         smallIcon: imageIcon(resource:"/images/up.png")

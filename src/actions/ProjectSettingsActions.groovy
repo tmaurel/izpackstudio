@@ -20,6 +20,8 @@ actions
           controller.updatePacksSettings(
                   packTree.getTreeTableModel()
           )
+
+          controller.refresh()
           projectSettings.dispose()
         },
 		shortDescription: 'Save settings'
