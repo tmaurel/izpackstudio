@@ -458,24 +458,6 @@ class IzPackStudio extends Controller
     }
 
 
-    /**
-    * Enable/Disable all the buttons of the given component
-    *
-    * @param component The component containing the buttons you wanna enable/disable
-    * @param enabled True or false
-    */
-    def setActionsEnabled(enabled = true)
-    {
-        projectActions.each {
-            if(it instanceof DefaultAction)
-            {
-                it.enabled = enabled
-            }
-        }
-        view.newProject.setEnabled(true)
-        view.loadProject.setEnabled(true)
-    }
-
 
    /**
     * Create a panel
@@ -486,17 +468,6 @@ class IzPackStudio extends Controller
     {
         if(project != null)
             project.createPanel(panel)
-    }
-
-
-   /**
-    * Build current project
-    *
-    * @param e ActionEvent thrown by action
-    */
-    public buildProject(e)
-    {
-
     }
 
 

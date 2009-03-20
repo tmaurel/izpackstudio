@@ -147,7 +147,7 @@ actions
 		id: 'buildProject',
         enabled: bind { controller.project.isInProject },
 		name: 'Build Project',
-		closure: controller.&buildProject,
+		closure: { },
 		mnemonic: 'B',
 		accelerator: 'ctrl  B',
 		shortDescription: 'Build the Project',
