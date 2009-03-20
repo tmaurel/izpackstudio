@@ -45,11 +45,6 @@ class SimpleFinishPanelController extends PanelController
 
     }
 
-   public refresh()
-    {
-
-    }
-
     public toXML()
     {
              return {

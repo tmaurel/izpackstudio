@@ -175,8 +175,8 @@ abstract class PanelController extends Controller {
         container.add(panel)
         view.doLater
         {
-            container.validate()
-            container.repaint()         
+
+            container.repaint()
         }
     }
 
@@ -310,7 +310,10 @@ abstract class PanelController extends Controller {
     */
     public refresh()
     {
-
+        view.build 
+        {
+            parent.projectHasChanged = true
+        }
     }
 
 }

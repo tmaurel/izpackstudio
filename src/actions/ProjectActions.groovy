@@ -1,12 +1,42 @@
 package actions
 
+import javax.swing.JFileChooser
+import javax.swing.filechooser.FileFilter
+import javax.swing.JOptionPane
+
 actions
 {
 
     action(
 		id: 'newProject',
 		name: 'New project',
-		closure: controller.&newProject,
+		closure: {
+
+            closeProject.actionPerformed()
+
+            if(!controller.project.isInProject)
+            {
+
+                def chooser = fileChooser(
+                   dialogTitle: 'Select a project destination file',
+                   fileFilter: [getDescription: {-> "*.xml"}, accept:{file-> file ==~ /.*?\.xml/ || file.isDirectory() }] as FileFilter,
+                   acceptAllFileFilterUsed: false
+                )
+
+                if(chooser.showSaveDialog() != JFileChooser.APPROVE_OPTION)
+                {
+                    return
+                }
+
+                def file = chooser.selectedFile.toString()
+                def selectedFile = (file.endsWith(".xml"))?file:file+".xml"
+                controller.project.model.fileName = selectedFile
+                controller.project.start("new")
+                controller.project.isInProject = true
+
+            }
+          
+        },
 		mnemonic: 'N',
 		accelerator: 'ctrl N',
 		shortDescription: 'Create a new installer project',
@@ -16,7 +46,33 @@ actions
     action(
 		id: 'loadProject',
 		name: 'Load Project',
-		closure: controller.&loadProject,
+		closure: {
+
+            closeProject.actionPerformed()
+
+            if(!controller.project.isInProject)
+            {
+
+                def chooser = fileChooser(
+                   dialogTitle: 'Select your project file',
+                   fileFilter: [getDescription: {-> "*.xml"}, accept:{file-> file ==~ /.*?\.xml/ || file.isDirectory() }] as FileFilter,
+                   acceptAllFileFilterUsed: false
+                )
+
+                if(chooser.showOpenDialog() != JFileChooser.APPROVE_OPTION)
+                {
+                    return
+                }
+
+                def file = chooser.selectedFile.toString()
+                controller.project.model.fileName = file
+                controller.project.start("load")
+                controller.project.isInProject = true
+                controller.project.projectHasChanged = false
+
+            }
+
+        },
 		mnemonic: 'L',
 		accelerator: 'ctrl L',
 		shortDescription: 'Load a project',
@@ -24,9 +80,35 @@ actions
     )
 
     action(
-		id: 'closeProject',
+        enabled: bind { controller.project.isInProject },
 		name: 'Close Project',
-		closure: controller.&closeProject,
+        id: 'closeProject',
+		closure: {
+            if(controller.project.isInProject)
+            {
+                if(controller.project.projectHasChanged)
+                {
+                  def answer = JOptionPane.showConfirmDialog(mainFrame,
+                                   "Save current project ?",
+                                   "Save project",
+                                    JOptionPane.YES_NO_CANCEL_OPTION)
+                  if (answer == JOptionPane.CANCEL_OPTION)
+                  {
+                      return
+                  }
+                  else if (answer == JOptionPane.YES_OPTION)
+                  {
+                      saveProject.actionPerformed()
+                  }
+                }
+              
+                controller.clean()
+                controller.project.stop()
+                controller.project.isInProject = false
+                controller.project.projectHasChanged = false
+            }
+
+        },
 		mnemonic: 'X',
 		accelerator: 'ctrl X',
 		shortDescription: 'Close the current project',
@@ -35,8 +117,15 @@ actions
 
     action(
 		id: 'saveProject',
+        enabled: bind { controller.project.projectHasChanged },
 		name: 'Save Project',
-		closure: controller.&saveProject,
+		closure: {
+            if(controller.project.isInProject && controller.project.projectHasChanged)
+            {
+                controller.project.save()
+                controller.project.projectHasChanged = false   
+            }
+        },
 		mnemonic: 'S',
 		accelerator: 'ctrl S',
 		shortDescription: 'Save the current project',
@@ -45,6 +134,7 @@ actions
 
     action(
 		id: 'toggleProjectSettings',
+        enabled: bind { controller.project.isInProject },
 		name: 'Project Settings',
 		closure: controller.&toggleProjectSettings,
 		mnemonic: 'P',
@@ -55,6 +145,7 @@ actions
 
     action(
 		id: 'buildProject',
+        enabled: bind { controller.project.isInProject },
 		name: 'Build Project',
 		closure: controller.&buildProject,
 		mnemonic: 'B',
@@ -65,6 +156,7 @@ actions
 
     action(
 		id: 'addHelloPanel',
+        enabled: bind { controller.project.isInProject },
 		name: 'HelloPanel',
 		closure: { controller.createPanel("HelloPanel") },
 		mnemonic: 'H',
@@ -75,6 +167,7 @@ actions
 
 	action(
 		id: 'addLicencePanel',
+        enabled: bind { controller.project.isInProject },
 		name: 'LicencePanel',
 		closure: { controller.createPanel("LicencePanel") },
 		mnemonic: 'L',
@@ -85,6 +178,7 @@ actions
 
 	action(
 		id: 'addInfoPanel',
+        enabled: bind { controller.project.isInProject },
 		name: 'InfoPanel',
 		closure: { controller.createPanel("InfoPanel") },
 		mnemonic: 'I',
@@ -95,6 +189,7 @@ actions
 
 	action(
 		id: 'addSummaryPanel',
+        enabled: bind { controller.project.isInProject },
 		name: 'SummaryPanel',
 		closure: { controller.createPanel("SummaryPanel") },
 		mnemonic: 'S',
@@ -105,6 +200,7 @@ actions
 
 	action(
 		id: 'addInstallPanel',
+        enabled: bind { controller.project.isInProject },
 		name: 'InstallPanel',
 		closure: { controller.createPanel("InstallPanel") },
 		mnemonic: 'N',
@@ -115,6 +211,7 @@ actions
 
 	action(
 		id: 'addPathInputPanel',
+        enabled: bind { controller.project.isInProject },
 		name: 'PathInputPanel',
 		closure: { controller.createPanel("PathInputPanel") },
 		mnemonic: 'P',
@@ -125,6 +222,7 @@ actions
 
     action(
 		id: 'addTargetPanel',
+        enabled: bind { controller.project.isInProject },
 		name: 'TargetPanel',
 		closure: { controller.createPanel("TargetPanel") },
 		mnemonic: 'T',
@@ -135,6 +233,7 @@ actions
 
     action(
 		id: 'addPacksPanel',
+        enabled: bind { controller.project.isInProject },
 		name: 'PacksPanel',
 		closure: { controller.createPanel("PacksPanel") },
 		mnemonic: 'K',
@@ -145,6 +244,7 @@ actions
 
     action(
 		id: 'addFinishPanel',
+        enabled: bind { controller.project.isInProject },
 		name: 'FinishPanel',
 		closure: { controller.createPanel("FinishPanel") },
 		mnemonic: 'F',
@@ -155,6 +255,7 @@ actions
 
     action(
         id: 'deletePanel',
+        enabled: bind { controller.project.isInProject },
         name: 'Delete Panel',
         closure: controller.&deletePanel,
         mnemonic: 'R',

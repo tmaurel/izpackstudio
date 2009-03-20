@@ -31,11 +31,6 @@ class XInfoPanelController extends PanelController
         buildPanel()
     }
 
-    public refresh()
-    {
-
-    }
-
     public toXML()
     {
              return {

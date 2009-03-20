@@ -31,11 +31,6 @@ class InstallPanelController extends PanelController
         buildPanel()
     }
 
-   public refresh()
-    {
-
-    }
-
     public toXML()
     {
              return {

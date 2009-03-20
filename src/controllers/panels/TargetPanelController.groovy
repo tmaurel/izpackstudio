@@ -31,11 +31,6 @@ class TargetPanelController extends PanelController
         buildPanel()
     }
 
-    public refresh()
-    {
-
-    }
-
     public toXML()
     {
              return {

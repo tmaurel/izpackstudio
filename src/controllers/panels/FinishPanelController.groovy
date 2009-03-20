@@ -45,10 +45,6 @@ class FinishPanelController extends PanelController
 
     }
 
-    public refresh()
-    {
-
-    }
 
     public toXML()
     {

@@ -50,6 +50,7 @@ class GeneralInfoPanelController extends PanelController
     */   
     public refresh()
     {
+        super.refresh()
         if(panelType == 0)
         {
             StringBuffer fileData = new StringBuffer(1000)

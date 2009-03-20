@@ -32,11 +32,6 @@ class PathInputPanelController extends PanelController
         buildPanel()
     }
 
-   public refresh()
-    {
-
-    }
-
     public toXML()
     {
              return {

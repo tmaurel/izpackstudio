@@ -8,12 +8,14 @@ import com.izforge.izpack.Info.Author
 import views.panels.NavigationPanel
 import javax.swing.ImageIcon
 import com.izforge.izpack.compiler.PackInfo
+import groovy.beans.Bindable
 
 
 /**
 * Controller for Projects
 *
 */
+@Bindable
 class ProjectController extends Controller {
 
 
@@ -21,7 +23,13 @@ class ProjectController extends Controller {
     * Boolean telling if u'r currently in a project or not
     *
     */
-    def isInProject = false
+    boolean isInProject = false
+
+    /**
+    * Boolean telling if there has been any changes since last save
+    *
+    */
+    boolean projectHasChanged = false
 
 
     /**
@@ -45,6 +53,10 @@ class ProjectController extends Controller {
     public addPanel(controller) {
         model.panels.add(controller)
         parent.printPanel(controller)
+        view.build 
+        {
+            projectHasChanged = true
+        }
     }
 
 
@@ -70,6 +82,10 @@ class ProjectController extends Controller {
         def controller = panels.get(from)
         panels.remove(from)
         panels.add(to, controller)
+        view.build 
+        {
+            projectHasChanged = true
+        }
     }
 
 
@@ -82,6 +98,10 @@ class ProjectController extends Controller {
     {
         def panels = getPanels()
         panels.remove(index)
+        view.build 
+        {
+            projectHasChanged = true
+        }
     }
 
 
@@ -150,7 +170,6 @@ class ProjectController extends Controller {
     *
     */
     public start(args = null) {
-        isInProject = true
         if(args == "new")
             model.setDefaults()
         else if(args == "load")
@@ -162,9 +181,17 @@ class ProjectController extends Controller {
     *
     */
     public stop() {
-        isInProject = false
+      
     }
 
+     /**
+    * Stop method of the Controller
+    *
+    */
+    public save() {
+        if(isInProject)
+          toXML(model.fileName)
+    }
 
 
     /**
@@ -413,6 +440,10 @@ class ProjectController extends Controller {
         model.setInfos(authors, appName, appVersion, appURL)
         model.setPrefs(width, height, resizable)
         model.setLangs(appLangs)
+        view.build
+        {
+            projectHasChanged = true
+        }
     }
 
 

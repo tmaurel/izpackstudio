@@ -8,6 +8,7 @@ import javax.swing.UIManager
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE
 import java.awt.event.WindowEvent
 import java.awt.event.WindowListener
+import javax.swing.WindowConstants
 
 
 /**
@@ -19,7 +20,7 @@ frame(
         title: 'IzPack Studio',
         location: [0, 0],
         size: Positionning.getFullScreenSize(),
-        defaultCloseOperation: EXIT_ON_CLOSE,
+        defaultCloseOperation: WindowConstants.DO_NOTHING_ON_CLOSE,
         background: Color.WHITE,
         layout: new TableLayout((double[][]) [[0, -1, 0], [0, -1, 0]])
 ) {
@@ -84,6 +85,7 @@ frame(
 
             case WindowEvent.WINDOW_CLOSING:
                 controller.perspective.savePerspective()
+                exit.actionPerformed()
             break
         }
     } as WindowListener)

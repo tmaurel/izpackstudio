@@ -6,7 +6,13 @@ actions
     action(
         id: 'exit',
         name: 'Quit',
-        closure: controller.&exit,
+        closure: {
+            closeProject.actionPerformed()
+            if(!controller.project.isInProject)
+            {
+                controller.exit()
+            }
+        },
         mnemonic: 'Q',
         accelerator: 'ctrl Q',
         shortDescription: 'Exit IzPackStudio'

@@ -98,6 +98,10 @@ class IzPackStudio extends Controller
 
         setProgressBar(1, "Loading GUI...")
 
+        // Create the new empty project
+        // TO-DO : Args to load projects (no empty project)
+        project = new ProjectController(new ProjectModel(), null, this)
+
         /**
          * Building Actions
          *
@@ -112,11 +116,7 @@ class IzPackStudio extends Controller
         // Assign the our own List Model to the ThumbList
         listModel = view.thumbList.getModel()
 
-        // Create the new empty project
-        // TO-DO : Args to load projects (no empty project)
-        project = new ProjectController(new ProjectModel(), null, this)
-
-        setActionsEnabled(false)
+        //setActionsEnabled(false)
 
         sleep(1000)
         setProgressBar(10, "Loaded !")
@@ -490,66 +490,6 @@ class IzPackStudio extends Controller
 
 
    /**
-    * Create a new project
-    *
-    * @param e ActionEvent thrown by action
-    */
-    public newProject(e)
-    {
-        if(project.isInProject)
-        {
-            closeProject(e)
-        }
-        //project.model = new ProjectModel()
-        setActionsEnabled(true)
-        project.start("new")
-    }
-
-
-   /**
-    * Close current project project
-    *
-    * @param e ActionEvent thrown by action
-    */
-    public closeProject(e)
-    {
-        /*
-        * TO DO
-        */
-        clean()
-        project.stop()
-    }
-
-   /**
-    * Load an existing project
-    *
-    * @param e ActionEvent thrown by action
-    */
-    public loadProject(e)
-    {
-       if(project.isInProject)
-        {
-            closeProject(e)
-        }
-        //project.model = new ProjectModel()
-        setActionsEnabled(true)
-        project.start("load")
-    }
-
-   /**
-    * Save current project
-    *
-    * @param e ActionEvent thrown by action
-    */
-    public saveProject(e)
-    {
-       if(project.isInProject)
-        {
-            project.toXML("test.xml")
-        }
-    }
-
-   /**
     * Build current project
     *
     * @param e ActionEvent thrown by action
@@ -566,7 +506,7 @@ class IzPackStudio extends Controller
     */
     private clean()
     {
-        setActionsEnabled(false)
+        //setActionsEnabled(false)
         for(def i=listModel.size(); i> 0; --i)
         {
             deletePanel(i-1)
@@ -594,7 +534,7 @@ class IzPackStudio extends Controller
     *
     * @param e ActionEvent thrown by action
     */
-    def static public exit(e)
+    def static public exit()
     {
         System.exit(0)
     }

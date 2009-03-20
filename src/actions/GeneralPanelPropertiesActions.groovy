@@ -1,6 +1,7 @@
 package actions
 
 import javax.swing.JFileChooser
+import javax.swing.filechooser.FileFilter
 
 
 actions
@@ -11,7 +12,9 @@ actions
 		closure: {
             def fC = fileChooser(
                         id: 'myFileChooser',
-                        dialogTitle: 'Select a file'
+                        fileFilter: [getDescription: {-> "*.txt"}, accept:{file-> file ==~ /.*?\.txt/ || file.isDirectory() }] as FileFilter,
+                        dialogTitle: 'Select a file',
+                        acceptAllFileFilterUsed: false
                      )
 
             if (fC.showOpenDialog(panelProperties)==JFileChooser.APPROVE_OPTION)
