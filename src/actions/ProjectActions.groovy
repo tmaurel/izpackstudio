@@ -152,7 +152,11 @@ actions
 		id: 'buildProject',
         enabled: bind { controller.project.isInProject },
 		name: 'Build Project',
-		closure: { },
+		closure: {
+            controller.perspective.toolWindowManager.getToolWindow("Console").setVisible(true)
+            saveProject.actionPerformed()
+            controller.project.build()
+        },
 		mnemonic: 'B',
 		accelerator: 'ctrl  B',
 		shortDescription: 'Build the Project',

@@ -193,6 +193,16 @@ class ProjectController extends Controller {
           toXML(model.fileName)
     }
 
+     /**
+    * Build the jar
+    *
+    */
+    public build() {
+        String[] args = [model.fileName]
+        
+        com.izforge.izpack.compiler.Compiler.main(args);
+    }
+
 
     /**
     * Refresh all panels

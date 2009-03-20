@@ -1,10 +1,7 @@
 package views
 
-import helpers.WrapLayout
 import javax.swing.BorderFactory
 import net.miginfocom.swing.MigLayout
-
-
 
 scrollPane(
     constraints: '0,0',

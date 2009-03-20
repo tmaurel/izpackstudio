@@ -66,6 +66,13 @@ class Perspective
             "view" : PanelPropertiesView,
             "settings" : "setPanelPropertiesProperties"
         ],
+        [
+            "id": "Console",
+            "anchor" : ToolWindowAnchor.BOTTOM,
+            "icon" : "images/mini-comment.png",
+            "view" : ConsolePanelView,
+            "settings" : "setConsolePanelProperties"
+        ],
 
     ]
 
@@ -302,5 +309,24 @@ class Perspective
     {
 
     }
+
+
+
+    /**
+    * Set default properties for ConsolePanel ToolBar
+    *
+    * @param    toolWindow   The Toolwindow which will get the new settings
+    */
+    def setConsolePanelProperties(ToolWindow toolwindow)
+    {
+        DockedTypeDescriptor dockedTypeDescriptor = (DockedTypeDescriptor) toolwindow.getTypeDescriptor(ToolWindowType.DOCKED)
+        dockedTypeDescriptor.setDockLength(115)
+        dockedTypeDescriptor.setMinimumDockLength(115)
+        def pos = Positionning.CenterPosition([600,300])
+        FloatingTypeDescriptor floatingTypeDescriptor = (FloatingTypeDescriptor) toolwindow.getTypeDescriptor(ToolWindowType.FLOATING)
+        floatingTypeDescriptor.setLocation((int)pos[0], (int)pos[1])
+        floatingTypeDescriptor.setSize(600,300)
+    }
+
 
 }
