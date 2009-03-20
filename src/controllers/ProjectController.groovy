@@ -399,27 +399,36 @@ class ProjectController extends Controller {
                 model.packs.getFilteredArray(PackInfo).each{
                     def myPackInfo = it.getUserObject()
                     if(myPackInfo.getPack().required)
-                        "pack"(name:myPackInfo.getPack().name,required:"yes")
+                        "pack"(name:myPackInfo.getPack().name,
+                               parent:myPackInfo.getPack().parent,
+                               required:"yes")
                         {
                             "description"(myPackInfo.getPack().description)
-                            myPackInfo.files.values().each{ currentFileName ->
-                                "file"(src:currentFileName.toString())   
+                            myPackInfo.files.keySet().each{ currentFileName ->
+                                "file"(src:myPackInfo.files.get(currentFileName).toString(),
+                                       targetdir:currentFileName.getTargetPath())
                             }
                         }
                     else if(myPackInfo.getPack().preselected)
-                        "pack"(name:myPackInfo.getPack().name,required:"no",preselected:"yes")
+                        "pack"(name:myPackInfo.getPack().name,
+                               parent:myPackInfo.getPack().parent,
+                               required:"no",preselected:"yes")
                         {
                             "description"(myPackInfo.getPack().description)
-                            myPackInfo.files.values().each{ currentFileName ->
-                                "file"(src:currentFileName.toString())
+                            myPackInfo.files.keySet().each{ currentFileName ->
+                                "file"(src:myPackInfo.files.get(currentFileName).toString(),
+                                       targetdir:currentFileName.getTargetPath())
                             }
                         }
                     else
-                        "pack"(name:myPackInfo.getPack().name,required:"no")
+                        "pack"(name:myPackInfo.getPack().name,
+                               parent:myPackInfo.getPack().parent,
+                               required:"no")
                         {
                             "description"(myPackInfo.getPack().description)
-                            myPackInfo.files.values().each{ currentFileName ->
-                                "file"(src:currentFileName.toString())
+                            myPackInfo.files.keySet().each{ currentFileName ->
+                                "file"(src:myPackInfo.files.get(currentFileName).toString(),
+                                       targetdir:currentFileName.getTargetPath())
                             }
                         }
                 }
