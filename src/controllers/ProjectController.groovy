@@ -301,6 +301,15 @@ class ProjectController extends Controller {
         }
         reader.close()
         def xml = new XmlParser().parseText(fileData.toString())
+        def absolutePath
+        if(fileName.lastIndexOf('\\') != -1)
+        {
+            absolutePath = fileName.substring(0,fileName.lastIndexOf('\\')+1)
+        }
+        else
+        {
+            absolutePath = fileName.substring(0,fileName.lastIndexOf('/')+1)    
+        }
         model.info.setAppName(xml.info.appname.text())
         model.info.setAppVersion(xml.info.appversion.text())
         def authorsList = xml.info.authors.author
@@ -340,7 +349,7 @@ class ProjectController extends Controller {
                     }
                     if(i<model.panels.size())
                     {
-                        model.panels[i].model.resource = "${res.'@src'}".toString()
+                        model.panels[i].model.resource = absolutePath + "${res.'@src'}".toString()
                     }
                     break
                 case "InfoPanel.info":
@@ -351,7 +360,7 @@ class ProjectController extends Controller {
                     }
                     if(i<model.panels.size())
                     {
-                        model.panels[i].model.resource = "${res.'@src'}".toString()
+                        model.panels[i].model.resource = absolutePath + "${res.'@src'}".toString()
                     }
                     break
             }
