@@ -33,6 +33,8 @@ actions
                 controller.project.model.fileName = selectedFile
                 controller.project.start("new")
                 controller.project.isInProject = true
+                controller.project.projectHasChanged = false
+                toggleProjectSettings.actionPerformed()
 
             }
           
@@ -104,10 +106,13 @@ actions
               
                 controller.clean()
                 controller.project.stop()
-                controller.project.isInProject = false
-                controller.project.projectHasChanged = false
+                doLater
+                {
+                    controller.project.isInProject = false
+                    controller.project.projectHasChanged = false
+                }
+                
             }
-
         },
 		mnemonic: 'X',
 		accelerator: 'ctrl X',
