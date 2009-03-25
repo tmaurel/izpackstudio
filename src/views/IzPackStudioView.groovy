@@ -5,7 +5,6 @@ import info.clearthought.layout.TableLayout
 import java.awt.Color
 import javax.swing.SwingUtilities
 import javax.swing.UIManager
-import static javax.swing.WindowConstants.EXIT_ON_CLOSE
 import java.awt.event.WindowEvent
 import java.awt.event.WindowListener
 import javax.swing.WindowConstants
@@ -56,14 +55,14 @@ frame(
              mnemonic: 'I'
         ) {
             menuItem(addHelloPanel)
-            menuItem(addFinishPanel)
-            menuItem(addLicencePanel)
             menuItem(addInfoPanel)
-            menuItem(addSummaryPanel)
-            menuItem(addInstallPanel)
+            menuItem(addLicencePanel)
             menuItem(addPathInputPanel)
             menuItem(addTargetPanel)
-            menuItem(addPacksPanel)            
+            menuItem(addPacksPanel)
+            menuItem(addSummaryPanel)
+            menuItem(addInstallPanel)
+            menuItem(addFinishPanel)
         }
         menu(
              text: 'Window',

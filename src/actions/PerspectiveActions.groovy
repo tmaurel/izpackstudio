@@ -8,9 +8,12 @@ actions
         name: 'Quit',
         closure: {
             closeProject.actionPerformed()
-            if(!controller.project.isInProject)
+            doLater
             {
-                controller.exit()
+                if(!controller.project.isInProject)
+                {
+                    controller.exit()
+                }
             }
         },
         mnemonic: 'Q',

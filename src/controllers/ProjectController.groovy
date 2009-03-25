@@ -9,6 +9,8 @@ import views.panels.NavigationPanel
 import javax.swing.ImageIcon
 import com.izforge.izpack.compiler.PackInfo
 import groovy.beans.Bindable
+import org.jdesktop.swingx.treetable.DefaultMutableTreeTableNode
+import helpers.URIHelper
 
 
 /**
@@ -57,6 +59,9 @@ class ProjectController extends Controller {
         {
             projectHasChanged = true
         }
+        def name = controller.model.name
+        name = name.substring(name.lastIndexOf(".")+1, name.length())
+        println(model.info.getAppName() + " : Added " + name)
     }
 
 
@@ -86,6 +91,9 @@ class ProjectController extends Controller {
         {
             projectHasChanged = true
         }
+        def name = controller.model.name
+        name = name.substring(name.lastIndexOf(".")+1, name.length())
+        println(model.info.getAppName() + " : Moved " + name)
     }
 
 
@@ -97,6 +105,10 @@ class ProjectController extends Controller {
     def deletePanel(index)
     {
         def panels = getPanels()
+        def controller = panels.get(index)
+        def name = controller.model.name
+        name = name.substring(name.lastIndexOf(".")+1, name.length())
+        println(model.info.getAppName() + " : Removed  " + name)
         panels.remove(index)
         view.build 
         {
@@ -171,9 +183,15 @@ class ProjectController extends Controller {
     */
     public start(args = null) {
         if(args == "new")
+        {
+            println("Creating new Project...")
             model.setDefaults()
+        }
         else if(args == "load")
+        {
+            println("Loading Project...")
             loadXML(model.fileName)
+        }
     }
 
     /**
@@ -181,7 +199,7 @@ class ProjectController extends Controller {
     *
     */
     public stop() {
-      
+        println("Closing Project...")  
     }
 
      /**
@@ -198,9 +216,15 @@ class ProjectController extends Controller {
     *
     */
     public build() {
-        String[] args = [model.fileName]
-        
+        def tempName = model.fileName.substring(model.fileName.lastIndexOf(File.separator)+1,model.fileName.size())
+        def path = model.fileName.substring(0,model.fileName.lastIndexOf(File.separator)+1)
+        def nameJar = path+tempName.substring(0,tempName.size()-3)+"jar"
+        tempName = path+"~"+tempName
+        String[] args = [tempName,"-o",nameJar,"-b",path]
+        toXML(tempName)
         com.izforge.izpack.compiler.Compiler.main(args);
+        def tempFile = new File(tempName)
+        tempFile.delete()
     }
 
 
@@ -289,6 +313,8 @@ class ProjectController extends Controller {
     */
     def loadXML(String fileName)
     {
+        println("Loading from " + fileName)  
+        model.fileName = fileName
         StringBuffer fileData = new StringBuffer(1000)
         BufferedReader reader = new BufferedReader(new FileReader(fileName))
         char[] buf = new char[1024]
@@ -302,43 +328,46 @@ class ProjectController extends Controller {
         reader.close()
         def xml = new XmlParser().parseText(fileData.toString())
         def absolutePath
-        if(fileName.lastIndexOf('\\') != -1)
-        {
-            absolutePath = fileName.substring(0,fileName.lastIndexOf('\\')+1)
-        }
-        else
-        {
-            absolutePath = fileName.substring(0,fileName.lastIndexOf('/')+1)    
-        }
+        absolutePath = fileName.substring(0,fileName.lastIndexOf(File.separator)+1)
         model.info.setAppName(xml.info.appname.text())
+        println(model.info.getAppName() + " : Set Application Name -> " + xml.info.appname.text())
         model.info.setAppVersion(xml.info.appversion.text())
+        println(model.info.getAppName() + " : Set Application Version -> " + xml.info.appversion.text())
         def authorsList = xml.info.authors.author
         model.info.getAuthors().clear()
         authorsList.each
         {
             def author = new Author(it['@name'],it['@email'])
             model.info.addAuthor(author)
+            println(model.info.getAppName() + " : Added author -> " + it['@name'])
         }
         model.info.setAppURL(xml.info.url.text())
+        println(model.info.getAppName() + " : Set Application URL -> " + xml.info.url.text())
         model.prefs.width = Integer.parseInt(xml.guiprefs['@width'].text())
+        println(model.info.getAppName() + " : Set Application Width -> " + xml.guiprefs['@width'].text())
         model.prefs.height = Integer.parseInt(xml.guiprefs['@height'].text())
+        println(model.info.getAppName() + " : Set Application Height -> " + xml.guiprefs['@height'].text())
         model.prefs.resizable = xml.info.guiprefs['@resizable']
+        println(model.info.getAppName() + " : Set Application Resizable -> " + xml.info.guiprefs['@resizable']) 
         def langs = xml.locale.langpack
         langs.each
         {
             lang ->
             model.selectedLangPacks.add("${lang.'@iso3'}".toString())
+            println(model.info.getAppName() + " : Added Langpack -> ${lang.'@iso3'}")
         }
         def panelsToBeInstanciated = xml.panels.panel
         panelsToBeInstanciated.each
         {
             panel ->
             createPanel("${panel.'@classname'}")
+            println(model.info.getAppName() + " : Added Panel -> ${panel.'@classname'}")
         }
         def resources = xml.resources.res
         resources.each
         {
             res ->
+            println(model.info.getAppName() + " : Added Ressource -> ${res.'@src'}")
             switch("${res.'@id'}".toString())
             {
                 case "LicencePanel.licence":
@@ -365,13 +394,37 @@ class ProjectController extends Controller {
                     break
             }
         }
+        def pack = xml.packs.pack
+        pack.each
+        {
+            currentPack ->
+            println(model.info.getAppName() + " : Added Pack -> ${currentPack.'@name'}")
+            def required = true
+            if("${currentPack.'@required'}".toString() == "no")
+            {
+                required = false
+            }
+            def myPackInfo = new PackInfo("${currentPack.'@name'}".toString(), "", "${currentPack.description.text()}", required, false, "", true)
+            def myNode = new DefaultMutableTreeTableNode(myPackInfo)
+            def files = currentPack.file
+            files.each
+            {
+                file ->
+                    def myFile = new File(absolutePath+"${file.'@src'}".toString())
+                    myPackInfo.addFile(null, myFile, "${file.'@targetdir'}".toString(), null, 0, null, "")
+                    myNode.add(new DefaultMutableTreeTableNode([path: "${file.'@src'}".toString(), target: "${file.'@targetdir'}".toString()]))
+            }
+            model.packs.getRoot().add(myNode)
+        }
         refresh()
      }
 
      def toXML(String fileName)
      {
+       println(model.info.getAppName() + " : Saving into " + fileName)      
        def myBuilder = new StreamingMarkupBuilder()
        def xml = myBuilder.bind{
+        mkp.xmlDeclaration()
         installation(version:"1.0")
         {
             "info"()
@@ -393,17 +446,20 @@ class ProjectController extends Controller {
                     "langpack"(iso3:it)
                 }
             }
+            def absolutePath
+            absolutePath = fileName.substring(0,fileName.lastIndexOf(File.separator)+1)
             "resources"{
                 model.panels.each{
                     if(it.model.resource != null)
                     {
                         if(it instanceof GeneralLicencePanelController)
                         {
-                            "res"(id:"LicencePanel.licence", src:it.model.resource)
+                             //"res"(id:"LicencePanel.licence", src:URIHelper.convertToRelativePath(absolutePath, it.model.resource))
+                             "res"(id:"LicencePanel.licence", src:URIHelper.absoluteToRelative(it.model.resource, absolutePath))
                         }
                         if(it instanceof GeneralInfoPanelController)
                         {
-                            "res"(id:"InfoPanel.info", src:it.model.resource)                            
+                             "res"(id:"InfoPanel.info", src:URIHelper.absoluteToRelative(it.model.resource, absolutePath))
                         }
                     }
                 }
@@ -414,39 +470,40 @@ class ProjectController extends Controller {
                     mkp.yield it2.toXML()
                 }
             }
+            //Todo Gestion parent 
             "packs"{
                 model.packs.getFilteredArray(PackInfo).each{
                     def myPackInfo = it.getUserObject()
                     if(myPackInfo.getPack().required)
                         "pack"(name:myPackInfo.getPack().name,
-                               parent:myPackInfo.getPack().parent,
+                                 mkp.yield {if(myPackInfo.getPack().parent != null) return {parent:myPackInfo.getPack().parent}},
                                required:"yes")
                         {
                             "description"(myPackInfo.getPack().description)
                             myPackInfo.files.keySet().each{ currentFileName ->
-                                "file"(src:myPackInfo.files.get(currentFileName).toString(),
+                                "file"(src:URIHelper.absoluteToRelative(myPackInfo.files.get(currentFileName).toString(),  absolutePath),
                                        targetdir:currentFileName.getTargetPath())
                             }
                         }
                     else if(myPackInfo.getPack().preselected)
                         "pack"(name:myPackInfo.getPack().name,
-                               parent:myPackInfo.getPack().parent,
+                               mkp.yield {if(myPackInfo.getPack().parent != null) return {parent:myPackInfo.getPack().parent}},
                                required:"no",preselected:"yes")
                         {
                             "description"(myPackInfo.getPack().description)
                             myPackInfo.files.keySet().each{ currentFileName ->
-                                "file"(src:myPackInfo.files.get(currentFileName).toString(),
+                                "file"(src:URIHelper.absoluteToRelative(myPackInfo.files.get(currentFileName).toString(),  absolutePath),
                                        targetdir:currentFileName.getTargetPath())
                             }
                         }
                     else
                         "pack"(name:myPackInfo.getPack().name,
-                               parent:myPackInfo.getPack().parent,
+                               mkp.yield {if(myPackInfo.getPack().parent != null) return {parent:myPackInfo.getPack().parent}},
                                required:"no")
                         {
                             "description"(myPackInfo.getPack().description)
                             myPackInfo.files.keySet().each{ currentFileName ->
-                                "file"(src:myPackInfo.files.get(currentFileName).toString(),
+                                "file"(src:URIHelper.absoluteToRelative(myPackInfo.files.get(currentFileName).toString(),  absolutePath),
                                        targetdir:currentFileName.getTargetPath())
                             }
                         }
@@ -458,7 +515,9 @@ class ProjectController extends Controller {
                  def out = new BufferedWriter(new FileWriter(fileName));
                  out.write(xml.toString());
                  out.close();
+                 println(model.info.getAppName() + " : Saved!")
              } catch (IOException e) {
+                    println(model.info.getAppName() + " : Couldnt save! ") 
              }
 
      }
@@ -472,6 +531,7 @@ class ProjectController extends Controller {
         {
             projectHasChanged = true
         }
+        println(model.info.getAppName() + " : Updated Project Settings") 
     }
 
 

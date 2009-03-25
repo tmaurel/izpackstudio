@@ -25,24 +25,6 @@ scrollPane(
             action: addHelloPanel
         ) 
 
-
-        widget(
-            new ToolBarButton(
-                    'FinishPanel',
-                    imageIcon(resource: '../images/finishpanel.png')
-            ),
-            action: addFinishPanel
-        )
-
-
-        widget(
-            new ToolBarButton(
-                    'LicencePanel',
-                    imageIcon(resource: '../images/licencepanel.png')
-            ),
-            action: addLicencePanel
-        )
-
         widget(
             new ToolBarButton(
                     'InfoPanel',
@@ -53,18 +35,10 @@ scrollPane(
 
         widget(
             new ToolBarButton(
-                    'SummaryPanel',
-                    imageIcon(resource: '../images/summarypanel.png')
+                    'LicencePanel',
+                    imageIcon(resource: '../images/licencepanel.png')
             ),
-            action: addSummaryPanel
-        )
-
-        widget(
-            new ToolBarButton(
-                    'InstallPanel',
-                    imageIcon(resource: '../images/installpanel.png')
-            ),
-            action: addInstallPanel
+            action: addLicencePanel
         )
 
         widget(
@@ -89,6 +63,30 @@ scrollPane(
                     imageIcon(resource: '../images/packspanel.png')
             ),
             action: addPacksPanel
+        )
+
+        widget(
+            new ToolBarButton(
+                    'SummaryPanel',
+                    imageIcon(resource: '../images/summarypanel.png')
+            ),
+            action: addSummaryPanel
+        )        
+
+        widget(
+            new ToolBarButton(
+                    'InstallPanel',
+                    imageIcon(resource: '../images/installpanel.png')
+            ),
+            action: addInstallPanel
+        )
+
+        widget(
+            new ToolBarButton(
+                    'FinishPanel',
+                    imageIcon(resource: '../images/finishpanel.png')
+            ),
+            action: addFinishPanel
         )
     }
 }

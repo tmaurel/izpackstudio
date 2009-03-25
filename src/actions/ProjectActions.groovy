@@ -35,6 +35,7 @@ actions
                 controller.project.isInProject = true
                 controller.project.projectHasChanged = false
                 toggleProjectSettings.actionPerformed()
+                controller.perspective.toolWindowManager.getToolWindow("Create Panel").setVisible(true)
 
             }
           
@@ -51,27 +52,29 @@ actions
 		closure: {
 
             closeProject.actionPerformed()
-
-            if(!controller.project.isInProject)
+            doLater
             {
-
-                def chooser = fileChooser(
-                   dialogTitle: 'Select your project file',
-                   fileFilter: [getDescription: {-> "*.xml"}, accept:{file-> file ==~ /.*?\.xml/ || file.isDirectory() }] as FileFilter,
-                   acceptAllFileFilterUsed: false
-                )
-
-                if(chooser.showOpenDialog() != JFileChooser.APPROVE_OPTION)
+                if(!controller.project.isInProject)
                 {
-                    return
+
+                    def chooser = fileChooser(
+                       dialogTitle: 'Select your project file',
+                       fileFilter: [getDescription: {-> "*.xml"}, accept:{file-> file ==~ /.*?\.xml/ || file.isDirectory() }] as FileFilter,
+                       acceptAllFileFilterUsed: false
+                    )
+
+                    if(chooser.showOpenDialog() != JFileChooser.APPROVE_OPTION)
+                    {
+                        return
+                    }
+
+                    def file = chooser.selectedFile.toString()
+                    controller.project.model.fileName = file
+                    controller.project.start("load")
+                    controller.project.isInProject = true
+                    controller.project.projectHasChanged = false
+
                 }
-
-                def file = chooser.selectedFile.toString()
-                controller.project.model.fileName = file
-                controller.project.start("load")
-                controller.project.isInProject = true
-                controller.project.projectHasChanged = false
-
             }
 
         },
@@ -154,7 +157,6 @@ actions
 		name: 'Build Project',
 		closure: {
             controller.perspective.toolWindowManager.getToolWindow("Console").setVisible(true)
-            saveProject.actionPerformed()
             controller.project.build()
         },
 		mnemonic: 'B',
