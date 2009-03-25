@@ -223,7 +223,7 @@ class ProjectController extends Controller {
         String[] args = [tempName,"-o",nameJar,"-b",path]
         toXML(tempName)
         com.izforge.izpack.compiler.Compiler.main(args);
-        def tempFile = new File(tempName)
+        def tempFile = new File((String)tempName)
         tempFile.delete()
     }
 
