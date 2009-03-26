@@ -51,7 +51,8 @@ class GeneralInfoPanelController extends PanelController
     public refresh()
     {
         super.refresh()
-        if(panelType == 0)
+
+        if(panelType == 0 && model.getResource() != null)
         {
             StringBuffer fileData = new StringBuffer(1000)
             BufferedReader reader = new BufferedReader(new FileReader(model.getResource()))

@@ -15,6 +15,7 @@ import models.ThumbEntry
 import views.Reflection
 import groovy.swing.SwingBuilder
 import java.awt.event.ActionListener
+import java.awt.Dimension
 
 /**
 * Controller for IzPack Panels
@@ -310,10 +311,28 @@ abstract class PanelController extends Controller {
     */
     public refresh()
     {
-        view.build 
+        def size = model.panel.getSize()
+        parent.parent.view.build
         {
+            if(size != parent.getSize())
+            {
+                model.panel.setPreferredSize(parent.getSize())
+                model.panel.getParent().remove(1)
+                panelPreview.validate()
+                panelPreview.repaint()
+
+                doLater
+                {
+                  model.panel.getParent().add(getReflection())
+                  panelPreview.validate()
+                  panelPreview.repaint()
+                }
+
+            }
             parent.projectHasChanged = true
         }
+
+
     }
 
 }

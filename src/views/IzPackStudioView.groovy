@@ -14,6 +14,9 @@ import javax.swing.WindowConstants
  * Building GUI
  *
  */
+lookAndFeel('system')
+
+
 frame(
         id: 'mainFrame',
         title: 'IzPack Studio',

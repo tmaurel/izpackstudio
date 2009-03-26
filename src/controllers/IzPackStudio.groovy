@@ -76,14 +76,6 @@ class IzPackStudio extends Controller
     IzPackStudio(m = null, v = null, p = null)
     {
         super(m, v, p)
-        try {
-              UIManager.setLookAndFeel(
-                  UIManager.getSystemLookAndFeelClassName())
-        }
-        catch (Exception e) {
-           // handle exception
-        } 
-
         loaded = false
 
     }
